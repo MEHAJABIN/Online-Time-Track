@@ -41,6 +41,8 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<string>("PasswordKey");
 
+                    b.Property<byte[]>("PasswordSalt");
+
                     b.Property<string>("Username");
 
                     b.HasKey("UserID");

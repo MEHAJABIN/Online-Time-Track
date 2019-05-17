@@ -30,7 +30,7 @@ namespace OnlineTimeTrack.Models
         public string Email { get; set; }
        
         //  public object Id { get; internal set; }
-        // public byte[] PasswordHash { get; set; }
-        // public byte[] PasswordSalt { get; set; }
+      
+         public byte[] PasswordSalt { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190516083204_InitialCreate")]
+    [Migration("20190517084932_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,8 @@ namespace OnlineTimeTrack.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("PasswordKey");
+
+                    b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("Username");
 

@@ -22,7 +22,8 @@ namespace OnlineTimeTrack.Migrations
                     Username = table.Column<string>(nullable: true),
                     PasswordKey = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    PasswordSalt = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
