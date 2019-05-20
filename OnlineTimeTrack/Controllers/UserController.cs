@@ -64,10 +64,14 @@ namespace OnlineTimeTrack.Controllers
                 Id = User.UserID,
                 Username = User.Username,
                 FullName = User.FullName,
-               
+
                 Token = tokenString
             });
+
         }
+            
+           
+       
 
         [AllowAnonymous]
         [HttpPost("Register")]

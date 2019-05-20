@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 using OnlineTimeTrack.Models;
 using System.Security.Claims;
 using Microsoft.VisualStudio.Web.CodeGeneration;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace OnlineTimeTrack.Services
 {
@@ -19,6 +19,7 @@ namespace OnlineTimeTrack.Services
     {
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
 
+
         public UserService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
@@ -26,7 +27,8 @@ namespace OnlineTimeTrack.Services
 
         public User Authenticate(string Username, string Password)
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            string passwordKey = Password;
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(passwordKey))
             {
                 return null;
             }
@@ -37,42 +39,36 @@ namespace OnlineTimeTrack.Services
             if (user == null)
                 return null;
 
+            string newHash = HashPassword(Password, user.PasswordKey);
             // check if password is correct
-            if (!VerifyPasswordHash(user.Password,user.PasswordKey,user.PasswordSalt))
-            {
+       
+               if( user.Password != newHash)
                 return null;
-            }
+          
 
             // authentication successful
             return user;
         }
 
-      
-
-        private bool VerifyPasswordHash(string Password, string PasswordKey, byte[] storedSalt)
+      /* private bool VerifyPasswordKey(string password)
         {
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
-            //    if (Password == null) throw new ArgumentNullException("Password");
-            if (string.IsNullOrWhiteSpace(PasswordKey)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            // if (PasswordKey.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            //if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-            // if (storedSalt.Length != 8) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-            if (storedSalt.Length >= 8)
+            if (true)
             {
-                new Exception("Login Successfully");
+                Console.WriteLine("Succesfully verified");
+            }
+             return Password;
+        }*/
+
+        private string VerifyPasswordKey(string Password, string Key)
+        {
+            string key = null;
+            string HashVal = Password + key;
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                string Hash = Convert.ToBase64String(shaM.ComputeHash(Encoding.UTF8.GetBytes(HashVal)));
+                return Hash;
             }
 
-
-                using (HMACSHA512 hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(PasswordKey));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != PasswordKey[i]) return false;
-                }
-            }
-
-            return true;
         }
 
         public IEnumerable<User> GetAll()
