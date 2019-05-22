@@ -123,7 +123,7 @@ namespace OnlineTimeTrack.Services
     
 
     // update user properties
-    user.FullName = user.FullName;
+            user.FullName = user.FullName;
             user.Username = user.Username;
             
             // update password if it was entered
@@ -263,6 +263,49 @@ namespace OnlineTimeTrack.Services
             }
         }
 
+       /* public async Task<User>ProfileUser(User user)
+        {
+             IEnumerable<User> GetAll()
+            {
+                return _onlineTimeTrackContext.Users.ToList();
+            }
+
+           User GetById(long UserID)
+            {
+                return _onlineTimeTrackContext.Users
+                       .FirstOrDefault(u => u.UserID == UserID);
+            }
+
+
+             void Add(User entity)
+            {
+                _onlineTimeTrackContext.Users.Add(entity);
+                _onlineTimeTrackContext.SaveChanges();
+            }
+
+            void Update(User User)
+            {
+                User.FullName = User.FullName;
+                User.Address = User.Address;
+                User.Dob = User.Dob;
+                User.Age = User.Age;
+                User.Gender = User.Gender;
+                User.Username = User.Username;
+                User.Password = User.Password;
+                User.Email = User.Email;
+                User.ContactNumber = User.ContactNumber;
+
+                _onlineTimeTrackContext.SaveChanges();
+            }
+
+            void Delete(User ProfileUser)
+            {
+                _onlineTimeTrackContext.Users.Remove(ProfileUser);
+                _onlineTimeTrackContext.SaveChanges();
+            }
+
+        }*/
+
         void IUserService.Update(User user, string password)
         {
             throw new NotImplementedException();
@@ -272,10 +315,20 @@ namespace OnlineTimeTrack.Services
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }
 
 
 
 
-        
+
+
+
+
+
+
+
+
+

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using OnlineTimeTrack.Contexts;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 
@@ -21,16 +22,14 @@ namespace OnlineTimeTrack.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-      //  private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
+
         public UserController(
-            IUserService userService,
-           // IMapper mapper,
-            IOptions<AppSettings> appSettings)
+              IUserService userService,
+              IOptions<AppSettings> appSettings)
         {
             _userService = userService;
-           // _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
@@ -66,12 +65,9 @@ namespace OnlineTimeTrack.Controllers
                 FullName = User.FullName,
 
                 Token = tokenString
-            });
 
+            });
         }
-            
-           
-       
 
         [AllowAnonymous]
         [HttpPost("Register")]
@@ -93,20 +89,69 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
-
-
-
-
-
     }
 
-    internal class _appSettings
-    {
-    }
+
+
+    /*  internal class _appSettings
+      {
+      }*/
 }
 
-            
- 
-    
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

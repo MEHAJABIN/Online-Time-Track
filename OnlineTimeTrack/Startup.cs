@@ -38,6 +38,8 @@ namespace OnlineTimeTrack
 
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProjectService, ProjectService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             // services.AddAutoMapper();
 

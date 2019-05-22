@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace OnlineTimeTrack.Models
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long UserID { get; set; }
 
         public string FullName { get; set; }
@@ -21,6 +23,8 @@ namespace OnlineTimeTrack.Models
 
         public int Age { get; set; }
 
+        public string ContactNumber { get; set; }
+
         public string Username { get; set; }
 
         public string PasswordKey { get; set; }
@@ -29,8 +33,6 @@ namespace OnlineTimeTrack.Models
 
         public string Email { get; set; }
        
-        //  public object Id { get; internal set; }
       
-         public byte[] PasswordSalt { get; set; }
     }
 }
