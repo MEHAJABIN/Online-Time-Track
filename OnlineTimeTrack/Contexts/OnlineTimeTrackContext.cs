@@ -21,23 +21,8 @@ namespace OnlineTimeTrack.Contexts
             md.Entity<User>().ToTable("Users");
             md.Entity<Project>().ToTable("Projects");
 
-            md.Entity<User>().HasData(new User
-            {
-               UserID = 3,
-               FullName = "Uncle",
-               Email = "uncle.bob@gmail.com",
-               Dob= new DateTime(1979, 04, 25),
-               ContactNumber = "999-888-7777"
+         
 
-            }, new User
-            {
-                UserID = 4,
-                FullName = "Jan",
-                Email = "jan.kirsten@gmail.com",
-                Dob = new DateTime(1981, 07, 13),
-                ContactNumber = "111-222-3333"
-
-            });
         }
     }
 }

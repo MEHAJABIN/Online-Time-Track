@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using OnlineTimeTrack.Models;
 
 namespace OnlineTimeTrack.Controllers
@@ -20,5 +21,10 @@ namespace OnlineTimeTrack.Controllers
         {
             throw new NotImplementedException();
         }
+
+     /*   internal static Task ProjectID(Project project)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }

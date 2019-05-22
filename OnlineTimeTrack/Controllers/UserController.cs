@@ -80,8 +80,8 @@ namespace OnlineTimeTrack.Controllers
 
             try
             {
-                var newUser = await _userService.RegisterUser(user);
-
+                
+           var newUser = await _userService.RegisterUser(user);
                 return Response<User>.CreateResponse(true, "Successfully registered.", newUser);
             }
             catch (Exception e)
@@ -93,9 +93,6 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-    /*  internal class _appSettings
-      {
-      }*/
 }
 
 

@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190517084932_InitialCreate")]
+    [Migration("20190522070633_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,19 @@ namespace OnlineTimeTrack.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("OnlineTimeTrack.Models.Project", b =>
+                {
+                    b.Property<long>("ProjectID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProjectTitle");
+
+                    b.HasKey("ProjectID");
+
+                    b.ToTable("Projects");
+                });
+
             modelBuilder.Entity("OnlineTimeTrack.Models.User", b =>
                 {
                     b.Property<long>("UserID")
@@ -30,6 +43,8 @@ namespace OnlineTimeTrack.Migrations
                     b.Property<string>("Address");
 
                     b.Property<int>("Age");
+
+                    b.Property<string>("ContactNumber");
 
                     b.Property<DateTime>("Dob");
 
@@ -42,8 +57,6 @@ namespace OnlineTimeTrack.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("PasswordKey");
-
-                    b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("Username");
 

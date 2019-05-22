@@ -9,6 +9,19 @@ namespace OnlineTimeTrack.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    ProjectID = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProjectTitle = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.ProjectID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -19,11 +32,11 @@ namespace OnlineTimeTrack.Migrations
                     Dob = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
                     Age = table.Column<int>(nullable: false),
+                    ContactNumber = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     PasswordKey = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    PasswordSalt = table.Column<byte[]>(nullable: true)
+                    Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,6 +46,9 @@ namespace OnlineTimeTrack.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Projects");
+
             migrationBuilder.DropTable(
                 name: "Users");
         }
