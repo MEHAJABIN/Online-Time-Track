@@ -1,49 +1,64 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using OnlineTimeTrack.Contexts;
-using Microsoft.Extensions.Options;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
-using Project = OnlineTimeTrack.Models.Project;
-
-
+using OnlineTimeTrack.Models.Data_Manager;
 
 namespace OnlineTimeTrack.Controllers
 {
-    [("api/[Project]")]
-    [ApiController]
+    
+    [Route("api/Project")]
+
     public class ProjectController : ControllerBase
     {
-        readonly _projectService ProjectService;
+        private IProjectService _projectService;
+
+        public ProjectController(IProjectService projectService)
+        {
+            _projectService = projectService;
+        }
 
         [HttpPost]
-        public async Task<Response<Project>> Project([FromBody] Project project)
+        public async Task<Response<Project>> Project([FromBody]Project project)
         {
-
-            if (project == null)
+            if (project  == null)
             {
-                return Response<Project>.CreateResponse(false, "Please provide valid Project Id.", null);
-            }
+                return Response<Project>.CreateResponse(false, "Please provide valid Project Id.",null);
 
+            }
             try
             {
-
-                var newProject = await _projectService.P(project);
-                return Response<Project>.CreateResponse(true, "Successfully registered.", newProject);
+                var newProject= await _projectService.Project(project);
+                return Response<Project>.CreateResponse(true, "Successfully uploaded.", null);
             }
             catch (Exception e)
             {
-                return Response<Project>.CreateResponse(false, e.Message, null);
+                return Response<Project>.CreateResponse(true, e.Message, null);
             }
-
-
-
         }
+            
+            
+        
+
+
+
+      /*  [HttpGet("Project")] 
+        public IActionResult Get()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")] 
+        public IActionResult Get(long id)
+        {
+            return Ok("Id");
+        }*/
+
+
+
     }
 }
 
@@ -55,86 +70,4 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-
-
-
-        /* try
-         {
-             if (project.ProjectID == 0)
-                 if (project.ProjectID ==)
-                 {
-                     project.ProjectID = ();
-                     _onlineTimeTrackContext.project.Add(project);
-
-                     await _onlineTimeTrackContext.SaveChangesAsync();
-                 }
-         }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*if (project == null)
-            {
-                return Response<Project>.CreateResponse(false, "Please provide valid project title", null);
-            }
-
-            try
-            {
-                var newProject = await _projectService.ProjectTitle(projectID);
-                return Response<User>.CreateResponse(true, "Successfully Added.", newProject);
-            }
-            catch (Exception e)
-            {
-                return Response<Project>.CreateResponse(false, e.Message, null);
-            }*/
-
-
-
-
-
-/* [HttpGet]
- public IEnumerable<long> (ProjectID)
- {
-     return new long[] {ProjectId};
- }
-
- [HttpGet]
- public  Value(int id)
- {
-     return "value";
- }
-
- [HttpPost]
- public void SaveNewValue([FromBody]string value)
- {
- }
-
- [HttpPut]
- public void UpdateValue(int id, [FromBody]string value)
- {
- }
-
- [HttpDelete]
- public void RemoveValue(int id)
- {
- }*/
-
-
-
+    

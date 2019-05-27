@@ -11,7 +11,7 @@ namespace OnlineTimeTrack.Services
     public interface IUserService
     {
             Task<User> RegisterUser(User user);
-          //  Task<User> ProfileUser(User user);
+         
 
         User Authenticate(string Username, string Password);
          IEnumerable<User> GetAll();

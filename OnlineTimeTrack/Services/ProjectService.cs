@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Contexts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineTimeTrack.Services
 {
@@ -12,17 +13,185 @@ namespace OnlineTimeTrack.Services
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
 
 
-        /*public ProjectService(OnlineTimeTrackContext onlineTimeTrackContext)
+        public ProjectService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
-        }*/
-        public async Task<Project> Project(Project project)
+        }
+
+       
+
+
+
+        public IEnumerable<Project> GetAll()
         {
+            return _onlineTimeTrackContext.Projects;
+        }
+
+        public Project GetById(long id)
+        {
+            return _onlineTimeTrackContext.Projects.Find(id);
+        }
+
+        public Project Create(Project project, string ProjectTitle)
+        {
+            // Add ProjectTitle
+            if (string.IsNullOrEmpty(ProjectTitle))
+                throw new AppException("ProjectTitle is required");
+
+            if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
+                throw new AppException("ProjectTitle \"" + project.ProjectTitle + "\" is already taken");
+
+
+
+            project.ProjectTitle = ProjectTitle;
+
+            _onlineTimeTrackContext.Projects.Add(project);
+            _onlineTimeTrackContext.SaveChanges();
+
+            return project;
+        }
+
+
+
+        void Update(Project project, string ProjectID = null)
+        {
+            var Project = _onlineTimeTrackContext.Projects.Find(project.ProjectID);
+
+            if (project == null)
+                throw new AppException("ProjectTitle not found");
+
+            if (project.ProjectTitle != project.ProjectTitle)
+            {
+                // ProjectTitle has changed so check if the new Project is already taken
+                if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
+                    throw new AppException("ProjectTitle " + project.ProjectTitle + " is already taken");
+            }
 
         }
+
+        public async Task<Project> Project(Project project)
+
+
+        {
+            /* if (project.ProjectTitle == null)
+              {
+                  Console.Write("message= Successfully Uploaded");
+              }
+              return null;*/
+               // save the project
+        var addedProject = await _onlineTimeTrackContext.Projects.AddAsync(project);
+        await _onlineTimeTrackContext.SaveChangesAsync();
+        // addedProject.Entity.ProjectID = long;
+        addedProject.Entity.ProjectTitle = project.ProjectTitle;
+
+
+
+        // return the project
+        return addedProject.Entity;
+
+
+          }
+
+        void IProjectService.Update(Project project, string ProjectTitle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /*  void IProjectService.Update(Project project, string ProjectTitle)
+          {
+              throw new NotImplementedException();
+          }
+
+          public void Delete(long id)
+          {
+              throw new NotImplementedException();
+          }*/
+    }
+
 
     }
 
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* public Task<Project> Project(Project project)
+  {
+
+      // Project Title is correct
+     /* if (string.IsNullOrEmpty(project.ProjectTitle))
+      {
+          throw new Exception("Incorrect project title.");
+      }
+      return ;*/
+
+
+
+
+
+
+
+
+
+
+/*  public async Task<Project> Project(Project project)
+  {
+
+      if (project.ProjectTitle == null)
+      {
+          Console.Write("message= Successfully Uploaded");
+      }
+      else
+      {
+          Console.Write("message= Invaid Title");
+      }
+
+      // save the project
+      var addedProject = await OnlineTimeTrackContext.Project.AddAsync(project);
+      await OnlineTimeTrackContext.SaveChangesAsync();
+      // addedProject.Entity.ProjectID = long;
+      addedProject.Entity.ProjectTitle = project.ProjectTitle;
+
+
+
+      // return the project
+      return addedProject.Entity;*/
+
+
+
+
+
+
+
+
+
+
+
+

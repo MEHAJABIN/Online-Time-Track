@@ -25,6 +25,8 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
 
+      
+
         public User Authenticate(string Username, string Password)
         {
             string passwordKey = Password;
@@ -230,8 +232,9 @@ namespace OnlineTimeTrack.Services
             // password  hash
             user.Password = HashPassword(user.Password, user.PasswordKey);
 
+
             // save the user
-            var addedUser = await _onlineTimeTrackContext.AddAsync(user);
+            var addedUser = await _onlineTimeTrackContext.Users.AddAsync(user);
             await _onlineTimeTrackContext.SaveChangesAsync();
             addedUser.Entity.Password = null;
             addedUser.Entity.PasswordKey = null;
@@ -263,58 +266,22 @@ namespace OnlineTimeTrack.Services
             }
         }
 
-       /* public async Task<User>ProfileUser(User user)
-        {
-             IEnumerable<User> GetAll()
-            {
-                return _onlineTimeTrackContext.Users.ToList();
-            }
+   
 
-           User GetById(long UserID)
-            {
-                return _onlineTimeTrackContext.Users
-                       .FirstOrDefault(u => u.UserID == UserID);
-            }
-
-
-             void Add(User entity)
+         void Add(User entity)
             {
                 _onlineTimeTrackContext.Users.Add(entity);
                 _onlineTimeTrackContext.SaveChanges();
             }
-
-            void Update(User User)
-            {
-                User.FullName = User.FullName;
-                User.Address = User.Address;
-                User.Dob = User.Dob;
-                User.Age = User.Age;
-                User.Gender = User.Gender;
-                User.Username = User.Username;
-                User.Password = User.Password;
-                User.Email = User.Email;
-                User.ContactNumber = User.ContactNumber;
-
-                _onlineTimeTrackContext.SaveChanges();
-            }
-
-            void Delete(User ProfileUser)
-            {
-                _onlineTimeTrackContext.Users.Remove(ProfileUser);
-                _onlineTimeTrackContext.SaveChanges();
-            }
-
-        }*/
-
         void IUserService.Update(User user, string password)
-        {
+            {
             throw new NotImplementedException();
-        }
+            }
 
         void IUserService.Delete(int id)
-        {
+            {
             throw new NotImplementedException();
-        }
+            }
 
        
     }
@@ -324,7 +291,7 @@ namespace OnlineTimeTrack.Services
 
 
 
-
+    
 
 
 

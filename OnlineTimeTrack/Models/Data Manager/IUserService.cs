@@ -1,4 +1,4 @@
-﻿namespace OnlineTimeTrack.Services
+﻿namespace OnlineTimeTrack.Models.Data_Manager
 {
     public interface IUserService<T>
     {

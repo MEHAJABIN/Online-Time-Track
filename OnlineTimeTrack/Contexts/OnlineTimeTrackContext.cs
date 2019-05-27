@@ -24,6 +24,11 @@ namespace OnlineTimeTrack.Contexts
          
 
         }
+
+        internal static Task AddAsync(object project)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
