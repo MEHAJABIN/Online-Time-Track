@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190522070633_InitialCreate")]
+    [Migration("20190528095218_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,29 @@ namespace OnlineTimeTrack.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("OnlineTimeTrack.Models.Worklog", b =>
+                {
+                    b.Property<long>("WorklogID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActualWorkTime");
+
+                    b.Property<DateTime>("EstimateWorkTimeEnd");
+
+                    b.Property<DateTime>("EstimateWorkTimeStart");
+
+                    b.Property<string>("Features");
+
+                    b.Property<long>("ProjectID");
+
+                    b.Property<long>("UserID");
+
+                    b.HasKey("WorklogID");
+
+                    b.ToTable("Worklogs");
                 });
 #pragma warning restore 612, 618
         }

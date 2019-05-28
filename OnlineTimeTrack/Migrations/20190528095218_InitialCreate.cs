@@ -42,6 +42,24 @@ namespace OnlineTimeTrack.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Worklogs",
+                columns: table => new
+                {
+                    WorklogID = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ProjectID = table.Column<long>(nullable: false),
+                    UserID = table.Column<long>(nullable: false),
+                    EstimateWorkTimeStart = table.Column<DateTime>(nullable: false),
+                    EstimateWorkTimeEnd = table.Column<DateTime>(nullable: false),
+                    Features = table.Column<string>(nullable: true),
+                    ActualWorkTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Worklogs", x => x.WorklogID);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -51,6 +69,9 @@ namespace OnlineTimeTrack.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Worklogs");
         }
     }
 }

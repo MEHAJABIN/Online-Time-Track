@@ -52,14 +52,7 @@ namespace OnlineTimeTrack.Services
             return user;
         }
 
-      /* private bool VerifyPasswordKey(string password)
-        {
-            if (true)
-            {
-                Console.WriteLine("Succesfully verified");
-            }
-             return Password;
-        }*/
+      
 
         private string VerifyPasswordKey(string Password, string Key)
         {
@@ -243,8 +236,8 @@ namespace OnlineTimeTrack.Services
             return addedUser.Entity;
         }
 
-        private string GeneratePasswordKey()
-        {
+          private string GeneratePasswordKey()
+          {
             using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
             {
                 byte[] tokenData = new byte[32];
@@ -254,34 +247,34 @@ namespace OnlineTimeTrack.Services
 
                 return token;
             }
-        }
+          }
 
-        private string HashPassword(string password, string key)
-        {
+          private string HashPassword(string password, string key)
+          {
             string HashVal = password + key;
             using (SHA512 shaM = new SHA512Managed())
             {
                 string Hash = Convert.ToBase64String(shaM.ComputeHash(Encoding.UTF8.GetBytes(HashVal)));
                 return Hash;
             }
-        }
+          }
 
    
 
-         void Add(User entity)
-            {
-                _onlineTimeTrackContext.Users.Add(entity);
-                _onlineTimeTrackContext.SaveChanges();
-            }
-        void IUserService.Update(User user, string password)
-            {
+          void Add(User entity)
+          {
+              _onlineTimeTrackContext.Users.Add(entity);
+              _onlineTimeTrackContext.SaveChanges();
+          }
+         void IUserService.Update(User user, string password)
+         {
             throw new NotImplementedException();
-            }
+         }
 
-        void IUserService.Delete(int id)
-            {
-            throw new NotImplementedException();
-            }
+         void IUserService.Delete(int id)
+         {
+           throw new NotImplementedException();
+         }
 
        
     }

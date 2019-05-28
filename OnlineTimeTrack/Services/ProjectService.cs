@@ -73,15 +73,10 @@ namespace OnlineTimeTrack.Services
 
 
         {
-            /* if (project.ProjectTitle == null)
-              {
-                  Console.Write("message= Successfully Uploaded");
-              }
-              return null;*/
-               // save the project
+          
+        // save the project
         var addedProject = await _onlineTimeTrackContext.Projects.AddAsync(project);
         await _onlineTimeTrackContext.SaveChangesAsync();
-        // addedProject.Entity.ProjectID = long;
         addedProject.Entity.ProjectTitle = project.ProjectTitle;
 
 
@@ -102,30 +97,10 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        /*  void IProjectService.Update(Project project, string ProjectTitle)
-          {
-              throw new NotImplementedException();
-          }
-
-          public void Delete(long id)
-          {
-              throw new NotImplementedException();
-          }*/
     }
 
 
-    }
+}
 
 
 
@@ -142,15 +117,6 @@ namespace OnlineTimeTrack.Services
 
 
 
-/* public Task<Project> Project(Project project)
-  {
-
-      // Project Title is correct
-     /* if (string.IsNullOrEmpty(project.ProjectTitle))
-      {
-          throw new Exception("Incorrect project title.");
-      }
-      return ;*/
 
 
 
@@ -158,31 +124,6 @@ namespace OnlineTimeTrack.Services
 
 
 
-
-
-
-/*  public async Task<Project> Project(Project project)
-  {
-
-      if (project.ProjectTitle == null)
-      {
-          Console.Write("message= Successfully Uploaded");
-      }
-      else
-      {
-          Console.Write("message= Invaid Title");
-      }
-
-      // save the project
-      var addedProject = await OnlineTimeTrackContext.Project.AddAsync(project);
-      await OnlineTimeTrackContext.SaveChangesAsync();
-      // addedProject.Entity.ProjectID = long;
-      addedProject.Entity.ProjectTitle = project.ProjectTitle;
-
-
-
-      // return the project
-      return addedProject.Entity;*/
 
 
 

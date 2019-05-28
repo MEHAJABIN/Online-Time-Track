@@ -45,7 +45,7 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-      /*  [HttpGet("Project")] 
+        [HttpGet("Project")] 
         public IActionResult Get()
         {
             return Ok();
@@ -55,7 +55,7 @@ namespace OnlineTimeTrack.Controllers
         public IActionResult Get(long id)
         {
             return Ok("Id");
-        }*/
+        }
 
 
 

@@ -11,6 +11,7 @@ namespace OnlineTimeTrack.Contexts
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Worklog> Worklogs { get; set; }
 
         public OnlineTimeTrackContext(DbContextOptions<OnlineTimeTrackContext> options) : base(options)
         {
@@ -20,6 +21,7 @@ namespace OnlineTimeTrack.Contexts
         {
             md.Entity<User>().ToTable("Users");
             md.Entity<Project>().ToTable("Projects");
+            md.Entity<Worklog>().ToTable("Worklogs");
 
          
 

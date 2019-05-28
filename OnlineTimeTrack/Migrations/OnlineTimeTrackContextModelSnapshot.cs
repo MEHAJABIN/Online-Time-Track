@@ -62,6 +62,29 @@ namespace OnlineTimeTrack.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("OnlineTimeTrack.Models.Worklog", b =>
+                {
+                    b.Property<long>("WorklogID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActualWorkTime");
+
+                    b.Property<DateTime>("EstimateWorkTimeEnd");
+
+                    b.Property<DateTime>("EstimateWorkTimeStart");
+
+                    b.Property<string>("Features");
+
+                    b.Property<long>("ProjectID");
+
+                    b.Property<long>("UserID");
+
+                    b.HasKey("WorklogID");
+
+                    b.ToTable("Worklogs");
+                });
 #pragma warning restore 612, 618
         }
     }
