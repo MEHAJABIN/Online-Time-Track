@@ -23,8 +23,7 @@ namespace OnlineTimeTrack.Controllers
     {
         private IUserService _userService;
         private readonly AppSettings _appSettings;
-
-
+      
         public UserController(
               IUserService userService,
               IOptions<AppSettings> appSettings)
@@ -36,11 +35,11 @@ namespace OnlineTimeTrack.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]User user)
+        public IActionResult Authenticate([FromBody]User loginDetails)
         {
-            var User = _userService.Authenticate(user.Username, user.Password);
+            var user = _userService.Authenticate(loginDetails.Username, loginDetails.Password);
 
-            if (User == null)
+            if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -58,18 +57,11 @@ namespace OnlineTimeTrack.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             // return basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                Id = User.UserID,
-                Username = User.Username,
-                FullName = User.FullName,
-
-                Token = tokenString
-
-            });
+            user.Token = tokenString;
+            return Ok(user);
         }
 
-        [AllowAnonymous]
+        [AllowAnonymous] 
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
         {
@@ -79,9 +71,9 @@ namespace OnlineTimeTrack.Controllers
             }
 
             try
-            { 
-
+            {
                 var newUser = await _userService.RegisterUser(user);
+
                 return Response<User>.CreateResponse(true, "Successfully registered.", newUser);
             }
             catch (Exception e)
@@ -89,6 +81,43 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
+
+      /*  [Produces("application/json")]
+        [HttpGet("findall")]
+
+        public async Task<User> FindAll()
+        {
+            try
+            {
+                var Users = db.Users.ToList();
+                return Ok(Users);
+            }
+            catch
+            {
+                return BadRequest();
+
+            }
+        }
+
+
+
+           
+
+
+
+        
+
+        [HttpGet("{id}")]
+        public IActionResult Get(long id)
+        {
+            return Ok("Id");
+        }*/
+      
+
+      
+
+
+
     }
 }
 

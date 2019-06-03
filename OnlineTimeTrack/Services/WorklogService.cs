@@ -30,28 +30,22 @@ namespace OnlineTimeTrack.Services
             return _onlineTimeTrackContext.Worklogs.Find(id);
         }
 
-        public Worklog Create(Worklog worklog, DateTime EstimateWorkTime, string Features, DateTime ActualTime)
+        public Worklog Create(Worklog worklog)
         {
             
             
 
            
            // Add Features
-            if (string.IsNullOrEmpty(Features))
+            if (string.IsNullOrEmpty(worklog.Features))
                 throw new AppException("Feature is required");
 
             if (_onlineTimeTrackContext.Worklogs.Any(x => x.Features == worklog.Features))
                 throw new AppException("Features \"" + worklog.Features + "\" is already taken");
-
-           
-
-
-
-            worklog.EstimateWorkTimeStart =EstimateWorkTime;
-            worklog.EstimateWorkTimeEnd = EstimateWorkTime;
-            worklog.Features = Features;
-            worklog.ActualWorkTime = ActualTime;
-
+            
+            worklog.DateAdded = DateTime.UtcNow;
+            worklog.DateModified = DateTime.UtcNow;
+            
             _onlineTimeTrackContext.Worklogs.Add(worklog);
             _onlineTimeTrackContext.SaveChanges();
 
@@ -80,7 +74,7 @@ namespace OnlineTimeTrack.Services
 
         {
            
-            // save the project
+            // save the worklog
             var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
             await _onlineTimeTrackContext.SaveChangesAsync();
             // addedProject.Entity.ProjectID = long;
@@ -106,7 +100,7 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        public void Update(Worklog worklog, DateTime EstimateWorkTime, DateTime ActualTime, string Features = null)
+        public void Update(Worklog worklog, int EstimateWorkTime, DateTime ActualTime, string Features = null)
         {
             throw new NotImplementedException();
         }
@@ -116,7 +110,7 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        public Worklog Create(Worklog worklog, DateTime EstimateWorkTimeStart, DateTime EstimateWorkTimeEnd, string Features, DateTime ActualTime)
+        public Worklog Create(Worklog worklog, int EstimateWorkTime, string Features, DateTime ActualTimeStart, DateTime ActualTimeEnd)
         {
             throw new NotImplementedException();
         }

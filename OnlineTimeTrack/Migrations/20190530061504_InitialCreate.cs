@@ -51,10 +51,13 @@ namespace OnlineTimeTrack.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProjectID = table.Column<long>(nullable: false),
                     UserID = table.Column<long>(nullable: false),
-                    EstimateWorkTimeStart = table.Column<DateTime>(nullable: false),
-                    EstimateWorkTimeEnd = table.Column<DateTime>(nullable: false),
+                    EstimateWorkTime = table.Column<int>(nullable: false),
                     Features = table.Column<string>(nullable: true),
-                    ActualWorkTime = table.Column<DateTime>(nullable: false)
+                    ActualWorkTimeStart = table.Column<DateTime>(nullable: false),
+                    ActualWorkTimeEnd = table.Column<DateTime>(nullable: false),
+                    TotalWorkTime = table.Column<int>(nullable: false),
+                    DateAdded = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

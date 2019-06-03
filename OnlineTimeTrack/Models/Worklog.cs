@@ -12,12 +12,30 @@ namespace OnlineTimeTrack.Models
         public long WorklogID { get; set; }
 
         public long ProjectID { get; set; }
+
         public long UserID { get; set; }
 
-        public DateTime EstimateWorkTimeStart { get; set; }
-        public DateTime EstimateWorkTimeEnd { get; set; }
-        public string Features { get; set; }
-        public DateTime ActualWorkTime { get; set; }
+        public int EstimateWorkTime { get; set; }
 
+        public string Features { get; set; }
+
+        public DateTime ActualWorkTimeStart { get; set; }
+
+        public DateTime ActualWorkTimeEnd { get; set; }
+
+        public int TotalWorkTime { get; set; }
+
+        public DateTime DateAdded { get; set; }
+
+        public DateTime DateModified { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+   

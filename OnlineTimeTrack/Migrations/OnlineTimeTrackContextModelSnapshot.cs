@@ -69,15 +69,21 @@ namespace OnlineTimeTrack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ActualWorkTime");
+                    b.Property<DateTime>("ActualWorkTimeEnd");
 
-                    b.Property<DateTime>("EstimateWorkTimeEnd");
+                    b.Property<DateTime>("ActualWorkTimeStart");
 
-                    b.Property<DateTime>("EstimateWorkTimeStart");
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<int>("EstimateWorkTime");
 
                     b.Property<string>("Features");
 
                     b.Property<long>("ProjectID");
+
+                    b.Property<int>("TotalWorkTime");
 
                     b.Property<long>("UserID");
 

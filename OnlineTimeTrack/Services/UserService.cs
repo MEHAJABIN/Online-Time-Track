@@ -11,18 +11,22 @@ using OnlineTimeTrack.Models;
 using System.Security.Claims;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineTimeTrack.Services
 {
+    
     public class UserService : IUserService
 
     {
+       
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
 
 
         public UserService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
+           
         }
 
       
@@ -71,9 +75,9 @@ namespace OnlineTimeTrack.Services
             return _onlineTimeTrackContext.Users;
         }
 
-        public User GetById(int id)
+        public User GetById(long id)
         {
-            return _onlineTimeTrackContext.Users.Find(id);
+            return _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == id);
         }
 
         public User Create(User user,string Password)
@@ -271,12 +275,18 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
          }
 
-         void IUserService.Delete(int id)
+         void IUserService.Delete(long id)
          {
            throw new NotImplementedException();
          }
 
-       
+        public int? GetUserIDFromContext(HttpContext context)
+        {
+            var userIDClaim = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
+            if (userIDClaim != null) return Int32.Parse(userIDClaim.Value);
+
+            return null;
+        }
     }
 }
 

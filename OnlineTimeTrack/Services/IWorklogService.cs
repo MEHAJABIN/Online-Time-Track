@@ -15,8 +15,8 @@ namespace OnlineTimeTrack.Services
         Worklog GetById(long id);
         Project GetProject(long id);
         User GetUser(long id);
-        Worklog Create(Worklog worklog,DateTime EstimateWorkTimeStart,DateTime EstimateWorkTimeEnd,string Features,DateTime ActualTime);
-        void Update(Worklog worklog, DateTime EstimateWorkTime,  DateTime ActualTime, string Features = null);
+        Worklog Create(Worklog worklog,int EstimateWorkTime,string Features,DateTime ActualTimeStart,DateTime ActualTimeEnd);
+        void Update(Worklog worklog, int EstimateWorkTime,  DateTime ActualTime, string Features = null);
         void Delete(long id);
 
     }

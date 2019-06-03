@@ -6,28 +6,31 @@ using System.Threading.Tasks;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 using OnlineTimeTrack.Models.Data_Manager;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace OnlineTimeTrack.Controllers
 {
-    
+    [Authorize]
     [Route("api/Project")]
-
     public class ProjectController : ControllerBase
     {
-        private IProjectService _projectService;
-
+        private readonly IProjectService _projectService;
+       
         public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
+            
         }
 
+        
         [HttpPost]
         public async Task<Response<Project>> Project([FromBody]Project project)
-        {
+           {
+            
             if (project  == null)
             {
                 return Response<Project>.CreateResponse(false, "Please provide valid Project Id.",null);
-
             }
             try
             {

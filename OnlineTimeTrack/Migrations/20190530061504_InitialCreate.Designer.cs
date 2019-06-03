@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190528095218_InitialCreate")]
+    [Migration("20190530061504_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,15 +71,21 @@ namespace OnlineTimeTrack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ActualWorkTime");
+                    b.Property<DateTime>("ActualWorkTimeEnd");
 
-                    b.Property<DateTime>("EstimateWorkTimeEnd");
+                    b.Property<DateTime>("ActualWorkTimeStart");
 
-                    b.Property<DateTime>("EstimateWorkTimeStart");
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<int>("EstimateWorkTime");
 
                     b.Property<string>("Features");
 
                     b.Property<long>("ProjectID");
+
+                    b.Property<int>("TotalWorkTime");
 
                     b.Property<long>("UserID");
 

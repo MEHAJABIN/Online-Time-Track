@@ -34,10 +34,10 @@ namespace OnlineTimeTrack.Models.Data_Manager
 
         public void Update(Worklog worklog, Worklog entity)
         {
-            worklog.EstimateWorkTimeStart = entity.EstimateWorkTimeStart;
-            worklog.EstimateWorkTimeEnd = entity.EstimateWorkTimeEnd;
+            worklog.EstimateWorkTime= entity.EstimateWorkTime;
             worklog.Features = entity.Features;
-            worklog.ActualWorkTime = entity.ActualWorkTime;
+            worklog.ActualWorkTimeStart = entity.ActualWorkTimeStart;
+            worklog.ActualWorkTimeEnd = entity.ActualWorkTimeEnd;
 
             _onlineTimeTrackContext.SaveChanges();
 

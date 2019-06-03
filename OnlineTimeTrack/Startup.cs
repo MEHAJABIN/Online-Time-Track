@@ -63,14 +63,6 @@ namespace OnlineTimeTrack
                {
                    OnTokenValidated = context =>
                    {
-                       var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                       var userId = int.Parse(context.Principal.Identity.Name);
-                       var user = userService.GetById(userId);
-                       if (user == null)
-                       {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                       }
                        return Task.CompletedTask;
                    }
                };
@@ -102,6 +94,7 @@ namespace OnlineTimeTrack
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
