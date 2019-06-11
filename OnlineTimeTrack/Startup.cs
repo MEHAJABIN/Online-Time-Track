@@ -38,7 +38,7 @@ namespace OnlineTimeTrack
 
 
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IProjectService, projectService>();
             services.AddTransient<IWorklogService, WorklogService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -70,7 +70,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, "Please provide valid user data.", null);
             }
 
-            try
+            try 
             {
                 var newUser = await _userService.RegisterUser(user);
 

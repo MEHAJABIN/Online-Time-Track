@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190530061504_InitialCreate")]
+    [Migration("20190603090357_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

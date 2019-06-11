@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Services;
 using OnlineTimeTrack.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineTimeTrack.Services
 {
@@ -19,16 +22,18 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
 
+        
 
-        public IEnumerable<Worklog> GetAll()
+        public async Task<IEnumerable<Worklog>> GetAll(long ProjectID)
         {
-            return _onlineTimeTrackContext.Worklogs;
+            var result = await _onlineTimeTrackContext.Worklogs.Where(p => p.ProjectID == ProjectID).ToListAsync();
+            return result;
         }
 
         public Worklog GetById(long id)
         {
             return _onlineTimeTrackContext.Worklogs.Find(id);
-        }
+        }   
 
         public Worklog Create(Worklog worklog)
         {
@@ -76,24 +81,34 @@ namespace OnlineTimeTrack.Services
            
             // save the worklog
             var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
-            await _onlineTimeTrackContext.SaveChangesAsync();
-            // addedProject.Entity.ProjectID = long;
+
             addedWorklog.Entity.Features = worklog.Features;
+            await _onlineTimeTrackContext.SaveChangesAsync();
 
 
 
-            // return the project
+
+
+            // return the worklog
             return addedWorklog.Entity;
 
 
         }
-
-     
-
-        public Project GetProject(long id)
+        public void Update(Worklog worklog, Worklog entity)
         {
-            throw new NotImplementedException();
+            worklog.EstimateWorkTime = entity.EstimateWorkTime;
+            worklog.Features = entity.Features;
+            worklog.ActualWorkTimeStart = entity.ActualWorkTimeStart;
+            worklog.ActualWorkTimeEnd = entity.ActualWorkTimeEnd;
+
+            _onlineTimeTrackContext.SaveChanges();
+
         }
+
+
+
+
+
 
         public User GetUser(long id)
         {
@@ -111,6 +126,13 @@ namespace OnlineTimeTrack.Services
         }
 
         public Worklog Create(Worklog worklog, int EstimateWorkTime, string Features, DateTime ActualTimeStart, DateTime ActualTimeEnd)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+
+        public int? GetprojectIDFromContext(HttpContext context)
         {
             throw new NotImplementedException();
         }

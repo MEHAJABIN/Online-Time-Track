@@ -8,20 +8,27 @@ using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 using OnlineTimeTrack.Contexts;
 
+
 namespace OnlineTimeTrack.Controllers
 {
     [Route("api/Worklog")]
 
     public class WorklogController : ControllerBase
     {
+       
         private readonly IUserService _userService;
-        private IWorklogService _worklogService;
+        private readonly IWorklogService _worklogService;
+        private readonly IProjectService _projectService;
 
-        public WorklogController(IWorklogService worklogService,IUserService userService)
+
+
+
+        public WorklogController(IWorklogService worklogService, IUserService userService,IProjectService projectService)
         {
             _worklogService = worklogService;
             _userService = userService;
-        } 
+            _projectService = projectService;
+        }
 
         [HttpPost]
         public async Task<Response<Worklog>> Worklog([FromBody]Worklog worklog)
@@ -30,7 +37,7 @@ namespace OnlineTimeTrack.Controllers
 
             if (userID == null)
             {
-                return Response<Worklog>.CreateResponse(false, "Not a valid user",null);
+                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
             }
 
             if (worklog == null)
@@ -40,8 +47,8 @@ namespace OnlineTimeTrack.Controllers
             }
 
             worklog.UserID = userID.GetValueOrDefault();
-            
-            
+
+
             try
             {
                 var newWorklog = await _worklogService.Worklog(worklog);
@@ -51,19 +58,34 @@ namespace OnlineTimeTrack.Controllers
             {
                 return Response<Worklog>.CreateResponse(true, e.Message, null);
             }
-
-        }
-     /*   [HttpGet("Worklog")]
-        public IActionResult Get()
-        {
-            return Ok();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(long id)
-        {
-            return Ok("Id");
-        }*/
+
+
+        [HttpGet]
+        public async Task<Response<IEnumerable<Worklog>>>GetWorklog([FromQuery] long? ProjectID)
+
+         {
+            if (ProjectID == null)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Worklog Id.", null);
+
+            }
+            try
+            {
+                var worklogs = await _worklogService.GetAll(ProjectID.GetValueOrDefault());
+                if (worklogs == null)
+                {
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.",worklogs);
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
+            }
+        }
     }
 }
 
@@ -74,6 +96,33 @@ namespace OnlineTimeTrack.Controllers
 
 
   
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

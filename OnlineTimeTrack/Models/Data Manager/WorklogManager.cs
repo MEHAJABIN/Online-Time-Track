@@ -16,11 +16,7 @@ namespace OnlineTimeTrack.Models.Data_Manager
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
 
-        public IEnumerable<Worklog> GetAll()
-        {
-            return _onlineTimeTrackContext.Worklogs.ToList();
-        }
-
+       
         public Worklog Get(long id)
         {
             return _onlineTimeTrackContext.Worklogs.FirstOrDefault(e => e.WorklogID == id);
@@ -32,17 +28,7 @@ namespace OnlineTimeTrack.Models.Data_Manager
             _onlineTimeTrackContext.SaveChanges();
         }
 
-        public void Update(Worklog worklog, Worklog entity)
-        {
-            worklog.EstimateWorkTime= entity.EstimateWorkTime;
-            worklog.Features = entity.Features;
-            worklog.ActualWorkTimeStart = entity.ActualWorkTimeStart;
-            worklog.ActualWorkTimeEnd = entity.ActualWorkTimeEnd;
-
-            _onlineTimeTrackContext.SaveChanges();
-
-        }
-
+       
 
       
 

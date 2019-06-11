@@ -23,7 +23,13 @@ namespace OnlineTimeTrack.Models
 
         public DateTime ActualWorkTimeEnd { get; set; }
 
-        public int TotalWorkTime { get; set; }
+        public double TotalWorkTime
+        {
+            get
+            {                
+                return (ActualWorkTimeEnd - ActualWorkTimeStart).TotalHours;
+            }
+        }
 
         public DateTime DateAdded { get; set; }
 

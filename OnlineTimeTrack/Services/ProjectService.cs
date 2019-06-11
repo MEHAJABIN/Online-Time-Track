@@ -8,12 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineTimeTrack.Services
 {
-    public class ProjectService : IProjectService
+    public class projectService : IProjectService
     {
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
+        private readonly WorklogService _worklogService;
 
 
-        public ProjectService(OnlineTimeTrackContext onlineTimeTrackContext)
+        public projectService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
