@@ -11,18 +11,23 @@ namespace OnlineTimeTrack.Services
 {
     public interface IUserService
     {
-            Task<User> RegisterUser(User user);
-         
-
+        Task<User>RegisterUser(User user);
+        Task<User>RegisterdUsers(User UserID);
+        Task<User> RegisterdUser(User UserID);
         User Authenticate(string Username, string Password);
-         IEnumerable<User> GetAll();
-         User GetById(long id);
-         User Create(User user, string password);
+        IEnumerable<User> GetAll();
+        User GetById(long id);
+        User Create(User user, string password);
         void Update(User user, string password = null);
-        void Delete(long id);
         int? GetUserIDFromContext(HttpContext context);
 
-      
+
     }
 
 }
+
+
+
+
+
+

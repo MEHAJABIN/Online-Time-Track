@@ -15,21 +15,21 @@ using Microsoft.AspNetCore.Http;
 
 namespace OnlineTimeTrack.Services
 {
-    
+
     public class UserService : IUserService
 
     {
-       
+
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
 
 
         public UserService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
-           
+
         }
 
-      
+
 
         public User Authenticate(string Username, string Password)
         {
@@ -47,16 +47,16 @@ namespace OnlineTimeTrack.Services
 
             string newHash = HashPassword(Password, user.PasswordKey);
             // check if password is correct
-       
-               if( user.Password != newHash)
+
+            if (user.Password != newHash)
                 return null;
-          
+
 
             // authentication successful
             return user;
         }
 
-      
+
 
         private string VerifyPasswordKey(string Password, string Key)
         {
@@ -80,7 +80,7 @@ namespace OnlineTimeTrack.Services
             return _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == id);
         }
 
-        public User Create(User user,string Password)
+        public User Create(User user, string Password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(Password))
@@ -89,11 +89,11 @@ namespace OnlineTimeTrack.Services
             if (_onlineTimeTrackContext.Users.Any(x => x.Username == user.Username))
                 throw new AppException("Username \"" + user.Username + "\" is already taken");
 
-        //    byte[] PasswordKey, password;
-            CreatePasswordHash( user.PasswordKey,user.Password);
+            //    byte[] PasswordKey, password;
+            CreatePasswordHash(user.PasswordKey, user.Password);
 
             user.PasswordKey = Password;
-            user.Password= Password;
+            user.Password = Password;
 
             _onlineTimeTrackContext.Users.Add(user);
             _onlineTimeTrackContext.SaveChanges();
@@ -101,13 +101,14 @@ namespace OnlineTimeTrack.Services
             return user;
         }
 
-        private void CreatePasswordHash( byte[] PasswordKey,byte[] Password)
+        private void CreatePasswordHash(byte[] PasswordKey, byte[] Password)
         {
             throw new NotImplementedException();
         }
 
         void Update(User user, string password = null)
-        { var User = _onlineTimeTrackContext.Users.Find(user.UserID);
+        {
+            var User = _onlineTimeTrackContext.Users.Find(user.UserID);
 
             if (user == null)
                 throw new AppException("User not found");
@@ -117,14 +118,14 @@ namespace OnlineTimeTrack.Services
                 // username has changed so check if the new username is already taken
                 if (_onlineTimeTrackContext.Users.Any(x => x.Username == user.Username))
                     throw new AppException("Username " + user.Username + " is already taken");
-    }
+            }
 
-    
 
-    // update user properties
+
+            // update user properties
             user.FullName = user.FullName;
             user.Username = user.Username;
-            
+
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
             {
@@ -240,8 +241,8 @@ namespace OnlineTimeTrack.Services
             return addedUser.Entity;
         }
 
-          private string GeneratePasswordKey()
-          {
+        private string GeneratePasswordKey()
+        {
             using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
             {
                 byte[] tokenData = new byte[32];
@@ -251,34 +252,31 @@ namespace OnlineTimeTrack.Services
 
                 return token;
             }
-          }
+        }
 
-          private string HashPassword(string password, string key)
-          {
+        private string HashPassword(string password, string key)
+        {
             string HashVal = password + key;
             using (SHA512 shaM = new SHA512Managed())
             {
                 string Hash = Convert.ToBase64String(shaM.ComputeHash(Encoding.UTF8.GetBytes(HashVal)));
                 return Hash;
             }
-          }
+        }
 
-   
 
-          void Add(User entity)
-          {
-              _onlineTimeTrackContext.Users.Add(entity);
-              _onlineTimeTrackContext.SaveChanges();
-          }
-         void IUserService.Update(User user, string password)
-         {
+
+        void Add(User entity)
+        {
+            _onlineTimeTrackContext.Users.Add(entity);
+            _onlineTimeTrackContext.SaveChanges();
+        }
+        void IUserService.Update(User user, string password)
+        {
             throw new NotImplementedException();
-         }
+        }
 
-         void IUserService.Delete(long id)
-         {
-           throw new NotImplementedException();
-         }
+
 
         public int? GetUserIDFromContext(HttpContext context)
         {
@@ -287,6 +285,57 @@ namespace OnlineTimeTrack.Services
 
             return null;
         }
+
+
+        public async Task<User> RegisterdUsers(User UserID)
+        {
+            _onlineTimeTrackContext.Users.Update(UserID);
+            await _onlineTimeTrackContext.SaveChangesAsync();
+            var ExistingUser = _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == UserID.UserID);
+
+            return ExistingUser;
+        }
+
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public  Task<User>RegisterdUser(User UserID)
+        {
+           // var User= _onlineTimeTrackContext.Users.Find(UserID.UserID);
+
+            if (UserID == null)
+            {
+                throw new AppException("User not found");
+            }
+
+            
+            _onlineTimeTrackContext.Users.Remove(UserID);
+            _onlineTimeTrackContext.SaveChanges();
+
+            return null;
+
+        }
+
+
     }
 }
 

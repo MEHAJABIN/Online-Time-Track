@@ -82,39 +82,61 @@ namespace OnlineTimeTrack.Controllers
             }
         }
 
-      /*  [Produces("application/json")]
-        [HttpGet("findall")]
 
-        public async Task<User> FindAll()
+
+        [HttpPut("RegisterdUsers")]
+       
+         public async Task<Response<User>> RegisterdUsers([FromBody] User UserID)
+
         {
+            if (UserID == null)
+            {
+                return Response<User>.CreateResponse(false, "Please provide valid User Id.", null);
+
+            }
             try
             {
-                var Users = db.Users.ToList();
-                return Ok(Users);
-            }
-            catch
-            {
-                return BadRequest();
+                var ExistingUser = await _userService.RegisterdUsers(UserID);
+                if (ExistingUser == null)
+                {
+                    return Response<User>.CreateResponse(false, "Not a valid Id", null);
+                }
 
+                return Response<User>.CreateResponse(true, "Successfully uploaded.", ExistingUser); 
+
+            }
+            catch (Exception e)
+            {
+                return Response<User>.CreateResponse(false, e.Message, null);
+            }
+         }
+
+
+        [HttpDelete("RegisterdUser")]
+        public async Task<Response<User>>RegisterdUser([FromBody] User UserID)
+
+        {
+            if (UserID == null)
+            {
+                return Response<User>.CreateResponse(false, "Please provide valid User Id.", null);
+
+            }
+            try
+            {
+                var ExistingUser = await _userService.RegisterdUsers(UserID);
+                if (ExistingUser == null)
+                {
+                    return Response<User>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<User>.CreateResponse(true, "Successfully deleted.", ExistingUser);
+            }
+            catch (Exception e)
+            {
+                return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
 
-
-
-           
-
-
-
-        
-
-        [HttpGet("{id}")]
-        public IActionResult Get(long id)
-        {
-            return Ok("Id");
-        }*/
-      
-
-      
 
 
 

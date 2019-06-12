@@ -16,6 +16,8 @@ namespace OnlineTimeTrack.Services
 
 
         Task<IEnumerable<Worklog>> GetAll(long ProjectID);
+        Task<IEnumerable<Worklog>> Get(long UserID);
+        Task<IEnumerable<Worklog>> GetAll(string Features);
         Worklog GetById(long id);
         User GetUser(long id);
         Worklog Create(Worklog worklog,int EstimateWorkTime,string Features,DateTime ActualTimeStart,DateTime ActualTimeEnd);

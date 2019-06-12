@@ -10,17 +10,18 @@ namespace OnlineTimeTrack.Services
 {
     public class projectService : IProjectService
     {
-        private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
-        private readonly WorklogService _worklogService;
 
+        private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
+       
 
         public projectService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
 
-       
 
+
+      
 
 
         public IEnumerable<Project> GetAll()
@@ -93,11 +94,7 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        public void Delete(long id)
-        {
-            throw new NotImplementedException();
-        }
-
+      
     }
 
 

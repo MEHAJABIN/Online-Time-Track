@@ -16,7 +16,6 @@ namespace OnlineTimeTrack.Services
         Project GetById(long id);
         Project Create(Project projectID, string ProjectTitle);
         void Update(Project project, string ProjectTitle = null);
-        void Delete(long id);
-
+       
     }
 }

@@ -30,6 +30,18 @@ namespace OnlineTimeTrack.Services
             return result;
         }
 
+        public async Task<IEnumerable<Worklog>> Get(long UserID)
+        {
+            var result = await _onlineTimeTrackContext.Worklogs.Where(u => u.UserID == UserID).ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<Worklog>> GetAll(string Features)
+        {
+            var result = await _onlineTimeTrackContext.Worklogs.Where(f => f.Features == Features).ToListAsync();
+            return result;
+        }
+
         public Worklog GetById(long id)
         {
             return _onlineTimeTrackContext.Worklogs.Find(id);
@@ -104,7 +116,10 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
 
         }
-
+         public int? GetprojectIDFromContext(HttpContext context)
+        {
+            throw new NotImplementedException();
+        }
 
 
 
@@ -132,10 +147,7 @@ namespace OnlineTimeTrack.Services
 
         
 
-        public int? GetprojectIDFromContext(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
 

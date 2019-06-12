@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
-using OnlineTimeTrack.Models.Data_Manager;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -43,24 +42,27 @@ namespace OnlineTimeTrack.Controllers
             }
         }
             
-            
-        
+         
+
+ 
 
 
 
-        [HttpGet("Project")] 
-        public IActionResult Get()
-        {
-            return Ok();
-        }
-
-        [HttpGet("{id}")] 
-        public IActionResult Get(long id)
-        {
-            return Ok("Id");
-        }
 
 
+       // [HttpPut("Project")]
+
+
+       
+
+
+
+
+       //  [HttpDelete("Project")]
+
+
+
+     
 
     }
 }

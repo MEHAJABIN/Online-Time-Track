@@ -62,13 +62,13 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet("ProjectID")]
         public async Task<Response<IEnumerable<Worklog>>>GetWorklog([FromQuery] long? ProjectID)
 
          {
             if (ProjectID == null)
             {
-                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Worklog Id.", null);
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Project Id.", null);
 
             }
             try
@@ -80,6 +80,59 @@ namespace OnlineTimeTrack.Controllers
                 }
 
                 return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.",worklogs);
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
+
+        [HttpGet("UserID")]
+        public async Task<Response<IEnumerable<Worklog>>>GetUSerWorklog([FromQuery] long? UserID)
+
+        {
+            if (UserID == null)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid User Id.", null);
+
+            }
+            try
+            {
+                var worklogs = await _worklogService.Get(UserID.GetValueOrDefault());
+                if (worklogs == null)
+                {
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
+        [HttpGet("Feature")]
+        public async Task<Response<IEnumerable<Worklog>>> GetFeature([FromQuery] string Features)
+
+        {
+            if (string.IsNullOrWhiteSpace(Features))
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Feature.", null);
+
+            }
+            try
+            {
+                var worklogs = await _worklogService.GetAll(Features.ToString());
+                if (worklogs == null)
+                {
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
