@@ -297,41 +297,14 @@ namespace OnlineTimeTrack.Services
         }
 
 
-
-
-
-
-
-
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public  Task<User>RegisterdUser(User UserID)
+        public  async Task<User> RegisterdUser(User UserID)
         {
-           // var User= _onlineTimeTrackContext.Users.Find(UserID.UserID);
-
-            if (UserID == null)
-            {
-                throw new AppException("User not found");
-            }
-
-            
             _onlineTimeTrackContext.Users.Remove(UserID);
-            _onlineTimeTrackContext.SaveChanges();
+            await _onlineTimeTrackContext.SaveChangesAsync();
+            var ExistingUser = _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == UserID.UserID);
 
-            return null;
+            return ExistingUser;
+
 
         }
 
@@ -343,7 +316,30 @@ namespace OnlineTimeTrack.Services
 
 
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
