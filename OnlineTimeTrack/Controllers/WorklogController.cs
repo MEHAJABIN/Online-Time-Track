@@ -62,6 +62,63 @@ namespace OnlineTimeTrack.Controllers
 
 
 
+
+
+          [HttpPut("UpdateWorklog")]
+       
+         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
+
+        {
+            if (WorklogID == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
+
+            }
+            try
+            {
+                var ExistingWorklog = await _worklogService.UpdateWorklog(WorklogID);
+                if (ExistingWorklog == null)
+                {
+                    return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingWorklog); 
+
+            }
+            catch (Exception e)
+            {
+                return Response<Worklog>.CreateResponse(false, e.Message, null);
+            }
+         }
+
+
+        [HttpDelete("DeleteWorklog")]
+        public async Task<Response<Worklog>>DeleteWorklog([FromBody] Worklog WorklogID)
+
+        {
+            if (WorklogID == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
+
+            }
+            try
+            {
+                var ExistingWorklog = await _worklogService.DeleteWorklog(WorklogID);
+                if (ExistingWorklog== null)
+                {
+                    return Response<Worklog>.CreateResponse(false, "Not a valid Worklog Id", null);
+                }
+
+                return Response<Worklog>.CreateResponse(true, "Successfully deleted.", ExistingWorklog);
+            }
+            catch (Exception e)
+            {
+                return Response<Worklog>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
+
         [HttpGet("ProjectID")]
         public async Task<Response<IEnumerable<Worklog>>>GetWorklog([FromQuery] long? ProjectID)
 

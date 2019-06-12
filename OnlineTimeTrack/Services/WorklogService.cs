@@ -1,4 +1,4 @@
-﻿using OnlineTimeTrack.Contexts;
+﻿ using OnlineTimeTrack.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,25 +49,26 @@ namespace OnlineTimeTrack.Services
 
         public Worklog Create(Worklog worklog)
         {
-            
-            
-
-           
-           // Add Features
+            // Add Features
             if (string.IsNullOrEmpty(worklog.Features))
                 throw new AppException("Feature is required");
 
             if (_onlineTimeTrackContext.Worklogs.Any(x => x.Features == worklog.Features))
                 throw new AppException("Features \"" + worklog.Features + "\" is already taken");
-            
+
             worklog.DateAdded = DateTime.UtcNow;
             worklog.DateModified = DateTime.UtcNow;
-            
+
             _onlineTimeTrackContext.Worklogs.Add(worklog);
             _onlineTimeTrackContext.SaveChanges();
 
             return worklog;
         }
+
+
+
+
+
 
 
 
@@ -90,22 +91,23 @@ namespace OnlineTimeTrack.Services
 
 
         {
-           
             // save the worklog
             var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
 
             addedWorklog.Entity.Features = worklog.Features;
             await _onlineTimeTrackContext.SaveChangesAsync();
 
-
-
-
-
             // return the worklog
             return addedWorklog.Entity;
-
-
         }
+
+
+
+
+
+
+
+
         public void Update(Worklog worklog, Worklog entity)
         {
             worklog.EstimateWorkTime = entity.EstimateWorkTime;
@@ -145,9 +147,31 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        
 
-      
+        public async Task<Worklog>UpdateWorklog(Worklog WorklogID)
+        {
+            _onlineTimeTrackContext.Worklogs.Update(WorklogID);
+            await _onlineTimeTrackContext.SaveChangesAsync();
+            var ExistingWorklog = _onlineTimeTrackContext.Worklogs.FirstOrDefault(x => x.WorklogID == WorklogID.WorklogID);
+
+            return ExistingWorklog;
+        }
+
+
+        public async Task<Worklog>DeleteWorklog(Worklog WorklogID)
+        {
+            _onlineTimeTrackContext.Worklogs.Remove(WorklogID);
+            await _onlineTimeTrackContext.SaveChangesAsync();
+            var ExistingWorklog = _onlineTimeTrackContext.Worklogs.FirstOrDefault(x => x.WorklogID == WorklogID.WorklogID);
+
+            return ExistingWorklog;
+
+
+        }
+
+
+
+
     }
 }
 

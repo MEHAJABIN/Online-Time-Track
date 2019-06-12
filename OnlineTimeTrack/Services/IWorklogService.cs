@@ -13,6 +13,8 @@ namespace OnlineTimeTrack.Services
     {
       
         Task<Worklog> Worklog(Worklog worklog);
+        Task<Worklog> UpdateWorklog(Worklog WorklogID);
+        Task<Worklog> DeleteWorklog(Worklog WorklogID);
 
 
         Task<IEnumerable<Worklog>> GetAll(long ProjectID);

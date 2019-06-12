@@ -10,12 +10,13 @@ namespace OnlineTimeTrack.Services
     public interface IProjectService
     {
         Task<Project> Project(Project project);
+        Task<Project> UpdateProject(Project ProjectID);
+        Task<Project> DeleteProject(Project ProjectID);
 
 
         IEnumerable<Project> GetAll();
         Project GetById(long id);
-        Project Create(Project projectID, string ProjectTitle);
-        void Update(Project project, string ProjectTitle = null);
        
+        
     }
 }
