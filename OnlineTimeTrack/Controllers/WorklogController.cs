@@ -102,7 +102,7 @@ namespace OnlineTimeTrack.Controllers
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
                 }
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingWorklog);
+                return Response<Worklog>.CreateResponse(true, "Successfully updated.", ExistingWorklog);
 
             }
             catch (Exception e)
@@ -136,6 +136,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
         }
+
 
         [HttpGet("ProjectID")]
         public async Task<Response<IEnumerable<Worklog>>> GetWorklog([FromQuery] long? ProjectID)

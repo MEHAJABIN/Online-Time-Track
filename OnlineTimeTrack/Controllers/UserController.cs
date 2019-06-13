@@ -151,13 +151,13 @@ namespace OnlineTimeTrack.Controllers
             }
             try
             {
-                var ExistingUser = await _userService.RegisterdUsers(UserID);
+                var ExistingUser = await _userService.RegisterdUser(UserID);
                 if (ExistingUser == null)
                 {
                     return Response<User>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<User>.CreateResponse(true, "Successfully deleted.", ExistingUser);
+                return Response<User>.CreateResponse(true, "Successfully deleted.", null);
             }
             catch (Exception e)
             {

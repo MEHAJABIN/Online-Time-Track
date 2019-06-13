@@ -38,7 +38,7 @@ namespace OnlineTimeTrack.Controllers
             }
             catch (Exception e)
             {
-                return Response<Project>.CreateResponse(true, e.Message, null);
+                return Response<Project>.CreateResponse(false, e.Message, null);
             }
         }
 
@@ -92,7 +92,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<Project>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Project>.CreateResponse(true, "Successfully uploaded.", ExistingProject);
+                return Response<Project>.CreateResponse(true, "Successfully updated.", ExistingProject);
 
             }
             catch (Exception e)
