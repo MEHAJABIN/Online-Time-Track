@@ -83,8 +83,6 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<long>("ProjectID");
 
-                    b.Property<int>("TotalWorkTime");
-
                     b.Property<long>("UserID");
 
                     b.HasKey("WorklogID");

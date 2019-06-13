@@ -55,7 +55,6 @@ namespace OnlineTimeTrack.Migrations
                     Features = table.Column<string>(nullable: true),
                     ActualWorkTimeStart = table.Column<DateTime>(nullable: false),
                     ActualWorkTimeEnd = table.Column<DateTime>(nullable: false),
-                    TotalWorkTime = table.Column<int>(nullable: false),
                     DateAdded = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false)
                 },

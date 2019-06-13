@@ -40,15 +40,7 @@ namespace OnlineTimeTrack.Services
             var ExistingProject = _onlineTimeTrackContext.Projects.FirstOrDefault(x => x.ProjectID == ProjectID.ProjectID);
 
             return ExistingProject;
-
-
         }
-
-
-
-
-
-
 
 
         public IEnumerable<Project> GetAll()
@@ -56,10 +48,13 @@ namespace OnlineTimeTrack.Services
             return _onlineTimeTrackContext.Projects;
         }
 
+
         public Project GetById(long id)
         {
             return _onlineTimeTrackContext.Projects.Find(id);
         }
+
+
 
         public Project Create(Project project, string ProjectTitle)
         {
@@ -70,13 +65,9 @@ namespace OnlineTimeTrack.Services
             if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
                 throw new AppException("ProjectTitle \"" + project.ProjectTitle + "\" is already taken");
 
-
-
             project.ProjectTitle = ProjectTitle;
-
             _onlineTimeTrackContext.Projects.Add(project);
             _onlineTimeTrackContext.SaveChanges();
-
             return project;
         }
 
@@ -91,36 +82,69 @@ namespace OnlineTimeTrack.Services
 
             if (project.ProjectTitle != project.ProjectTitle)
             {
-               // ProjectTitle has changed so check if the new Project is already taken
+                // ProjectTitle has changed so check if the new Project is already taken
                 if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
                     throw new AppException("ProjectTitle " + project.ProjectTitle + " is already taken");
             }
 
         }
 
+
         public async Task<Project> Project(Project project)
-
-
         {
-          
-        // save the project
-        var addedProject = await _onlineTimeTrackContext.Projects.AddAsync(project);
-        await _onlineTimeTrackContext.SaveChangesAsync();
-        addedProject.Entity.ProjectTitle = project.ProjectTitle;
+            // save the project
+            var addedProject = await _onlineTimeTrackContext.Projects.AddAsync(project);
+            await _onlineTimeTrackContext.SaveChangesAsync();
+            addedProject.Entity.ProjectTitle = project.ProjectTitle;
 
+            // return the project
+            return addedProject.Entity;
+        }
 
-
-        // return the project
-        return addedProject.Entity;
-
-
-          }
-
-      
     }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Migrations
 {
     [DbContext(typeof(OnlineTimeTrackContext))]
-    [Migration("20190603090357_InitialCreate")]
+    [Migration("20190613080951_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,8 +84,6 @@ namespace OnlineTimeTrack.Migrations
                     b.Property<string>("Features");
 
                     b.Property<long>("ProjectID");
-
-                    b.Property<int>("TotalWorkTime");
 
                     b.Property<long>("UserID");
 

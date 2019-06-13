@@ -12,23 +12,19 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Controllers
 {
     [Route("api/Worklog")]
-
     public class WorklogController : ControllerBase
     {
-       
         private readonly IUserService _userService;
         private readonly IWorklogService _worklogService;
         private readonly IProjectService _projectService;
 
-
-
-
-        public WorklogController(IWorklogService worklogService, IUserService userService,IProjectService projectService)
+        public WorklogController(IWorklogService worklogService, IUserService userService, IProjectService projectService)
         {
             _worklogService = worklogService;
             _userService = userService;
             _projectService = projectService;
         }
+
 
         [HttpPost]
         public async Task<Response<Worklog>> Worklog([FromBody]Worklog worklog)
@@ -61,14 +57,10 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
-
-
-
-          [HttpPut("UpdateWorklog")]
-       
-         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
-
+        [HttpPut("UpdateWorklog")]
+        public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
+
             if (WorklogID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
@@ -81,19 +73,18 @@ namespace OnlineTimeTrack.Controllers
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
                 }
-
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingWorklog); 
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingWorklog);
 
             }
             catch (Exception e)
             {
                 return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
-         }
+        }
 
 
         [HttpDelete("DeleteWorklog")]
-        public async Task<Response<Worklog>>DeleteWorklog([FromBody] Worklog WorklogID)
+        public async Task<Response<Worklog>> DeleteWorklog([FromBody] Worklog WorklogID)
 
         {
             if (WorklogID == null)
@@ -104,7 +95,7 @@ namespace OnlineTimeTrack.Controllers
             try
             {
                 var ExistingWorklog = await _worklogService.DeleteWorklog(WorklogID);
-                if (ExistingWorklog== null)
+                if (ExistingWorklog == null)
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Worklog Id", null);
                 }
@@ -117,12 +108,10 @@ namespace OnlineTimeTrack.Controllers
             }
         }
 
-
-
         [HttpGet("ProjectID")]
-        public async Task<Response<IEnumerable<Worklog>>>GetWorklog([FromQuery] long? ProjectID)
+        public async Task<Response<IEnumerable<Worklog>>> GetWorklog([FromQuery] long? ProjectID)
 
-         {
+        {
             if (ProjectID == null)
             {
                 return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Project Id.", null);
@@ -136,7 +125,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.",worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -145,9 +134,32 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+        [HttpGet("Feature")]
+        public async Task<Response<IEnumerable<Worklog>>> GetFeature([FromQuery] string Features)
+        {
+            if (string.IsNullOrWhiteSpace(Features))
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Feature.", null);
+
+            }
+            try
+            {
+                var worklogs = await _worklogService.GetAll(Features.ToString());
+                if (worklogs == null)
+                {
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
+            }
+        }
 
         [HttpGet("UserID")]
-        public async Task<Response<IEnumerable<Worklog>>>GetUSerWorklog([FromQuery] long? UserID)
+        public async Task<Response<IEnumerable<Worklog>>> GetUSerWorklog([FromQuery] long? UserID)
 
         {
             if (UserID == null)
@@ -170,32 +182,6 @@ namespace OnlineTimeTrack.Controllers
                 return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
             }
         }
-
-
-        [HttpGet("Feature")]
-        public async Task<Response<IEnumerable<Worklog>>> GetFeature([FromQuery] string Features)
-
-        {
-            if (string.IsNullOrWhiteSpace(Features))
-            {
-                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Feature.", null);
-
-            }
-            try
-            {
-                var worklogs = await _worklogService.GetAll(Features.ToString());
-                if (worklogs == null)
-                {
-                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
-                }
-
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
-            }
-            catch (Exception e)
-            {
-                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
-            }
-        }
     }
 }
 
@@ -205,12 +191,58 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-  
 
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

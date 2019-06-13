@@ -7,16 +7,16 @@ namespace OnlineTimeTrack.Models
     public class Project
     {
         
-         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public long ProjectID { get; set; }
 
-         public string ProjectTitle { get; set; }
+        public string ProjectTitle { get; set; }
 
-
-     
     }
 }
+
+
+
 
 
 

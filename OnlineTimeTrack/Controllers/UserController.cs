@@ -24,13 +24,12 @@ namespace OnlineTimeTrack.Controllers
         private IUserService _userService;
         private readonly AppSettings _appSettings;
       
-        public UserController(
-              IUserService userService,
-              IOptions<AppSettings> appSettings)
+        public UserController(IUserService userService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
         }
+
 
 
         [AllowAnonymous]
@@ -38,12 +37,11 @@ namespace OnlineTimeTrack.Controllers
         public IActionResult Authenticate([FromBody]User loginDetails)
         {
             var user = _userService.Authenticate(loginDetails.Username, loginDetails.Password);
+              if (user == null)
+               return BadRequest(new { message = "Username or password is incorrect" });
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+              var tokenHandler = new JwtSecurityTokenHandler();
+              var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -55,13 +53,14 @@ namespace OnlineTimeTrack.Controllers
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
+           
             // return basic user info (without password) and token to store client side
             user.Token = tokenString;
             return Ok(user);
         }
 
-        [AllowAnonymous] 
+
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
         {
@@ -70,7 +69,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, "Please provide valid user data.", null);
             }
 
-            try 
+            try
             {
                 var newUser = await _userService.RegisterUser(user);
 
@@ -83,10 +82,36 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+        [HttpGet("GetById")]
+        public async Task<Response<User>> GetById([FromQuery]long? id)
+
+        {
+            if (id == null)
+            {
+                return Response<User>.CreateResponse(false, "Please provide valid User Id.", null);
+            }
+
+            try
+            {
+                var ExistingUser= await _userService.GetById(id.GetValueOrDefault());
+                if (ExistingUser == null)
+                {
+                   return Response<User>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                  return Response<User>.CreateResponse(true, "Successfully uploaded.",ExistingUser);
+            }
+            catch (Exception e)
+            {
+                return Response<User>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
 
         [HttpPut("RegisterdUsers")]
-       
-         public async Task<Response<User>> RegisterdUsers([FromBody] User UserID)
+
+        public async Task<Response<User>> RegisterdUsers([FromBody] User UserID)
 
         {
             if (UserID == null)
@@ -102,18 +127,18 @@ namespace OnlineTimeTrack.Controllers
                     return Response<User>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<User>.CreateResponse(true, "Successfully uploaded.", ExistingUser); 
+                return Response<User>.CreateResponse(true, "Successfully uploaded.", ExistingUser);
 
             }
             catch (Exception e)
             {
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
-         }
+        }
 
 
         [HttpDelete("RegisterdUser")]
-        public async Task<Response<User>>RegisterdUser([FromBody] User UserID)
+        public async Task<Response<User>> RegisterdUser([FromBody] User UserID)
 
         {
             if (UserID == null)
@@ -136,12 +161,35 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
-
-
-
-
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

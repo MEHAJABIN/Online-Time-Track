@@ -14,17 +14,19 @@ namespace OnlineTimeTrack.Services
         Task<User>RegisterUser(User user);
         Task<User>RegisterdUsers(User UserID);
         Task<User> RegisterdUser(User UserID);
+        Task<User>GetById(long? id);
+
         User Authenticate(string Username, string Password);
         IEnumerable<User> GetAll();
-        User GetById(long id);
         User Create(User user, string password);
         void Update(User user, string password = null);
         int? GetUserIDFromContext(HttpContext context);
 
-
     }
 
 }
+
+
 
 
 

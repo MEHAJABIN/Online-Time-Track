@@ -1,4 +1,4 @@
-﻿ using OnlineTimeTrack.Contexts;
+﻿using OnlineTimeTrack.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext = onlineTimeTrackContext;
         }
 
-        
+
 
         public async Task<IEnumerable<Worklog>> GetAll(long ProjectID)
         {
@@ -45,7 +45,7 @@ namespace OnlineTimeTrack.Services
         public Worklog GetById(long id)
         {
             return _onlineTimeTrackContext.Worklogs.Find(id);
-        }   
+        }
 
         public Worklog Create(Worklog worklog)
         {
@@ -88,8 +88,6 @@ namespace OnlineTimeTrack.Services
         }
 
         public async Task<Worklog> Worklog(Worklog worklog)
-
-
         {
             // save the worklog
             var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
@@ -102,12 +100,6 @@ namespace OnlineTimeTrack.Services
         }
 
 
-
-
-
-
-
-
         public void Update(Worklog worklog, Worklog entity)
         {
             worklog.EstimateWorkTime = entity.EstimateWorkTime;
@@ -118,7 +110,7 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
 
         }
-         public int? GetprojectIDFromContext(HttpContext context)
+        public int? GetprojectIDFromContext(HttpContext context)
         {
             throw new NotImplementedException();
         }
@@ -137,18 +129,14 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        public void Delete(long id)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public Worklog Create(Worklog worklog, int EstimateWorkTime, string Features, DateTime ActualTimeStart, DateTime ActualTimeEnd)
         {
             throw new NotImplementedException();
         }
 
 
-        public async Task<Worklog>UpdateWorklog(Worklog WorklogID)
+        public async Task<Worklog> UpdateWorklog(Worklog WorklogID)
         {
             _onlineTimeTrackContext.Worklogs.Update(WorklogID);
             await _onlineTimeTrackContext.SaveChangesAsync();
@@ -158,7 +146,7 @@ namespace OnlineTimeTrack.Services
         }
 
 
-        public async Task<Worklog>DeleteWorklog(Worklog WorklogID)
+        public async Task<Worklog> DeleteWorklog(Worklog WorklogID)
         {
             _onlineTimeTrackContext.Worklogs.Remove(WorklogID);
             await _onlineTimeTrackContext.SaveChangesAsync();
@@ -168,12 +156,22 @@ namespace OnlineTimeTrack.Services
 
 
         }
-
-
-
-
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

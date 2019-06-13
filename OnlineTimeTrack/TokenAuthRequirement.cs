@@ -2,7 +2,7 @@
 
 namespace OnlineTimeTrack
 {
-    internal class TokenAuthRequirement : IAuthorizationRequirement
+  public class TokenAuthRequirement : IAuthorizationRequirement
     {
     }
 }

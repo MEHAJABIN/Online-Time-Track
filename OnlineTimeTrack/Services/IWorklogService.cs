@@ -10,7 +10,7 @@ using OnlineTimeTrack.Contexts;
 namespace OnlineTimeTrack.Services
 {
   public  interface IWorklogService
-    {
+  {
       
         Task<Worklog> Worklog(Worklog worklog);
         Task<Worklog> UpdateWorklog(Worklog WorklogID);
@@ -24,9 +24,9 @@ namespace OnlineTimeTrack.Services
         User GetUser(long id);
         Worklog Create(Worklog worklog,int EstimateWorkTime,string Features,DateTime ActualTimeStart,DateTime ActualTimeEnd);
         void Update(Worklog worklog, int EstimateWorkTime,  DateTime ActualTime, string Features = null);
-        void Delete(long id);
         int? GetprojectIDFromContext(HttpContext context);
-        
 
     }
 }
+
+

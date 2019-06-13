@@ -16,7 +16,8 @@ namespace OnlineTimeTrack.Services
 
         IEnumerable<Project> GetAll();
         Project GetById(long id);
-       
-        
     }
 }
+
+
+

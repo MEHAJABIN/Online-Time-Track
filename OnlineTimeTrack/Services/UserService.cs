@@ -17,18 +17,15 @@ namespace OnlineTimeTrack.Services
 {
 
     public class UserService : IUserService
-
     {
 
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
-
 
         public UserService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
 
         }
-
 
 
         public User Authenticate(string Username, string Password)
@@ -70,15 +67,13 @@ namespace OnlineTimeTrack.Services
 
         }
 
+
+
         public IEnumerable<User> GetAll()
         {
             return _onlineTimeTrackContext.Users;
         }
 
-        public User GetById(long id)
-        {
-            return _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == id);
-        }
 
         public User Create(User user, string Password)
         {
@@ -203,7 +198,6 @@ namespace OnlineTimeTrack.Services
                 throw new Exception("Please provide a valid email address.");
             }
 
-
             if (_onlineTimeTrackContext.Users.Count() > 0)
             {
                 User sameUser = null;
@@ -254,6 +248,7 @@ namespace OnlineTimeTrack.Services
             }
         }
 
+
         private string HashPassword(string password, string key)
         {
             string HashVal = password + key;
@@ -271,6 +266,7 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.Users.Add(entity);
             _onlineTimeTrackContext.SaveChanges();
         }
+
         void IUserService.Update(User user, string password)
         {
             throw new NotImplementedException();
@@ -287,6 +283,13 @@ namespace OnlineTimeTrack.Services
         }
 
 
+        public async Task<User> GetById(long? id)
+        {
+            var result = await _onlineTimeTrackContext.Users.Where(u => u.UserID == id).ToListAsync();
+
+            return _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == id);
+        }
+
         public async Task<User> RegisterdUsers(User UserID)
         {
             _onlineTimeTrackContext.Users.Update(UserID);
@@ -297,20 +300,31 @@ namespace OnlineTimeTrack.Services
         }
 
 
-        public  async Task<User> RegisterdUser(User UserID)
+        public async Task<User> RegisterdUser(User UserID)
         {
             _onlineTimeTrackContext.Users.Remove(UserID);
             await _onlineTimeTrackContext.SaveChangesAsync();
             var ExistingUser = _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == UserID.UserID);
 
             return ExistingUser;
-
-
         }
-
-
     }
 }
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

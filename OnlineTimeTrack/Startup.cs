@@ -34,11 +34,11 @@ namespace OnlineTimeTrack
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OnlineTimeTrackContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IProjectService, projectService>();
+            services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IWorklogService, WorklogService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -81,9 +81,9 @@ namespace OnlineTimeTrack
 
      
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
+       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+       {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,7 +97,7 @@ namespace OnlineTimeTrack
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
+       }
     }
 }
 
