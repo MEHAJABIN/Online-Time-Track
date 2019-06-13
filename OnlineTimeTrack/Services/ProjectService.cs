@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineTimeTrack.Services
 {
@@ -42,6 +43,14 @@ namespace OnlineTimeTrack.Services
             return ExistingProject;
         }
 
+        public async Task<Project> GetById(long? id)
+        {
+            var result = await _onlineTimeTrackContext.Projects.Where(p => p.ProjectID == id).ToListAsync();
+
+            return _onlineTimeTrackContext.Projects.FirstOrDefault(p => p.ProjectID == id);
+        }
+
+
 
         public IEnumerable<Project> GetAll()
         {
@@ -49,10 +58,6 @@ namespace OnlineTimeTrack.Services
         }
 
 
-        public Project GetById(long id)
-        {
-            return _onlineTimeTrackContext.Projects.Find(id);
-        }
 
 
 

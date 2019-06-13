@@ -45,6 +45,35 @@ namespace OnlineTimeTrack.Controllers
 
 
 
+
+        [HttpGet("GetById")]
+        public async Task<Response<Project>> GetById([FromQuery]long? id)
+
+        {
+            if (id == null)
+            {
+                return Response<Project>.CreateResponse(false, "Please provide valid Project Id.", null);
+            }
+
+            try
+            {
+                var ExistingId = await _projectService.GetById(id.GetValueOrDefault());
+                if (ExistingId == null)
+                {
+                    return Response<Project>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<Project>.CreateResponse(true, "Successfully uploaded.", ExistingId);
+            }
+            catch (Exception e)
+            {
+                return Response<Project>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
+
+
         [HttpPut("UpdateProject")]
 
         public async Task<Response<Project>> UpdateProject([FromBody] Project ProjectID)

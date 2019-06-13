@@ -57,6 +57,35 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+        [HttpGet("GetById")]
+        public async Task<Response<Worklog>> GetById([FromQuery]long? id)
+
+        {
+            if (id == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
+            }
+
+            try
+            {
+                var ExistingId = await _worklogService.GetById(id.GetValueOrDefault());
+                if (ExistingId == null)
+                {
+                    return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
+                }
+
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingId);
+            }
+            catch (Exception e)
+            {
+                return Response<Worklog>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
+
+
+
         [HttpPut("UpdateWorklog")]
         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
@@ -157,6 +186,8 @@ namespace OnlineTimeTrack.Controllers
                 return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
             }
         }
+
+
 
         [HttpGet("UserID")]
         public async Task<Response<IEnumerable<Worklog>>> GetUSerWorklog([FromQuery] long? UserID)

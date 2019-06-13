@@ -12,12 +12,15 @@ namespace OnlineTimeTrack.Services
         Task<Project> Project(Project project);
         Task<Project> UpdateProject(Project ProjectID);
         Task<Project> DeleteProject(Project ProjectID);
-
+        Task<Project> GetById(long? id);
 
         IEnumerable<Project> GetAll();
-        Project GetById(long id);
     }
 }
+
+
+
+
 
 
 

@@ -15,13 +15,12 @@ namespace OnlineTimeTrack.Services
         Task<Worklog> Worklog(Worklog worklog);
         Task<Worklog> UpdateWorklog(Worklog WorklogID);
         Task<Worklog> DeleteWorklog(Worklog WorklogID);
+        Task<Worklog> GetById(long? id);
 
 
         Task<IEnumerable<Worklog>> GetAll(long ProjectID);
         Task<IEnumerable<Worklog>> Get(long UserID);
         Task<IEnumerable<Worklog>> GetAll(string Features);
-        Worklog GetById(long id);
-        User GetUser(long id);
         Worklog Create(Worklog worklog,int EstimateWorkTime,string Features,DateTime ActualTimeStart,DateTime ActualTimeEnd);
         void Update(Worklog worklog, int EstimateWorkTime,  DateTime ActualTime, string Features = null);
         int? GetprojectIDFromContext(HttpContext context);

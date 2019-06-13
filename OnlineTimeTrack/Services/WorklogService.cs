@@ -30,11 +30,13 @@ namespace OnlineTimeTrack.Services
             return result;
         }
 
+
         public async Task<IEnumerable<Worklog>> Get(long UserID)
         {
             var result = await _onlineTimeTrackContext.Worklogs.Where(u => u.UserID == UserID).ToListAsync();
             return result;
         }
+
 
         public async Task<IEnumerable<Worklog>> GetAll(string Features)
         {
@@ -42,10 +44,7 @@ namespace OnlineTimeTrack.Services
             return result;
         }
 
-        public Worklog GetById(long id)
-        {
-            return _onlineTimeTrackContext.Worklogs.Find(id);
-        }
+        
 
         public Worklog Create(Worklog worklog)
         {
@@ -67,13 +66,8 @@ namespace OnlineTimeTrack.Services
 
 
 
-
-
-
-
-
-        void Update(Worklog worklog, string Features = null)
-        {
+       public void Update(Worklog worklog, string Features = null)
+       {
             var Worklog = _onlineTimeTrackContext.Projects.Find(worklog.WorklogID);
             if (worklog == null)
                 throw new AppException("worklog not found");
@@ -85,7 +79,8 @@ namespace OnlineTimeTrack.Services
                     throw new AppException("Worklog " + worklog.Features + " is already taken");
             }
 
-        }
+       }
+
 
         public async Task<Worklog> Worklog(Worklog worklog)
         {
@@ -100,6 +95,14 @@ namespace OnlineTimeTrack.Services
         }
 
 
+        public async Task<Worklog> GetById(long? id)
+        {
+            var result = await _onlineTimeTrackContext.Worklogs.Where(w => w.WorklogID == id).ToListAsync();
+
+            return _onlineTimeTrackContext.Worklogs.FirstOrDefault(w => w.WorklogID == id);
+        }
+
+
         public void Update(Worklog worklog, Worklog entity)
         {
             worklog.EstimateWorkTime = entity.EstimateWorkTime;
@@ -110,16 +113,9 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
 
         }
+
+
         public int? GetprojectIDFromContext(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public User GetUser(long id)
         {
             throw new NotImplementedException();
         }

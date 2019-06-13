@@ -60,6 +60,7 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
@@ -80,6 +81,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
+
 
 
         [HttpGet("GetById")]
@@ -135,6 +137,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<User>.CreateResponse(false, e.Message, null);
             }
         }
+
 
 
         [HttpDelete("RegisterdUser")]

@@ -145,11 +145,7 @@ namespace OnlineTimeTrack.Services
             throw new NotImplementedException();
         }
 
-        private void CreatePasswordHash(string password1, byte[] passwordKey, string password)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         private void CreatePasswordHash(byte[] passwordHash, string password)
         {
             if (password == null) throw new ArgumentNullException("password");
