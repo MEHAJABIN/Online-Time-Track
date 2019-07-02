@@ -40,6 +40,7 @@ namespace OnlineTimeTrack
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IWorklogService, WorklogService>();
+            services.AddTransient<ITimelogService, TimelogService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
            
@@ -95,7 +96,10 @@ namespace OnlineTimeTrack
             }
 
             app.UseAuthentication();
+#if DEBUG
+#else
             app.UseHttpsRedirection();
+#endif
             app.UseMvc();
        }
     }

@@ -15,7 +15,7 @@ namespace OnlineTimeTrack.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,6 +30,25 @@ namespace OnlineTimeTrack.Migrations
                     b.HasKey("ProjectID");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("OnlineTimeTrack.Models.Timelog", b =>
+                {
+                    b.Property<long>("TimelogID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActualWorkTimeEnd");
+
+                    b.Property<DateTime>("ActualWorkTimeStart");
+
+                    b.Property<long>("WorklogID");
+
+                    b.HasKey("TimelogID");
+
+                    b.HasIndex("WorklogID");
+
+                    b.ToTable("Timelogs");
                 });
 
             modelBuilder.Entity("OnlineTimeTrack.Models.User", b =>
@@ -69,9 +88,7 @@ namespace OnlineTimeTrack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ActualWorkTimeEnd");
-
-                    b.Property<DateTime>("ActualWorkTimeStart");
+                    b.Property<DateTime>("Date");
 
                     b.Property<DateTime>("DateAdded");
 
@@ -88,6 +105,14 @@ namespace OnlineTimeTrack.Migrations
                     b.HasKey("WorklogID");
 
                     b.ToTable("Worklogs");
+                });
+
+            modelBuilder.Entity("OnlineTimeTrack.Models.Timelog", b =>
+                {
+                    b.HasOne("OnlineTimeTrack.Models.Worklog", "Worklog")
+                        .WithMany("Timelogs")
+                        .HasForeignKey("WorklogID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

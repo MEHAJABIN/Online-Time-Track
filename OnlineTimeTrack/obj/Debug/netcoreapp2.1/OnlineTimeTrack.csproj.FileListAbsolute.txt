@@ -1,0 +1,11 @@
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\bin\Debug\netcoreapp2.1\OnlineTimeTrack.deps.json
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\bin\Debug\netcoreapp2.1\OnlineTimeTrack.runtimeconfig.json
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\bin\Debug\netcoreapp2.1\OnlineTimeTrack.runtimeconfig.dev.json
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\bin\Debug\netcoreapp2.1\OnlineTimeTrack.dll
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.csprojAssemblyReference.cache
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.csproj.CoreCompileInputs.cache
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.RazorAssemblyInfo.cache
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.RazorAssemblyInfo.cs
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.AssemblyInfoInputs.cache
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.AssemblyInfo.cs
+C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\obj\Debug\netcoreapp2.1\OnlineTimeTrack.RazorTargetAssemblyInfo.cache

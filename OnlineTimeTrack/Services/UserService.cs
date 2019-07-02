@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineTimeTrack.Services
 {
@@ -68,11 +69,8 @@ namespace OnlineTimeTrack.Services
         }
 
 
+    
 
-        public IEnumerable<User> GetAll()
-        {
-            return _onlineTimeTrackContext.Users;
-        }
 
 
         public User Create(User user, string Password)
@@ -95,6 +93,8 @@ namespace OnlineTimeTrack.Services
 
             return user;
         }
+
+
 
         private void CreatePasswordHash(byte[] PasswordKey, byte[] Password)
         {
@@ -135,17 +135,21 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
         }
 
+
+
         private void CreatePasswordHash(string passwordKey)
         {
             throw new NotImplementedException();
         }
+
+
 
         private void CreatePasswordHash(string password, string password1)
         {
             throw new NotImplementedException();
         }
 
-      
+
         private void CreatePasswordHash(byte[] passwordHash, string password)
         {
             if (password == null) throw new ArgumentNullException("password");
@@ -157,6 +161,7 @@ namespace OnlineTimeTrack.Services
                 NewMethod(password, hmac);
             }
         }
+
 
         private static void NewMethod(string password, HMACSHA512 hmac)
         {
@@ -286,6 +291,10 @@ namespace OnlineTimeTrack.Services
             return _onlineTimeTrackContext.Users.FirstOrDefault(x => x.UserID == id);
         }
 
+
+
+
+        //Update UserDetails
         public async Task<User> RegisterdUsers(User UserID)
         {
             _onlineTimeTrackContext.Users.Update(UserID);
@@ -296,6 +305,7 @@ namespace OnlineTimeTrack.Services
         }
 
 
+        //Delete UserDetails
         public async Task<User> RegisterdUser(User UserID)
         {
             _onlineTimeTrackContext.Users.Remove(UserID);
@@ -304,11 +314,36 @@ namespace OnlineTimeTrack.Services
 
             return ExistingUser;
         }
+
+
+        public async Task<IEnumerable<User>> GetAllUsers(int start, int limit)
+        {
+
+            if (start == 0 & limit == 0)
+            {
+                var user = await _onlineTimeTrackContext.Users.ToListAsync();
+                return user;
+            }
+            else
+            {
+                var result = await _onlineTimeTrackContext.Users.Skip(start).Take(limit).ToListAsync();
+
+                return result;
+            }
+
+        }
+
     }
 }
 
 
-       
+
+
+
+
+
+
+
 
 
 

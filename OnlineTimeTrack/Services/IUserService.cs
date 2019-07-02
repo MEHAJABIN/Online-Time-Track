@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Contexts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineTimeTrack.Services
 {
@@ -17,11 +18,11 @@ namespace OnlineTimeTrack.Services
         Task<User>GetById(long? id);
 
         User Authenticate(string Username, string Password);
-        IEnumerable<User> GetAll();
+        Task<IEnumerable<User>>GetAllUsers(int start, int limit);
         User Create(User user, string password);
         void Update(User user, string password = null);
         int? GetUserIDFromContext(HttpContext context);
-
+       
     }
 
 }

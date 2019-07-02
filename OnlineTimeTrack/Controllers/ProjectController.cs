@@ -19,6 +19,7 @@ namespace OnlineTimeTrack.Controllers
         public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
+
             
         }
 
@@ -63,7 +64,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<Project>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Project>.CreateResponse(true, "Successfully uploaded.", ExistingId);
+                return Response<Project>.CreateResponse(true, "Successfully loaded.", ExistingId);
             }
             catch (Exception e)
             {
@@ -125,6 +126,33 @@ namespace OnlineTimeTrack.Controllers
             {
                 return Response<Project>.CreateResponse(false, e.Message, null);
             }
+        }
+
+
+
+
+
+        [HttpGet("GetAllProjects")]
+        public async Task<Response<IEnumerable<Project>>> GetAllProjects([FromQuery] int start, int limit)
+        {
+
+            try
+            {
+                var projects = await _projectService.GetAllProjects(start, limit);
+
+                if (projects == null)
+                {
+                    return Response<IEnumerable<Project>>.CreateResponse(false, "Not  valid ", null);
+                }
+                return Response<IEnumerable<Project>>.CreateResponse(true, "Successfully loaded", projects);
+
+                
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Project>>.CreateResponse(false, e.Message, null);
+            }
+
         }
     }
 }

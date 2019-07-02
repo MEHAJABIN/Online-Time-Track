@@ -12,25 +12,29 @@ namespace OnlineTimeTrack.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Worklog> Worklogs { get; set; }
+        public DbSet<Timelog> Timelogs { get; set; }
 
         public OnlineTimeTrackContext(DbContextOptions<OnlineTimeTrackContext> options) : base(options)
         {
         }
+
 
         protected override void OnModelCreating(ModelBuilder md)
         {
             md.Entity<User>().ToTable("Users");
             md.Entity<Project>().ToTable("Projects");
             md.Entity<Worklog>().ToTable("Worklogs");
+            md.Entity<Timelog>().ToTable("Timelogs");
 
-         
+
+        // md.Entity<Worklog>()
+        //.HasOne(p => p.Timelogs)
+        //.HasForeignKey(p => p.WorklogID);
+
 
         }
 
-        internal static Task AddAsync(object project)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
 

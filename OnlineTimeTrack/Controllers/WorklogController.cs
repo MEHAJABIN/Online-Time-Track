@@ -48,11 +48,12 @@ namespace OnlineTimeTrack.Controllers
             try
             {
                 var newWorklog = await _worklogService.Worklog(worklog);
+
                 return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", null);
             }
             catch (Exception e)
             {
-                return Response<Worklog>.CreateResponse(true, e.Message, null);
+                return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
         }
 
@@ -69,12 +70,13 @@ namespace OnlineTimeTrack.Controllers
             try
             {
                 var ExistingId = await _worklogService.GetById(id.GetValueOrDefault());
+
                 if (ExistingId == null)
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingId);
+                return Response<Worklog>.CreateResponse(true, "Successfully loaded.", ExistingId);
             }
             catch (Exception e)
             {
@@ -89,15 +91,26 @@ namespace OnlineTimeTrack.Controllers
         [HttpPut("UpdateWorklog")]
         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
+            var userID = _userService.GetUserIDFromContext(HttpContext);
+
+            if (userID == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
+            }
 
             if (WorklogID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
-
             }
+
+
+            WorklogID.UserID = userID.GetValueOrDefault();
+
+
             try
             {
                 var ExistingWorklog = await _worklogService.UpdateWorklog(WorklogID);
+
                 if (ExistingWorklog == null)
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
@@ -112,18 +125,31 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+
         [HttpDelete("DeleteWorklog")]
         public async Task<Response<Worklog>> DeleteWorklog([FromBody] Worklog WorklogID)
 
         {
+            var userID = _userService.GetUserIDFromContext(HttpContext);
+
+            if (userID == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
+            }
+
             if (WorklogID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
 
             }
+
+            WorklogID.UserID = userID.GetValueOrDefault();
+
             try
             {
                 var ExistingWorklog = await _worklogService.DeleteWorklog(WorklogID);
+
+
                 if (ExistingWorklog == null)
                 {
                     return Response<Worklog>.CreateResponse(false, "Not a valid Worklog Id", null);
@@ -136,6 +162,7 @@ namespace OnlineTimeTrack.Controllers
                 return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
         }
+
 
 
         [HttpGet("ProjectID")]
@@ -180,7 +207,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -213,6 +240,32 @@ namespace OnlineTimeTrack.Controllers
             {
                 return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
             }
+        }
+
+
+
+        [HttpGet("GetAllWorklogs")]
+        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int EstimateWorkTime,
+        DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
+
+        {
+           
+            try
+            {
+                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Features, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
+
+                if (worklogs == null)
+                {
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not  valid ", null);
+                }
+
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
+            }
+            catch (Exception e)
+            {
+                return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
+            }
+          
         }
     }
 }

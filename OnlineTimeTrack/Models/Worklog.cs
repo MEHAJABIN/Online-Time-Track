@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace OnlineTimeTrack.Models
 {
-    public class Worklog
+    public class Worklog 
+
     {
         [Key]
         public long WorklogID { get; set; }
@@ -16,15 +18,30 @@ namespace OnlineTimeTrack.Models
 
         public long UserID { get; set; }
 
+        public DateTime Date { get; set; }
+
         public int EstimateWorkTime { get; set; }
 
         public string Features { get; set; }
 
-        public DateTime ActualWorkTimeStart { get; set; }
+        [NotMapped]
+        public string ProjectTitle { get; set; }
 
-        public DateTime ActualWorkTimeEnd { get; set; }
 
         [NotMapped]
+        public string FullName { get; set; }
+
+
+        [NotMapped]
+        public string Address { get; set; }
+
+        [NotMapped]
+        public DateTime ActualWorkTimeStart { get; set; }
+
+        [NotMapped]
+        public DateTime ActualWorkTimeEnd { get; set; }
+
+        
         public double TotalWorkTime
         {
             get
@@ -33,9 +50,20 @@ namespace OnlineTimeTrack.Models
             }
         }
 
+
+        
+
+        [DefaultValue("getutcdate()")]
         public DateTime DateAdded { get; set; }
 
+
+        [DefaultValue("getutcdate()")]
         public DateTime DateModified { get; set; }
+
+        [NotMapped]
+        public Timelog TimeLog { get; set; }
+      
+        public List<Timelog> Timelogs { get; set; }
     }
 }
 

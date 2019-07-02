@@ -1,11 +1,15 @@
-﻿using OnlineTimeTrack.Models;
+﻿using OnlineTimeTrack.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OnlineTimeTrack.Contexts;
+using OnlineTimeTrack.Services;
+using OnlineTimeTrack.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq.Expressions;
 
 namespace OnlineTimeTrack.Services
 {
@@ -52,10 +56,7 @@ namespace OnlineTimeTrack.Services
 
 
 
-        public IEnumerable<Project> GetAll()
-        {
-            return _onlineTimeTrackContext.Projects;
-        }
+      
 
 
 
@@ -106,6 +107,29 @@ namespace OnlineTimeTrack.Services
             return addedProject.Entity;
         }
 
+
+
+
+       
+
+        public async Task<IEnumerable<Project>> GetAllProjects(int start, int limit)
+        {
+
+            if (start == 0 & limit == 0)
+            {
+                var Project = await _onlineTimeTrackContext.Projects.ToListAsync();
+                return Project;
+
+            }
+
+            else
+            {
+                var result = await _onlineTimeTrackContext.Projects.Skip(start).Take(limit).ToListAsync();
+
+                return result;
+            }
+
+        }
     }
 
 

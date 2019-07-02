@@ -1,4 +1,5 @@
-﻿using OnlineTimeTrack.Models;
+﻿using Microsoft.AspNetCore.Http;
+using OnlineTimeTrack.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,11 @@ namespace OnlineTimeTrack.Services
         Task<Project> DeleteProject(Project ProjectID);
         Task<Project> GetById(long? id);
 
-        IEnumerable<Project> GetAll();
+        Task <IEnumerable<Project>> GetAllProjects(int start, int limit);
+
+     
+
+        
     }
 }
 
