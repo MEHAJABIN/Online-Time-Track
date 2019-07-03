@@ -126,8 +126,55 @@ namespace OnlineTimeTrack.Controllers
             }
         }
 
+
+
+
+        [HttpDelete("DeleteTimelog")]
+        public async Task<Response<Timelog>> DeleteTimelog([FromBody] Timelog TimelogID)
+
+        {
+            var userID = _userService.GetUserIDFromContext(HttpContext);
+
+            if (userID == null)
+            {
+                return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
+            }
+
+            if (TimelogID == null)
+            {
+                return Response<Timelog>.CreateResponse(false, "Please provide valid Timelog Id.", null);
+
+            }
+
+            TimelogID.UserID = userID.GetValueOrDefault();
+
+            try
+            {
+                var ExistingTimelog = await _timelogService.DeleteTimelog(TimelogID);
+
+
+                if (ExistingTimelog == null)
+                {
+                    return Response<Timelog>.CreateResponse(false, "Not a valid Timelog Id", null);
+                }
+
+                return Response<Timelog>.CreateResponse(true, "Successfully deleted.", ExistingTimelog);
+            }
+            catch (Exception e)
+            {
+                return Response<Timelog>.CreateResponse(false, e.Message, null);
+            }
+        }
+
+
     }
 }
+
+
+
+
+
+
 
 
 

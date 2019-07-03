@@ -14,6 +14,5 @@ namespace OnlineTimeTrack.Services
         Task<Timelog> DeleteTimelog(Timelog TimelogID);
         Task<Timelog> GetById(long? id);
 
-        Task<IEnumerable<Timelog>> GetAllTimelogs(int start, int limit);
     }
 }

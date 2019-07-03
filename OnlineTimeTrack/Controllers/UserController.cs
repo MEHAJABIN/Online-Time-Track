@@ -32,6 +32,7 @@ namespace OnlineTimeTrack.Controllers
 
 
 
+        //User Login
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]User loginDetails)
@@ -73,7 +74,7 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
-
+        //User Registration
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
@@ -180,7 +181,7 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-
+        //For Get AllUsers
         [HttpGet("GetAllUsers")]
         public async Task<Response<IEnumerable<User>>> GetAllUsers([FromQuery] int start, int limit)
         {

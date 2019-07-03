@@ -62,7 +62,8 @@ namespace OnlineTimeTrack.Models
 
         [NotMapped]
         public Timelog TimeLog { get; set; }
-      
+
+        [NotMapped]
         public List<Timelog> Timelogs { get; set; }
     }
 }

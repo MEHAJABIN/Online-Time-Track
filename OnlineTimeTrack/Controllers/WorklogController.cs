@@ -49,7 +49,7 @@ namespace OnlineTimeTrack.Controllers
             {
                 var newWorklog = await _worklogService.Worklog(worklog);
 
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", null);
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", newWorklog);
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -234,7 +234,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -267,6 +267,8 @@ namespace OnlineTimeTrack.Controllers
             }
           
         }
+
+
     }
 }
 

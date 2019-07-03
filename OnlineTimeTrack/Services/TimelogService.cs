@@ -37,6 +37,7 @@ namespace OnlineTimeTrack.Services
         }
 
 
+        //Get particular timelog
        public async Task<Timelog> GetById(long? id)
         {
             var result = await _onlineTimeTrackContext.Timelogs.Where(t => t.TimelogID == id).ToListAsync();
@@ -61,7 +62,7 @@ namespace OnlineTimeTrack.Services
 
 
 
-
+        //Delete Timelog
         public async Task<Timelog> DeleteTimelog(Timelog TimelogID)
         {
             _onlineTimeTrackContext.Timelogs.Remove(TimelogID);
@@ -70,25 +71,13 @@ namespace OnlineTimeTrack.Services
 
             return ExistingTimelog;
         }
-
-
-
-
-        public async Task<IEnumerable<Timelog>> GetAllTimelogs(int start, int limit)
-        {
-
-            if (start == 0 & limit == 0)
-            {
-                var timelog = await _onlineTimeTrackContext.Timelogs.ToListAsync();
-                return timelog;
-            }
-            else
-            {
-                var result = await _onlineTimeTrackContext.Timelogs.Skip(start).Take(limit).ToListAsync();
-
-                return result;
-            }
-
-        }
     }
 }
+
+
+
+
+
+
+
+
