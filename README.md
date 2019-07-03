@@ -45,7 +45,7 @@ If a new Role add as Admin or Manager of the company, They have the permission t
 
 ### My entire Project Code Documentation link in Wiki is below:
 
-github.com/MEHAJABIN/Online-Time-Track/wiki
+https://github.com/MEHAJABIN/Online-Time-Track/wiki
 
 
 
