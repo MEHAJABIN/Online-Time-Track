@@ -100,8 +100,12 @@ namespace OnlineTimeTrack
 #else
             app.UseHttpsRedirection();
 #endif
+            app.UseCors(Builder => Builder.WithOrigins("*")
+            .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+
             app.UseMvc();
        }
+        
     }
 }
 

@@ -46,8 +46,6 @@ namespace OnlineTimeTrack.Migrations
 
                     b.HasKey("TimelogID");
 
-                    b.HasIndex("WorklogID");
-
                     b.ToTable("Timelogs");
                 });
 
@@ -96,7 +94,7 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<int>("EstimateWorkTime");
 
-                    b.Property<string>("Features");
+                    b.Property<string>("Feature");
 
                     b.Property<long>("ProjectID");
 
@@ -105,14 +103,6 @@ namespace OnlineTimeTrack.Migrations
                     b.HasKey("WorklogID");
 
                     b.ToTable("Worklogs");
-                });
-
-            modelBuilder.Entity("OnlineTimeTrack.Models.Timelog", b =>
-                {
-                    b.HasOne("OnlineTimeTrack.Models.Worklog", "Worklog")
-                        .WithMany("Timelogs")
-                        .HasForeignKey("WorklogID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

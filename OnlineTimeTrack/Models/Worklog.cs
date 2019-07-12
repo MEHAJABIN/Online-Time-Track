@@ -22,7 +22,7 @@ namespace OnlineTimeTrack.Models
 
         public int EstimateWorkTime { get; set; }
 
-        public string Features { get; set; }
+        public string Feature { get; set; }
 
         [NotMapped]
         public string ProjectTitle { get; set; }

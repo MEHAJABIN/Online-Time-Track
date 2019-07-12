@@ -245,14 +245,14 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("GetAllWorklogs")]
-        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int EstimateWorkTime,
+        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Feature, int EstimateWorkTime,
         DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
 
         {
            
             try
             {
-                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Features, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
+                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Feature, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
 
                 if (worklogs == null)
                 {

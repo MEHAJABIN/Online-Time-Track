@@ -1,0 +1,133 @@
+<a href="menu.html"><font size="5">Menu</font></a>
+<style>
+    
+        ul#menu{
+            padding: 10
+        }
+        ul#menu li{
+            display: inline-block;
+        }
+        ul#menu li a{
+            background-color:darksalmon;
+            color:#366092;
+            padding: 5px 10px;
+            text-decoration: none;
+            font:800 15px cursive ;
+                border-radius: 4px 4px 0 0;
+        }
+        ul#menu li a:hover{
+            background-color: #366092;
+            color:aqua;
+            font: 700 18px fantasy;
+            border-radius: 20px 20px 0 0;
+        }
+        body{
+            background-image: url("Background 3.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        
+          </style>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML Page</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <center>
+        <form name ="Timelogform">
+            <br><br><br>
+            <h1><i>Timelog</i></h1>
+       <div>
+            <tr>
+                 <td>
+                     Worklog ID
+                            
+                 </td>
+                <td>
+                  <input type="int" name="WorklogID"/>
+                </td>
+            <tr>
+                <td>
+                    Actual Work Time Sart
+                    
+                </td>
+                <td>
+                    <input type="datetime" name="ActualWorkTimeSart"/>
+                </td>
+                
+            </tr>
+            <tr>
+                    <td>
+                        Actual Work Time End
+                    </td>
+                    <td>
+                        <input type="int" name="ActualWorkTimeEnd"/>
+                    </td>
+                    
+                </tr>
+                <br><br>
+                 <tr>
+                <td>
+                    
+                    <input  type="submit"  value="SUBMIT"  name="bt" />
+                </td>
+            </tr>
+        </div>
+        </form>
+
+        <div>
+                <button onclick="POST();"  >hjh</button>
+            </div>
+    
+            <script>
+            function POST()
+            {
+                function reqListener () {
+                console.log(this.responseText);
+               }
+                
+               var WorklogID=document.forms["Timelogform"]["UserID"].value;
+               var ActualWorkTimeStart=document.forms["Timelogform"]["ActualWorkTimeStart"].value;
+                var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value;
+                const body = {
+                        WorklogID :  WorklogID,
+                        ActualWorkTimeStart :  ActualWorkTimeStart,
+                        ActualWorkTimeEnd :ActualWorkTimeEnd
+                 };
+
+                 var xhr = new XMLHttpRequest();
+                 xhr.addEventListener("load", reqListener);
+                 xhr.open("POST", "https://localhost:44392/api/timelog ");
+               
+                 console.log(body);
+                 xhr.setRequestHeader("Content-Type","application/json");
+                xhr.send(JSON.stringify(body));
+            };
+        
+        
+        
+        /* if(id1>0&&id2>0){
+            response.sendRedirect("login.html");
+        }
+        else {
+            response.sendRedirect("timelog.html");
+        }*/
+        
+        </script>
+    </center> 
+    </body>
+    
+</html>
+                   
+            
+
+
+
+
+
+        
+        
+        
+        

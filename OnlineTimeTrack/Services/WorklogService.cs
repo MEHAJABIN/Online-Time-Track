@@ -30,11 +30,11 @@ namespace OnlineTimeTrack.Services
         public Worklog Create(Worklog worklog)
         {
             // Add Features
-            if (string.IsNullOrEmpty(worklog.Features))
+            if (string.IsNullOrEmpty(worklog.Feature))
                 throw new AppException("Feature is required");
 
-            if (_onlineTimeTrackContext.Worklogs.Any(x => x.Features == worklog.Features))
-                throw new AppException("Features \"" + worklog.Features + "\" is already taken");
+            if (_onlineTimeTrackContext.Worklogs.Any(x => x.Feature == worklog.Feature))
+                throw new AppException("Feature \"" + worklog.Feature + "\" is already taken");
 
            
 
@@ -45,17 +45,17 @@ namespace OnlineTimeTrack.Services
         }
 
 
-        public void Update(Worklog worklog, string Features = null)
+        public void Update(Worklog worklog, string Feature = null)
         {
             var Worklog = _onlineTimeTrackContext.Projects.Find(worklog.WorklogID);
             if (worklog == null)
                 throw new AppException("worklog not found");
 
-            if (worklog.Features != worklog.Features)
+            if (worklog.Feature != worklog.Feature)
             {
                 //Features has changed so check if the new Feature is already taken
-                if (_onlineTimeTrackContext.Worklogs.Any(x => x.Features == worklog.Features))
-                    throw new AppException("Worklog " + worklog.Features + " is already taken");
+                if (_onlineTimeTrackContext.Worklogs.Any(x => x.Feature == worklog.Feature))
+                    throw new AppException("Worklog " + worklog.Feature + " is already taken");
             }
 
         }
@@ -66,7 +66,7 @@ namespace OnlineTimeTrack.Services
             // save the worklog
             var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
 
-            addedWorklog.Entity.Features = worklog.Features;
+            addedWorklog.Entity.Feature = worklog.Feature;
             worklog.DateAdded = DateTime.UtcNow;
             worklog.DateModified = DateTime.UtcNow;
             await _onlineTimeTrackContext.SaveChangesAsync();
@@ -100,9 +100,9 @@ namespace OnlineTimeTrack.Services
         }
 
 
-        public async Task<IEnumerable<Worklog>> GetAll(string Features)
+        public async Task<IEnumerable<Worklog>> GetAll(string Feature)
         {
-            var result = await _onlineTimeTrackContext.Worklogs.Where(f => f.Features == Features).ToListAsync();
+            var result = await _onlineTimeTrackContext.Worklogs.Where(f => f.Feature == Feature).ToListAsync();
             return result;
         }
 
@@ -112,7 +112,7 @@ namespace OnlineTimeTrack.Services
         {
 
             string query = @"UPDATE Worklogs SET ProjectID = @ProjectID, Date = @Date, EstimateWorkTime = @EstimateWorkTime,
-                             Features = @Features WHERE UserID = @UserID AND WorklogID = @WorklogID";
+                             Feature = @Feature WHERE UserID = @UserID AND WorklogID = @WorklogID";
 
 
             var result = _onlineTimeTrackContext.Database.ExecuteSqlCommand(query,
@@ -120,7 +120,7 @@ namespace OnlineTimeTrack.Services
                 new SqlParameter("@ProjectID", WorklogID.ProjectID),
                 new SqlParameter("@Date", WorklogID.Date),
                 new SqlParameter("@EstimateWorkTime", WorklogID.EstimateWorkTime),
-                new SqlParameter("@Features", WorklogID.Features),
+                new SqlParameter("@Feature", WorklogID.Feature),
                 new SqlParameter("@UserID", WorklogID.UserID),
                 new SqlParameter("@WorklogID", WorklogID.WorklogID));
 
@@ -149,7 +149,7 @@ namespace OnlineTimeTrack.Services
 
 
         public async Task<IEnumerable<Worklog>> GetAllWorklogs(int start, int limit, long? WorklogID, long? UserID, long? ProjectID,
-        string Features, int EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
+        string Feature, int EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
         {
 
 
@@ -162,7 +162,7 @@ namespace OnlineTimeTrack.Services
                 {
                     WorklogID = w.WorklogID,
                     UserID = w.UserID,
-                    Features = w.Features,
+                    Feature = w.Feature,
                     ProjectID = p.ProjectID,
                     ProjectTitle = p.ProjectTitle
 
@@ -174,7 +174,7 @@ namespace OnlineTimeTrack.Services
                 new Worklog
                 {
                     WorklogID = comb.WorklogID,
-                    Features = comb.Features,
+                    Feature = comb.Feature,
                     UserID = u.UserID,
                     FullName = u.FullName,
                     Address = u.Address,
@@ -188,7 +188,7 @@ namespace OnlineTimeTrack.Services
                 new Worklog
                 {
                     WorklogID = comb.WorklogID,
-                    Features = comb.Features,
+                    Feature = comb.Feature,
                     UserID = comb.UserID,
                     FullName = comb.FullName,
                     Address = comb.Address,
@@ -209,9 +209,9 @@ namespace OnlineTimeTrack.Services
                 worklogs = worklogs.Where(p => p.ProjectTitle == ProjectTitle);
             }
 
-            if (Features != null)
+            if (Feature != null)
             {
-                worklogs = worklogs.Where(w => w.Features == Features);
+                worklogs = worklogs.Where(w => w.Feature == Feature);
             }
 
 
@@ -239,7 +239,7 @@ namespace OnlineTimeTrack.Services
                       ProjectID = g.FirstOrDefault().ProjectID,
                       UserID = g.FirstOrDefault().UserID,
                       ProjectTitle = g.FirstOrDefault().ProjectTitle,
-                      Features = g.FirstOrDefault().Features,
+                      Feature = g.FirstOrDefault().Feature,
                       FullName = g.FirstOrDefault().FullName,
                       Address = g.FirstOrDefault().Address,
 
@@ -273,11 +273,11 @@ namespace OnlineTimeTrack.Services
 
 
 
-        public Worklog Create(Worklog worklog, int EstimateWorkTime, string Features, DateTime ActualTimeStart, DateTime ActualTimeEnd)
+        public Worklog Create(Worklog worklog, int EstimateWorkTime, string Feature, DateTime ActualTimeStart, DateTime ActualTimeEnd)
         {
             throw new NotImplementedException();
         }
-
+         
     }
 }
 
