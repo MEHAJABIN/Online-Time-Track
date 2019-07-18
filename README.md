@@ -42,7 +42,7 @@ In Timelog module, Every users have corresponding timelogs. In this module store
 
 ### Future Enhancement
 
-If a new Role add as Admin or Manager of the company, They have the permission to access the all modules.
+If a new Role add as Admin or Manager of the company, They have the permission to access all modules.
 
 
 
