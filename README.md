@@ -29,6 +29,11 @@ they are listed in the next module. that is, worklog module. They are assigned t
 In Worklog module, Every users have corresponding worklogs. The users can access their own worklogs. The worklogs includes project id, feature of the project.
 Each user get a Estimate work time. The Users total work time also get from this module.
 
+### 4.Timelog
+
+In Timelog module, Every users have corresponding timelogs. In this module stored the Users Actual Work Time Starts, Actual Work Time Ends. From this module the Worklog module access the Users Total Time work.
+
+
 
 
  
