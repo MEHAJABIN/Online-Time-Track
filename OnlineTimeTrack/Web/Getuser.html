@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <title>HTML Page</title>
+    </head>
+    <style id="style">
+        ul#menu {
+            padding: 10;
+        }
+        ul#menu li {
+            display: inline-block;
+        }
+        ul#menu li a {
+            background-color: darksalmon;
+            color: #366092;
+            padding: 5px 10px;
+            text-decoration: none;
+            font: 800 15px cursive;
+            border-radius: 4px 4px 0 0;
+        }
+        ul#menu li a:hover {
+            background-color: #366092;
+            color: aqua;
+            font: 700 18px fantasy;
+            border-radius: 20px 20px 0 0;
+        }
+        body {
+            background-image: url('Background 3.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+
+    <body>
+        <a href="menu.html">Home</a>
+        <a href="logout.html">Logout</a>
+
+        <form name="Getuserform" id="forms">
+            <div>
+                <label for="Token">Token </label>
+
+                <input type="string" id="Token" name="Token" required />
+
+                <label for="UserID">UserID </label>
+
+                <input type="long" id="UserID" name="UserID" /> <br />
+            </div>
+        </form>
+
+        <input type="button" value="GETUSER" onclick="getUser();" />
+
+        <table name="Table" id="table_id" class="display" border="1">
+            <thead>
+                <tr>
+                    <th>UserID</th>
+                    <th>FullName</th>
+                    <th>Address</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>ContactNumber</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody id="tablePlace"></tbody>
+        </table>
+        <p id="Getuser"></p>
+
+        <script>
+            function createUserColumn(data) {
+                return '<td>' + data + '</td>';
+            }
+
+            function generateUserRow(user) {
+                var row = '<tr>';
+                row += createUserColumn(user.userID);
+                row += createUserColumn(user.fullName);
+                row += createUserColumn(user.address);
+                row += createUserColumn(user.dob);
+                row += createUserColumn(user.gender);
+                row += createUserColumn(user.age);
+                row += createUserColumn(user.contactNumber);
+                row += createUserColumn(user.email);
+                row += createUserColumn(user.username);
+                row += '</td>';
+
+                return row;
+            }
+
+            function showUserDetails(res) {
+                var userTableBody = document.getElementById('tablePlace');
+                if (userTableBody) {
+                    userTableBody.innerHTML =generateUserRow(res.data);
+                } else {
+                    alert('Cannot retrieve the element for showing user.');
+                }
+            }
+
+            function getUser() {
+                function reqListener() {
+                    showUserDetails(JSON.parse(this.responseText));
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener('load', reqListener);
+                xhr.open('GET', 'https://localhost:44392/api/user/getbyid?='+ UserID.value, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                var Token = document.forms['Getuserform']['Token'].value;
+                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+                xhr.send(UserID);
+            }
+        </script>
+    </body>
+</html>

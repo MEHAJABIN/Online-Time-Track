@@ -1,4 +1,8 @@
-<a href="menu.html"><font size="5">Menu</font></a>
+<a href="menu.html"><font size="5">Home</font></a>
+
+<br>
+
+<a href="logout.html"><font size="5">Logout</font></a>
 <style>
     
         ul#menu{
@@ -36,14 +40,25 @@
     </head>
     <body>
         <center>
-        <form name="Projectform"   id="forms" action="project_action.html">
+        <form name="Projectform"   id="forms" >
             <br><br><br>
             <h1><i>Project</i></h1>
         
             <div>
+
+                    <label for="Token">Token </label>
+                   
+                    <input type="string" id="Token" name="Token" required/>
+
+
+
                     <label for="ProjectTitle">ProjectTitle </label>
 
                     <input type="text" id="projectitle" name="ProjectTitle">  <br>
+
+                   
+                         
+                  
             </div>
         
            
@@ -53,27 +68,26 @@
         </div>
 
         <script>
+           
         function POST()
-        {
+        { 
             function reqListener () {
            console.log(this.responseText);
         }
 
         
-        var ProjectTitle =document.forms["Projectform"]["ProjectTitle"].value
+        var ProjectTitle = document.forms["Projectform"]["ProjectTitle"].value
 
         const body = {
                   ProjectTitle : ProjectTitle
+                  
                 
                 };
 
         var xhr = new XMLHttpRequest();
         xhr.addEventListener("load", reqListener);
-        xhr.open("POST", "https ://localhost:44392/api/project ",true);
-           {
+        xhr.open("POST", "https://localhost:44392/api/project",true);
          
-           
-           };
            
            
            //oReq.send("Content-Type","application/json;charset=utf-8");
@@ -82,23 +96,63 @@
               
             console.log(body);
             xhr.setRequestHeader("Content-Type","application/json");
-            xhr.send(JSON.stringify(body));
 
-        
+            var Token = document.forms["Projectform"]["Token"].value
+            xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+            xhr.send(JSON.stringify(body));
+          
+};
+ </script>
+
+
+
+<!--<script>
+        function GET() {
+    function reqListener () {
     
- };
+    //console.log(JSON.parse(xhr.responseText));
+    //console.log(this.responseText);
     
-    
-    
-    /* if(id1>0&&id2>0){
-        response.sendRedirect("login.html");
+    var myObj = { UserID : +"UserID", FullName : "FullName" };
+    console.log(this.responseText); 
+    //  var obj= JSON.parse('{"userID":+UserID}');
+    document.getElementById("userid").innerHTML=UserID;
+    document.getElementById("userid").innerHTML=FullName;
     }
-    else {
-        response.sendRedirect("project.html");
-    }*/
     
-    </script>
-    </center> 
-    </body>
+    var xhr= new XMLHttpRequest();
+    /*  XMLHttpRequest.onreadystatechange = function(){
+        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
+      }*/
+    xhr.addEventListener("load", reqListener);
+     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
+     xhr.setRequestHeader("Content-Type","application/json");
+     if (xhr.readyState == 4 && xhr.status == 200) { 
+      var jsonData = JSON.parse(xhr.responseText);
+      showGET(jsonData);
+     }
+    var Token = document.forms["Getuserform"]["Token"].value
+    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+    xhr.send(UserID);
     
+    };
+    </script>-->
+</center> 
+</body>
 </html>
+
+
+
+
+<!--  <table border="1"> 
+        <tr>
+            <td> 
+               ProjectID           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
+                
+            </td>
+             <td>
+                   ProjectTitle     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
+                    
+                </td>
+            </tr>
+     </table>-->

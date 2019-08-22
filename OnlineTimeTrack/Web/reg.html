@@ -1,5 +1,9 @@
+<a href="menu.html"><font size="5">Home</font></a>
 
-<a href="menu.html"><font size="5">Menu</font></a>
+<br>
+
+<a href="logout.html"><font size="5">Logout</font></a>
+
 
 <style id="style">
     
@@ -31,7 +35,7 @@
         }
         
           </style>
- 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,135 +43,194 @@
     <meta charset="utf-8"/>
     
         <title>HTML Page</title>
+
     </head>
-    <body>
-        <center>
-     
-            <form name="Registerform"  id="forms">  
-            <br><br><br>
-            <h1><i>Registration</i></h1>
-            <div>
-
-                <label for="FullName"> FullName </label>
-
-                <input type="text" id="FullName" name="FullName"> <br>
-
-                <label for="Address"> Address </label>
-                <input type= "textarea" name="Address"> </textarea> <br>
-
-
-                <label for="Gender">Gender  </label>
-
-                Male   <input type="radio" name="Gender" value="Male"/> 
-
-                Female <input type="radio" name="Gender" value="Female"/>  <br> 
-
-                <label for="Dob">Date of birth  </label>
-
-                <input type="datetime" id="Dob" name="Dob"> <br>
-
-                <label for="Age">Age  </label>
-
-                <input type="int" id="Age" name="Age">  <br>
-
-                <label for="ContactNumber">Contact Number  </label>
-
-                <input type= "text" id="ContactNumber" name="ContactNumber">    <br>
-
-                
-                <label for="Email">Email  </label>
-
-                <input type= "text" name="Email" value="" required/>    <br>
-               
-         
-                <label for="username">Username  </label>
-
-                <input type="text" id="username" name="Username">  <br>
-           
-                <label for="password">Password  </label>
-
-                <input type="password" name="Password" required/>   <br>
-           
-                
-               
-
-            </form>
-            <div>
-                   
-            <input type=button  value="SUBMIT" onClick="POST();"> </button>
-            
-            </div>
-        <script>
-            function POST()
-            { 
-               function reqListener () {
-               console.log(this.responseText);
-               }
-              
-                  var FullName =document.forms["Registerform"]["FullName"].value;
-                  var Address = document.forms["Registerform"]["Address"].value;
-                  var Dob= document.forms["Registerform"]["Dob"].value;
-                  var Gender =document.forms["Registerform"]["Gender"].value;
-                  var Age =document.forms["Registerform"]["Age"].value;
-                  var ContactNumber =document.forms["Registerform"]["ContactNumber"].value;
-                  var Email = document.forms["Registerform"]["Email"].value;
-                  var Username =document.forms["Registerform"]["Username"].value;
-                  var Password =document.forms["Registerform"]["Password"].value;
-                  const body = {
-                      FullName: FullName,
-                      Address:Address,
-                      Dob:Dob,
-                      Gender:Gender,
-                      Age:Age,
-                      ContactNumber:ContactNumber,
-                      Email:Email,
-                      Username:Username,
-                      Password:Password
-                      };
-                      var xhr = new XMLHttpRequest();
-                       xhr.addEventListener("load", reqListener);
-                      xhr.open("POST", "https://localhost:44392/api/user/register ");
-                     
-                  
-                      
-                     // xhr.send("Content-Type","application/json;charset=utf-8");
-                    
-                      console.log(body);
-                      xhr.setRequestHeader("Content-Type","application/json");
-                      xhr.send(JSON.stringify(body));
-          
-                  };
-        </script> 
-</center>
-</body>
-</html>
-
-
-         
-
-           
-           
-           
-            
-               
-
-               
-              
-               
-
-               
-             
-               
+  <body>   
       
+    <center>
+     
+      <form name="Registerform"  id="forms">  
+      <br><br><br>
+      <h1><i>Registration</i></h1>
+      <div>
+
+          <label for="FullName"> FullName </label>
+
+          <input type="text" id="FullName" name="FullName"> <br>
+
+
+          <label for="Address"> Address </label>
+          <input type= "textarea" name="Address"> </textarea> <br>
+
+
+          <label for="Gender">Gender  </label>
+         Male     <input type="radio" name="Gender" value="Male"/> 
+
+         Female   <input type="radio" name="Gender" value="Female"/>  <br> 
+
+          
+         <label for="Dob">Date of birth  </label>
+
+          <input type="datetime" id="Dob" name="Dob"> <br>
+
+         
+          <label for="Age">Age  </label>
+
+          <input type="int" id="Age" name="Age">  <br>
+
+         
+          <label for="ContactNumber">Contact Number  </label>
+
+          <input type= "text" id="ContactNumber" name="ContactNumber">    <br>
+
+          
+          <label for="Email">Email  </label>
+
+          <input type= "text" name="Email" value="" required/>    <br>
+         
+   
+          <label for="username">Username  </label>
+
+          <input type="text" id="username" name="Username">  <br>
+     
+        
+          <label for="password">Password  </label>
+
+          <input type="password" name="Password" required/>   <br>
+     
+         </div> 
+         
+
+      </form>
+
+      <div>
+             
+      <input type="button"  value="SUBMIT" onClick="POST();"> </button>
+      
+      </div>
+    
+
+      <script >
+          function POST()
+          {
+          function reqListener () {
+          console.log(this.responseText);
+          
+                
+          }
+                      
+          var FullName =document.forms["Registerform"]["FullName"].value;
+                          var Address = document.forms["Registerform"]["Address"].value;
+                          var Dob= document.forms["Registerform"]["Dob"].value;
+                          var Gender =document.forms["Registerform"]["Gender"].value;
+                          var Age =document.forms["Registerform"]["Age"].value;
+                          var ContactNumber =document.forms["Registerform"]["ContactNumber"].value;
+                          var Email = document.forms["Registerform"]["Email"].value;
+                          var Username =document.forms["Registerform"]["Username"].value;
+                          var Password =document.forms["Registerform"]["Password"].value;
+                          const body = {
+                              FullName: FullName,
+                              Address:Address,
+                              Dob:Dob,
+                              Gender:Gender,
+                              Age:Age,
+                              ContactNumber:ContactNumber,
+                              Email:Email,
+                              Username:Username,
+                              Password:Password
+                              };
+                              var xhr = new XMLHttpRequest();
+                               xhr.addEventListener("load", reqListener);
+                              xhr.open("POST", "https://localhost:44392/api/user/register ")
+                            
+                              console.log(body);
+                              xhr.setRequestHeader("Content-Type","application/JSON");
+                              xhr.send(JSON.stringify(body));
+          
+                         //   window.location.replace("login.html");  
+                         
+                       };
+                      </script> 
+
+
+
+                               
+</center>
+
+</body>
+</html> 
+
+  
+
+ 
+
+
+
+
+
+
+
    
 
 
-           
+
+
+    
+               
+              
+                         
+                           
+              
+          
+        
+                    
+                
+                   
+                    
+                     
+                     
+                
+               
+               
+                   
+                  
+            
+              
+              
+            
 
           
-                   
+    
 
+       
+
+ <!--<script>
+    // Store XMLHttpRequest and the JSON file location in variables
+    var xhr = new XMLHttpRequest();
+    var url = "https://localhost:44392/api/user/getbyid?id=28";
+    
+    // Called whenever the readyState attribute changes 
+    xhr.onreadystatechange = function loadGET() {
+    
+      // Check if fetch request is done
+      if (xhr.readyState == 4 && xhr.status == 200) { 
+      
+        // Parse the JSON string
+        var jsonData = JSON.parse(xhr.responseText);
+        
+        // Call the showArtists(), passing in the parsed JSON string
+        showloadGET(jsonData);
+      }
+    };
+    
+    // Do the HTTP call using the url variable we specified above
+    xhr.open("GET","https://localhost:44392/api/user/getbyid?id=28", true);
+    xhr.send();
+    </script>-->
+        
+    
+
+        
+            
+         
            
-    
-    
-    

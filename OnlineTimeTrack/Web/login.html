@@ -1,5 +1,9 @@
+<a href="menu.html"><font size="5">Home</font></a>
 
-<a href="menu.html" ><font size="5"> Menu </font></a>
+<br>
+
+<a href="logout.html"><font size="5">Logout</font></a>
+
 
 <style id="style">
     
@@ -69,6 +73,8 @@
                 <td>
                     <input type="password" name="Password" required/>
                 </td>
+
+                
             </tr>
           
         </div>
@@ -95,7 +101,7 @@
                           };
                           var xhr = new XMLHttpRequest();
                            xhr.addEventListener("load", reqListener);
-                          xhr.open("POST", "https://localhost:44392/api/user/authenticate ");
+                          xhr.open("POST", "https://localhost:44392/api/user/authenticate");
                          
                       
                           
@@ -104,6 +110,10 @@
                           console.log(body);
                           xhr.setRequestHeader("Content-Type","application/json");
                           xhr.send(JSON.stringify(body));
+
+                        
+                       //   window.location.replace("front.html");
+
               
                       };
             </script> 

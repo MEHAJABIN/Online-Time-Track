@@ -1,4 +1,9 @@
-<a href="menu.html"><font size="5">Menu</font></a>
+<a href="menu.html"><font size="5">Home</font></a>
+
+<br>
+
+<a href="logout.html"><font size="5">Logout</font></a>
+
 <style>
     
         ul#menu{
@@ -40,45 +45,41 @@
             <br><br><br>
             <h1><i>Timelog</i></h1>
        <div>
-            <tr>
-                 <td>
-                     Worklog ID
-                            
-                 </td>
-                <td>
-                  <input type="int" name="WorklogID"/>
-                </td>
-            <tr>
-                <td>
-                    Actual Work Time Sart
-                    
-                </td>
-                <td>
-                    <input type="datetime" name="ActualWorkTimeSart"/>
-                </td>
+           
+                    <label for="Token">Token </label>
+                   
+                    <input type="string" id="Token" name="Token" required/>
+
+                   
+                    <label for="Worklog ID">  Worklog ID</label>
+
+                    <input type="int" name="WorklogID"/>
                 
-            </tr>
-            <tr>
-                    <td>
-                        Actual Work Time End
-                    </td>
-                    <td>
-                        <input type="int" name="ActualWorkTimeEnd"/>
-                    </td>
-                    
-                </tr>
+                   <label for="ActualWorkTimeStart"> Actual Work Time Start</label>
+
+                    <input type="datetime" name="ActualWorkTimeStart"/>
+                            
+                    <label for="ActualWorkTimeEnd"> Actual Work Time End</label>
+
+                    <input type="datetime" name="ActualWorkTimeEnd"/>
+                
+           
+                 
+             
+
+            
                 <br><br>
-                 <tr>
+               <!--  <tr>
                 <td>
                     
                     <input  type="submit"  value="SUBMIT"  name="bt" />
                 </td>
-            </tr>
+            </tr>-->
         </div>
         </form>
 
         <div>
-                <button onclick="POST();"  >hjh</button>
+                <button onclick="POST();"  >SUBMIT</button>
             </div>
     
             <script>
@@ -87,10 +88,9 @@
                 function reqListener () {
                 console.log(this.responseText);
                }
-                
-               var WorklogID=document.forms["Timelogform"]["UserID"].value;
+               var WorklogID=document.forms["Timelogform"]["WorklogID"].value;
                var ActualWorkTimeStart=document.forms["Timelogform"]["ActualWorkTimeStart"].value;
-                var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value;
+                var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value
                 const body = {
                         WorklogID :  WorklogID,
                         ActualWorkTimeStart :  ActualWorkTimeStart,
@@ -103,19 +103,48 @@
                
                  console.log(body);
                  xhr.setRequestHeader("Content-Type","application/json");
+
+                 var Token = document.forms["Timelogform"]["Token"].value
+                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(JSON.stringify(body));
             };
         
-        
-        
-        /* if(id1>0&&id2>0){
-            response.sendRedirect("login.html");
-        }
-        else {
-            response.sendRedirect("timelog.html");
-        }*/
-        
+    
         </script>
+
+
+
+<!--<script>
+        function GET() {
+    function reqListener () {
+    
+    //console.log(JSON.parse(xhr.responseText));
+    //console.log(this.responseText);
+    
+    var myObj = { UserID : +"UserID", FullName : "FullName" };
+    console.log(this.responseText); 
+    //  var obj= JSON.parse('{"userID":+UserID}');
+    document.getElementById("userid").innerHTML=UserID;
+    document.getElementById("userid").innerHTML=FullName;
+    }
+    
+    var xhr= new XMLHttpRequest();
+    /*  XMLHttpRequest.onreadystatechange = function(){
+        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
+      }*/
+    xhr.addEventListener("load", reqListener);
+     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
+     xhr.setRequestHeader("Content-Type","application/json");
+     if (xhr.readyState == 4 && xhr.status == 200) { 
+      var jsonData = JSON.parse(xhr.responseText);
+      showGET(jsonData);
+     }
+    var Token = document.forms["Getuserform"]["Token"].value
+    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+    xhr.send(UserID);
+    
+    };
+    </script>-->
     </center> 
     </body>
     

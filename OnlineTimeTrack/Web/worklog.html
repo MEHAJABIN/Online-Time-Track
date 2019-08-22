@@ -1,4 +1,9 @@
-<a href="menu.html"><font size="5">Menu</font></a>
+<a href="menu.html"><font size="5">Home</font></a>
+
+<br>
+
+<a href="logout.html"><font size="5">Logout</font></a>
+
 <style>
     
         ul#menu{
@@ -40,6 +45,10 @@
             <br><br><br>
             <h1><i>Worklog</i></h1>
             <div>
+                 <label for="Token">Token </label>
+                   
+                 <input type="string" id="Token" name="Token" required/>
+
                  <label for="Date">Date</label>
                  <input type="datetime" id="Date" name="Date"/>  <br>
                 
@@ -88,34 +97,48 @@
           
              console.log(body);
             xhr.setRequestHeader("Content-Type","application/json");
+            
+            var Token = document.forms["Worklogform"]["Token"].value
+            xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
             xhr.send(JSON.stringify(body));
 
-           
-           
-       
-         
-            
+};
+    
+</script>
 
-           
-           
-           //oReq.send("Content-Type","application/json;charset=utf-8");
-               
-            
-               
 
-               
- };
+
+<!--<script>
+        function GET() {
+    function reqListener () {
     
+    //console.log(JSON.parse(xhr.responseText));
+    //console.log(this.responseText);
     
-    
-    /* if(id1>0&&id2>0){
-        response.sendRedirect("login.html");
+    var myObj = { UserID : +"UserID", FullName : "FullName" };
+    console.log(this.responseText); 
+    //  var obj= JSON.parse('{"userID":+UserID}');
+    document.getElementById("userid").innerHTML=UserID;
+    document.getElementById("userid").innerHTML=FullName;
     }
-    else {
-        response.sendRedirect("worklog.html");
-    }*/
     
-    </script>
+    var xhr= new XMLHttpRequest();
+    /*  XMLHttpRequest.onreadystatechange = function(){
+        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
+      }*/
+    xhr.addEventListener("load", reqListener);
+     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
+     xhr.setRequestHeader("Content-Type","application/json");
+     if (xhr.readyState == 4 && xhr.status == 200) { 
+      var jsonData = JSON.parse(xhr.responseText);
+      showGET(jsonData);
+     }
+    var Token = document.forms["Getuserform"]["Token"].value
+    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+    xhr.send(UserID);
+    
+    };
+    </script>-->
 </center> 
 </body>
 
