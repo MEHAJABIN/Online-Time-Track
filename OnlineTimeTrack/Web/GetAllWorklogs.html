@@ -37,9 +37,9 @@
         <a href="menu.html">Home</a>
         <a href="logout.html">Logout</a>
 
-    <center>
+        <center>
 
-        <form name="Getuserform" id="forms">
+        <form name="Getworklogform" id="forms">
             <div>
                 <label for="Token">Token </label>
 
@@ -47,28 +47,30 @@
 
                 <br>
 
-                <label for="UserID">UserID </label>
+                <label for="start">start</label>
 
-                <input type="long" id="UserID" name="UserID" /> 
+                <input type="int" id="start" name="start" /> 
+                
+                <br>
+
+                <label for="limit">limit</label>
+
+                <input type="int" id="limit" name="limit" /> 
                 
                 <br>
             </div>
         </form>
 
-        <input type="button" value="GETUSER" onclick="getUser();" />
+        <input type="button" value="GETALLWORKLOG" onclick="getAllWorklogs();" />
 
         <table name="Table" id="table_id" class="display" border="1">
             <thead>
                 <tr>
-                    <th>UserID</th>
-                    <th>FullName</th>
-                    <th>Address</th>
-                    <th>DOB</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>ContactNumber</th>
-                    <th>Email</th>
-                    <th>Username</th>
+                        <th>WorklogID</th>
+                        <th>ProjectID</th>
+                        <th>userID</th>
+                        <th>feature</th>
+                        <th>estimateWorkTime</th>
                     
                 </tr>
             </thead>
@@ -83,43 +85,49 @@
                 return '<td>' + data + '</td>';
             }
 
-            function generateUserRow(users) {
+            function generateUserRow(user) {
                 var row = '<tr>';
-                row += createUserColumn(user.userID);
-                row += createUserColumn(user.fullName);
-                row += createUserColumn(user.address);
-                row += createUserColumn(user.dob);
-                row += createUserColumn(user.gender);
-                row += createUserColumn(user.age);
-                row += createUserColumn(user.contactNumber);
-                row += createUserColumn(user.email);
-                row += createUserColumn(user.username);
+               row += createUserColumn(user.worklogID);
+               row += createUserColumn(user.projectID);
+               row += createUserColumn(user.userID);
+               row += createUserColumn(user.feature);
+               row += createUserColumn(user.estimateWorkTime);
+       
                 row += '</td>';
 
                 return row;
             }
-
+            
+           
             function showUserDetails(res) {
+                
                 var userTableBody = document.getElementById('tablePlace');
                 if (userTableBody) {
-                    userTableBody.innerHTML =generateUserRow(res.data);
-                } else {
-                    alert('Cannot retrieve the element for showing user.');
+                    var rowStrings="";
+                    for(var i=0; i<res.data.length;i++)
+                    rowStrings += generateUserRow(res.data[i]);
+                    userTableBody.innerHTML =rowStrings;
                 }
+
+                else {
+                    alert('Cannot retrieve the element for showing worklogs.');
+                }
+                
             }
 
-            function getUser() {
+            function getAllWorklogs() {
                 function reqListener() {
                     showUserDetails(JSON.parse(this.responseText));
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/user/getbyid?='+ UserID.value, true);
+                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?start=0&limit=6', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                var Token = document.forms['Getuserform']['Token'].value;
+                var Token = document.forms['Getworklogform']['Token'].value;
                 xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-                xhr.send(UserID);
+                xhr.send(start,limit);
+                
             }
         </script>
         </center>

@@ -36,26 +36,24 @@
     <body>
         <a href="menu.html">Home</a>
         <a href="logout.html">Logout</a>
-
-    <center>
-
+<center>
         <form name="Getuserform" id="forms">
             <div>
                 <label for="Token">Token </label>
 
                 <input type="string" id="Token" name="Token" required />
 
-                <br>
+                <label for="start">start</label>
 
-                <label for="UserID">UserID </label>
+                <input type="int" id="start" name="start" /> <br />
 
-                <input type="long" id="UserID" name="UserID" /> 
-                
-                <br>
+                <label for="limit">limit</label>
+
+                <input type="int" id="limit" name="limit" /> <br />
             </div>
         </form>
 
-        <input type="button" value="GETUSER" onclick="getUser();" />
+        <input type="button" value="GETALLUSER" onclick="getAllUsers();" />
 
         <table name="Table" id="table_id" class="display" border="1">
             <thead>
@@ -83,7 +81,7 @@
                 return '<td>' + data + '</td>';
             }
 
-            function generateUserRow(users) {
+            function generateUserRow(user) {
                 var row = '<tr>';
                 row += createUserColumn(user.userID);
                 row += createUserColumn(user.fullName);
@@ -98,28 +96,38 @@
 
                 return row;
             }
-
+            
+           
             function showUserDetails(res) {
+                
                 var userTableBody = document.getElementById('tablePlace');
                 if (userTableBody) {
-                    userTableBody.innerHTML =generateUserRow(res.data);
-                } else {
-                    alert('Cannot retrieve the element for showing user.');
+                    var rowStrings="";
+                    for(var i=0; i<res.data.length;i++)
+                    rowStrings += generateUserRow(res.data[i]);
+                    userTableBody.innerHTML =rowStrings;
                 }
+
+                else {
+                    alert('Cannot retrieve the element for showing users.');
+                }
+                
             }
 
-            function getUser() {
+            function getAllUsers() {
                 function reqListener() {
                     showUserDetails(JSON.parse(this.responseText));
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/user/getbyid?='+ UserID.value, true);
+                //xhr.open('GET', 'https://localhost:44392/api/user/getallusers?start=0&limit=10', true);
+                xhr.open('GET', 'https://localhost:44392/api/user/getallusers?start=0&limit=10', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 var Token = document.forms['Getuserform']['Token'].value;
                 xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-                xhr.send(UserID);
+                xhr.send(start,limit);
+                
             }
         </script>
         </center>

@@ -1,9 +1,3 @@
-<a href="menu.html"><font size="5">Home</font></a>
-
-<br>
-
-<a href="logout.html"><font size="5">Logout</font></a>
-
 <style>
     
         ul#menu{
@@ -40,28 +34,33 @@
         <meta charset="utf-8"/>
     </head>
     <body>
+
+            <a href="menu.html">Home</a>
+            <a href="logout.html">Logout</a>
+
         <center>
-        <form name ="Timelogform">
+        <form name ="Timelogform"  id="forms">
             <br><br><br>
             <h1><i>Timelog</i></h1>
        <div>
            
                     <label for="Token">Token </label>
                    
-                    <input type="string" id="Token" name="Token" required/>
+                    <input type="string" id="Token" name="Token" required/><br>
 
                    
                     <label for="Worklog ID">  Worklog ID</label>
 
-                    <input type="int" name="WorklogID"/>
-                
+                    <input type="int" name="WorklogID"/>          <br>
+
+
                    <label for="ActualWorkTimeStart"> Actual Work Time Start</label>
 
-                    <input type="datetime" name="ActualWorkTimeStart"/>
+                    <input type="datetime" name="ActualWorkTimeStart"/>  <br>
                             
                     <label for="ActualWorkTimeEnd"> Actual Work Time End</label>
 
-                    <input type="datetime" name="ActualWorkTimeEnd"/>
+                    <input type="datetime" name="ActualWorkTimeEnd"/> <br>
                 
            
                  
@@ -69,12 +68,7 @@
 
             
                 <br><br>
-               <!--  <tr>
-                <td>
-                    
-                    <input  type="submit"  value="SUBMIT"  name="bt" />
-                </td>
-            </tr>-->
+             
         </div>
         </form>
 
@@ -92,8 +86,8 @@
                var ActualWorkTimeStart=document.forms["Timelogform"]["ActualWorkTimeStart"].value;
                 var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value
                 const body = {
-                        WorklogID :  WorklogID,
-                        ActualWorkTimeStart :  ActualWorkTimeStart,
+                        WorklogID : WorklogID,
+                        ActualWorkTimeStart : ActualWorkTimeStart,
                         ActualWorkTimeEnd :ActualWorkTimeEnd
                  };
 
@@ -114,49 +108,76 @@
 
 
 
-<!--<script>
-        function GET() {
-    function reqListener () {
-    
-    //console.log(JSON.parse(xhr.responseText));
-    //console.log(this.responseText);
-    
-    var myObj = { UserID : +"UserID", FullName : "FullName" };
-    console.log(this.responseText); 
-    //  var obj= JSON.parse('{"userID":+UserID}');
-    document.getElementById("userid").innerHTML=UserID;
-    document.getElementById("userid").innerHTML=FullName;
-    }
-    
-    var xhr= new XMLHttpRequest();
-    /*  XMLHttpRequest.onreadystatechange = function(){
-        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
-      }*/
-    xhr.addEventListener("load", reqListener);
-     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
-     xhr.setRequestHeader("Content-Type","application/json");
-     if (xhr.readyState == 4 && xhr.status == 200) { 
-      var jsonData = JSON.parse(xhr.responseText);
-      showGET(jsonData);
-     }
-    var Token = document.forms["Getuserform"]["Token"].value
-    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-    xhr.send(UserID);
-    
-    };
-    </script>-->
-    </center> 
-    </body>
-    
-</html>
-                   
+<form name="GetTimelogform" id="forms">
+    <div>
+        <label for="Token">Token </label>
+
+        <input type="string" id="Token" name="Token" required />
+
+        <label for="TimelogID">TimelogID </label>
+
+        <input type="long" id="TimelogID" name="TimelogID" /> <br />
+    </div>
+</form>
+
+<input type="button" value="GET TIMELOG" onclick="getTimelog();" />
+
+<table name="Table" id="table_id" class="display" border="1">
+    <thead>
+        <tr>
+            <th>TimelogID</th>
+            <th>WorklogID</th>
+            <th>ActualWorkTimeStart</th>
+            <th>ActualWorkTimeEnd</th>
+            <th>TotalWorkTime</th>
             
+        </tr>
+    </thead>
 
+    <tbody id="tablePlace"></tbody>
+</table>
+<p id="GetTimelog"></p>
 
+<script>
+    function createUserColumn(data) {
+        return '<td>' + data + '</td>';
+    }
 
-
-
+    function generateUserRow(user) {
+        var row = '<tr>';
+        row += createUserColumn(user.timelogID);
+        row += createUserColumn(user.worklogID);
+        row += createUserColumn(user.actualWorkTimeStart);
+        row += createUserColumn(user.actualWorkTimeEnd);
+        row += createUserColumn(user.totalWorkTime);
         
-        
-        
-        
+        row += '</td>';
+
+        return row;
+    }
+
+    function showUserDetails(res) {
+        var userTableBody = document.getElementById('tablePlace');
+        if (userTableBody) {
+            userTableBody.innerHTML =generateUserRow(res.data);
+        } else {
+            alert('Cannot retrieve the element for showing Timelog.');
+        }
+    }
+
+    function getTimelog() {
+        function reqListener() {
+            showUserDetails(JSON.parse(this.responseText));
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', reqListener);
+        xhr.open('GET', 'https://localhost:44392/api/timelog/getbyid?id='+TimelogID.value, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        var Token = document.forms['GetTimelogform']['Token'].value;
+        xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+        xhr.send(TimelogID);
+    }
+</script>
+</body>
+</html>

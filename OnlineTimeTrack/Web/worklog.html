@@ -1,8 +1,3 @@
-<a href="menu.html"><font size="5">Home</font></a>
-
-<br>
-
-<a href="logout.html"><font size="5">Logout</font></a>
 
 <style>
     
@@ -40,6 +35,10 @@
         <meta charset="utf-8"/>
     </head>
     <body>
+
+            <a href="menu.html">Home</a>
+            <a href="logout.html">Logout</a>
+            
         <center>
         <form  name="Worklogform" >
             <br><br><br>
@@ -47,30 +46,42 @@
             <div>
                  <label for="Token">Token </label>
                    
-                 <input type="string" id="Token" name="Token" required/>
+                 <input type="string" id="Token" name="Token" required/> 
+                 
+                 <br>
 
                  <label for="Date">Date</label>
-                 <input type="datetime" id="Date" name="Date"/>  <br>
+                 <input type="datetime" id="Date" name="Date"/>  
+                 
+                 <br>
                 
 
                 <label for="ProjectID">ProjectID</label>
-                <input type="int" id="ProjectID" name="ProjectID"/>  <br>
+                <input type="int" id="ProjectID" name="ProjectID"/>  
+                
+                <br>
 
                 <label for="UserID">UserID</label>
-                <input type="int" id="UserID" name="UserID"/>  <br>
+                <input type="int" id="UserID" name="UserID"/>  
+                
+                <br>
                      
                 <label for="Feature">Feature</label>
-                <input type="text" id="Feature" name="Feature"/>  <br>
+                <input type="text" id="Feature" name="Feature"/>  
+                
+                <br>
                      
                  <label for="EstimateWorkTime">EstimateWorkTime</label>
-                <input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/>  <br>
+                <input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/>  
+                
+                <br>
 
                     
                 </div>
          </form>
 
        <div>
-            <input type=button  value="ADD" onClick="POST();"> </button>
+            <input type=button  value="ADD" onClick="POST();"> </button> <br>
         </div>
 
         <script>
@@ -83,11 +94,13 @@
             var Date=document.forms["Worklogform"]["Date"].value;
             var UserID=document.forms["Worklogform"]["UserID"].value;
             var ProjectID=document.forms["Worklogform"]["ProjectID"].value;
+            var Feature=document.forms["Worklogform"]["Feature"].value;
             var EstimateWorkTime=document.forms["Worklogform"]["EstimateWorkTime"].value;
             const body = { 
                     Date : Date,
                     UserID : UserID,
                     ProjectID : ProjectID,
+                    Feature : Feature,
                     EstimateWorkTime : EstimateWorkTime
 
                 };
@@ -108,44 +121,78 @@
 
 
 
-<!--<script>
-        function GET() {
-    function reqListener () {
-    
-    //console.log(JSON.parse(xhr.responseText));
-    //console.log(this.responseText);
-    
-    var myObj = { UserID : +"UserID", FullName : "FullName" };
-    console.log(this.responseText); 
-    //  var obj= JSON.parse('{"userID":+UserID}');
-    document.getElementById("userid").innerHTML=UserID;
-    document.getElementById("userid").innerHTML=FullName;
-    }
-    
-    var xhr= new XMLHttpRequest();
-    /*  XMLHttpRequest.onreadystatechange = function(){
-        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
-      }*/
-    xhr.addEventListener("load", reqListener);
-     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
-     xhr.setRequestHeader("Content-Type","application/json");
-     if (xhr.readyState == 4 && xhr.status == 200) { 
-      var jsonData = JSON.parse(xhr.responseText);
-      showGET(jsonData);
-     }
-    var Token = document.forms["Getuserform"]["Token"].value
-    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-    xhr.send(UserID);
-    
-    };
-    </script>-->
-</center> 
-</body>
+<form name="GetWorklogform" id="forms">
+    <div>
+        <label for="Token">Token </label>
 
-</html>
+        <input type="string" id="Token" name="Token" required />
 
-                     
-               
+        <label for="WorklogID">WorklogID </label>
+
+        <input type="long" id="WorklogID" name="WorklogID" /> <br />
+    </div>
+</form>
+
+<input type="button" value="GETWORKLOG" onclick="getWorklog();" />
+
+<table name="Table" id="table_id" class="display" border="1">
+    <thead>
+        <tr>
+            <th>WorklogID</th>
+            <th>ProjectID</th>
+            <th>userID</th>
+            <th>feature</th>
+            <th>estimateWorkTime</th>
+           
             
-                
-              
+        </tr>
+    </thead>
+
+    <tbody id="tablePlace"></tbody>
+</table>
+<p id="Getproject"></p>
+
+<script>
+    function createUserColumn(data) {
+        return '<td>' + data + '</td>';
+    }
+
+    function generateUserRow(user) {
+        var row = '<tr>';
+        row += createUserColumn(user.worklogID);
+        row += createUserColumn(user.projectID);
+        row += createUserColumn(user.userID);
+        row += createUserColumn(user.feature);
+        row += createUserColumn(user.estimateWorkTime);
+       
+        row += '</td>';
+
+        return row;
+    }
+
+    function showUserDetails(res) {
+        var userTableBody = document.getElementById('tablePlace');
+        if (userTableBody) {
+            userTableBody.innerHTML =generateUserRow(res.data);
+        } else {
+            alert('Cannot retrieve the element for showing worklog.');
+        }
+    }
+
+    function getWorklog() {
+        function reqListener() {
+            showUserDetails(JSON.parse(this.responseText));
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', reqListener);
+        xhr.open('GET', 'https://localhost:44392/api/worklog/getbyid?id='+ WorklogID.value, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        var Token = document.forms['GetWorklogform']['Token'].value;
+        xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+        xhr.send(WorklogID);
+    }
+</script>
+</center>
+</body>
+</html>

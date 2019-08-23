@@ -1,8 +1,4 @@
-<a href="menu.html"><font size="5">Home</font></a>
 
-<br>
-
-<a href="logout.html"><font size="5">Logout</font></a>
 <style>
     
         ul#menu{
@@ -39,6 +35,11 @@
         <meta charset="utf-8"/>
     </head>
     <body>
+
+            <a href="menu.html">Home</a>
+            <a href="logout.html">Logout</a>
+
+
         <center>
         <form name="Projectform"   id="forms" >
             <br><br><br>
@@ -90,7 +91,7 @@
          
            
            
-           //oReq.send("Content-Type","application/json;charset=utf-8");
+          
                
             
               
@@ -106,53 +107,70 @@
 
 
 
-<!--<script>
-        function GET() {
-    function reqListener () {
-    
-    //console.log(JSON.parse(xhr.responseText));
-    //console.log(this.responseText);
-    
-    var myObj = { UserID : +"UserID", FullName : "FullName" };
-    console.log(this.responseText); 
-    //  var obj= JSON.parse('{"userID":+UserID}');
-    document.getElementById("userid").innerHTML=UserID;
-    document.getElementById("userid").innerHTML=FullName;
-    }
-    
-    var xhr= new XMLHttpRequest();
-    /*  XMLHttpRequest.onreadystatechange = function(){
-        if( XMLHttpRequest.readyState== 4 &&  XMLHttpRequest.status==200)
-      }*/
-    xhr.addEventListener("load", reqListener);
-     xhr.open("GET", "https://localhost:44392/api/user/getbyid?id=28", true);
-     xhr.setRequestHeader("Content-Type","application/json");
-     if (xhr.readyState == 4 && xhr.status == 200) { 
-      var jsonData = JSON.parse(xhr.responseText);
-      showGET(jsonData);
-     }
-    var Token = document.forms["Getuserform"]["Token"].value
-    xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-    xhr.send(UserID);
-    
-    };
-    </script>-->
-</center> 
-</body>
-</html>
+<form name="Getprojectform" id="forms">
+            <div>
+                <label for="Token">Token </label>
 
+                <input type="string" id="Token" name="Token" required />
 
+                <label for="ProjectID">ProjectID </label>
 
+                <input type="long" id="ProjectID" name="ProjectID" /> <br />
+            </div>
+        </form>
 
-<!--  <table border="1"> 
-        <tr>
-            <td> 
-               ProjectID           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
-                
-            </td>
-             <td>
-                   ProjectTitle     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
+        <input type="button" value="GETPROJECT" onclick="getProject();" />
+
+        <table name="Table" id="table_id" class="display" border="1">
+            <thead>
+                <tr>
+                    <th>ProjectID</th>
+                    <th>ProjectTitle</th>
                     
-                </td>
-            </tr>
-     </table>-->
+                </tr>
+            </thead>
+ 
+            <tbody id="tablePlace"></tbody>
+        </table>
+        <p id="Getproject"></p>
+
+        <script>
+            function createUserColumn(data) {
+                return '<td>' + data + '</td>';
+            }
+
+            function generateUserRow(user) {
+                var row = '<tr>';
+                row += createUserColumn(user.projectID);
+                row += createUserColumn(user.projectTitle);
+                row += '</td>';
+
+                return row;
+            }
+
+            function showUserDetails(res) {
+                var userTableBody = document.getElementById('tablePlace');
+                if (userTableBody) {
+                    userTableBody.innerHTML =generateUserRow(res.data);
+                } else {
+                    alert('Cannot retrieve the element for showing project.');
+                }
+            }
+
+            function getProject() {
+                function reqListener() {
+                    showUserDetails(JSON.parse(this.responseText));
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener('load', reqListener);
+                xhr.open('GET', 'https://localhost:44392/api/project/getbyid?id='+ ProjectID.value, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                var Token = document.forms['Getprojectform']['Token'].value;
+                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+                xhr.send(ProjectID);
+            }
+        </script>
+        </center>>
+    </body>
+</html>
