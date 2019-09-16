@@ -1,8 +1,3 @@
-<a href="menu.html"><font size="5">Home</font></a>
-
-<br>
-
-<a href="logout.html"><font size="5">Logout</font></a>
 
 
 <style id="style">
@@ -43,8 +38,15 @@
     
         <title>HTML Page</title>
     </head>
-    <center>
+    
     <body>
+
+            <a href="menu.html">Home</a>
+
+            <a href="logout.html">Logout</a>
+
+
+            <center>
      
         <form name="Loginform" id="forms">
             <br>
@@ -90,6 +92,8 @@
                 { 
                    function reqListener () {
                    console.log(this.responseText);
+                   alert("Login Successfully");
+                   window.location.href = "front.html";
                    }
                   
                       var Username =document.forms["Loginform"]["Username"].value;
@@ -113,7 +117,7 @@
 
                         
                        //   window.location.replace("front.html");
-
+                      // window.location.href = "front.html";
               
                       };
             </script> 

@@ -1,11 +1,4 @@
-<a href="menu.html"><font size="5">Home</font></a>
-
-<br>
-
-<a href="logout.html"><font size="5">Logout</font></a>
-
-
-<style id="style">
+ <style id="style">
     
         ul#menu{
             padding: 10
@@ -45,7 +38,10 @@
         <title>HTML Page</title>
 
     </head>
-  <body>   
+  <body>  
+      <a href="menu.html">Home</a>
+
+      <a href="logout.html">Logout</a> 
       
     <center>
      
@@ -53,51 +49,78 @@
       <br><br><br>
       <h1><i>Registration</i></h1>
       <div>
+         
+          <tr>
+         <td>
+            FullName
+          </td>
+           <td> <input type="text" id="FullName" name="FullName"> </td>
+         </tr>
+          <br>
+          <br>
 
-          <label for="FullName"> FullName </label>
+          <tr>
+         <td>
+            Address
+          </td>
+            <td><input type= "textarea" name="Address"> </textarea></td>
+          </tr>
+          <br>
+          <br>
 
-          <input type="text" id="FullName" name="FullName"> <br>
+        <tr>
+        <td>
+          Gender
+        </td>
+          <td>Male<input type="radio" name="Gender" value="Male"/> </td>
 
-
-          <label for="Address"> Address </label>
-          <input type= "textarea" name="Address"> </textarea> <br>
-
-
-          <label for="Gender">Gender  </label>
-         Male     <input type="radio" name="Gender" value="Male"/> 
-
-         Female   <input type="radio" name="Gender" value="Female"/>  <br> 
-
-          
-         <label for="Dob">Date of birth  </label>
-
-          <input type="datetime" id="Dob" name="Dob"> <br>
+          <td>Female<input type="radio" name="Gender" value="Female"/> </td>
+         </tr>
+         <br> 
+         <br>
 
          
-          <label for="Age">Age  </label>
-
-          <input type="int" id="Age" name="Age">  <br>
-
+         <tr>
+         <td><label for="Dob"> Date of birth </label></td>
+           <td><input type="datetime" id="Dob" name="Dob" value="yyyy-mm-dd"> </td>
+        </tr>
+        <br>
+        <br>
          
-          <label for="ContactNumber">Contact Number  </label>
+        <tr>
+          <td><label for="Age"> Age </label></td>
+            <td><input type="Age" id="Age" name="Age"></td> 
+        </tr>
+            <br>
+            <br>
 
-          <input type= "text" id="ContactNumber" name="ContactNumber">    <br>
+         <tr>
+          <td><label for="ContactNumber"> Contact Number </label></td>
+            <td><input type= "text" id="ContactNumber" name="ContactNumber"></td>    
+          </tr>
+          <br>
+          <br>
 
-          
-          <label for="Email">Email  </label>
-
-          <input type= "text" name="Email" value="" required/>    <br>
+          <tr>
+          <td><label for="Email">Email</label></td>
+          <td><input type= "email" name="Email" value="@gmail.com" required/></td>
+          </tr>   
+          <br>
+          <br>
          
-   
-          <label for="username">Username  </label>
-
-          <input type="text" id="username" name="Username">  <br>
+          <tr>
+          <td><label for="username"> Username </label></td>
+            <td><input type="text" id="username" name="Username"></td>
+          </tr>
+           <br>
+           <br>
      
         
-          <label for="password">Password  </label>
-
-          <input type="password" name="Password" required/>   <br>
-     
+           <tr>
+          <td><label for="password"> Password </label></td>
+            <td><input type="password" name="Password" required/></td> 
+        </tr>
+        
          </div> 
          
 
@@ -115,7 +138,9 @@
           {
           function reqListener () {
           console.log(this.responseText);
-          
+          alert("Registered Successfully");
+          window.location.href = "login.html";
+                      
                 
           }
                       
@@ -147,9 +172,13 @@
                               xhr.setRequestHeader("Content-Type","application/JSON");
                               xhr.send(JSON.stringify(body));
           
-                         //   window.location.replace("login.html");  
+                         //   window.location.replace("login.html"); 
+                          //window.location.href = "login.html";
+                         
                          
                        };
+                       
+
                       </script> 
 
 
