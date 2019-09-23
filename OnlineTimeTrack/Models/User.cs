@@ -1,5 +1,7 @@
-﻿ using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -23,21 +25,23 @@ namespace OnlineTimeTrack.Models
 
         public int Age { get; set; }
 
-        public string ContactNumber { get; set; }
+         public string ContactNumber { get; set; }
 
         public string Email { get; set; }
 
         public string Username { get; set; }
+
+      
+        public string Password { get; set; }
         
+       
+        [JsonIgnore]
+        public string PasswordHash { get; set; } 
+
+        [JsonIgnore]
         public string PasswordKey { get; set; }
 
-        public string Password { get; set; }
 
-        [NotMapped]
         public string Token { get; set; }
-
-
-        
-
     }
 }

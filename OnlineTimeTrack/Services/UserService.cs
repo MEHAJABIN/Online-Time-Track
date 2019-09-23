@@ -13,6 +13,10 @@ using Microsoft.VisualStudio.Web.CodeGeneration;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+
 
 namespace OnlineTimeTrack.Services
 {
@@ -21,161 +25,107 @@ namespace OnlineTimeTrack.Services
     {
 
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
-
-        public UserService(OnlineTimeTrackContext onlineTimeTrackContext)
+        private readonly AppSettings _appSettings;
+        
+        public UserService(OnlineTimeTrackContext onlineTimeTrackContext, IOptions<AppSettings> appSettings)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
-
+            _appSettings = appSettings.Value;
+           
         }
 
 
-        public User Authenticate(string Username, string Password)
+          
+
+        private void GenerateUserToken(User user)
         {
-            string passwordKey = Password;
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(passwordKey))
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
-                return null;
-            }
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                      new Claim(ClaimTypes.Name, user.UserID.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            /*  var claims = new List<Claim>();
+             // user Id
+              claims.Add(new Claim(nameof(OnlineTimeTrackClaims.UserID), user.UserID.ToString()));
 
-            var user = _onlineTimeTrackContext.Users.SingleOrDefault(x => x.Username == Username);
-
-            // check if username exists
-            if (user == null)
-                return null;
-
-            string newHash = HashPassword(Password, user.PasswordKey);
-            // check if password is correct
-
-            if (user.Password != newHash)
-                return null;
+             new Claim(ClaimTypes.Name, user.UserID.ToString());
 
 
-            // authentication successful
-            return user;
+             var tokenDescriptor = new SecurityTokenDescriptor
+             {
+                 Subject = new ClaimsIdentity(claims),
+ #if DEBUG
+                 Expires = DateTime.UtcNow.AddDays(1000),
+ #else
+                 Expires = DateTime.UtcNow.AddDays(7),
+ #endif
+                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+             };*/
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
         }
 
-
-
-        private string VerifyPasswordKey(string Password, string Key)
+        private string GenerateHash(string Password, string PasswordKey)
         {
-            string key = null;
-            string HashVal = Password + key;
+            var passwordDigest = Password + PasswordKey;
             using (SHA512 shaM = new SHA512Managed())
             {
-                string Hash = Convert.ToBase64String(shaM.ComputeHash(Encoding.UTF8.GetBytes(HashVal)));
-                return Hash;
+                return Encoding.ASCII.GetString(
+                    shaM.ComputeHash(Encoding.ASCII.GetBytes(passwordDigest)));
             }
+        }
 
+        private string GeneratePasswordKey()
+        {
+            var random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&&*()_+|";
+            return new string(Enumerable.Repeat(chars, 30)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
 
-    
 
+         public async Task<User> Login(string Username, string Password)
+         {
+            // find the user from db with the same username
+            
+            var user =_onlineTimeTrackContext.Users.FirstOrDefault(x => x.Username == Username); 
 
+            if (user == null)
+            {
+                throw new Exception("The user is not registered.");
+         }
+           
+            // generate hash using the user's passwordKey and the given password
+            var hash = GenerateHash(Password, user.PasswordKey);
 
-        public User Create(User user, string Password)
-        {
-            // validation
-            if (string.IsNullOrWhiteSpace(Password))
-                throw new AppException("Password is required");
+            // see if the hash matches with the one stored in DB
+            if (hash == user.PasswordHash)
+            {
+                // generate token
+                GenerateUserToken(user);
 
-            if (_onlineTimeTrackContext.Users.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+              await _onlineTimeTrackContext.SaveChangesAsync();
 
-            //    byte[] PasswordKey, password;
-            CreatePasswordHash(user.PasswordKey, user.Password);
-
-            user.PasswordKey = Password;
-            user.Password = Password;
-
-            _onlineTimeTrackContext.Users.Add(user);
-            _onlineTimeTrackContext.SaveChanges();
+            }
+            /*  else
+              {
+                  throw new Exception("The credentials do not match.");
+              }*/
 
             return user;
         }
 
+        
 
 
-        private void CreatePasswordHash(byte[] PasswordKey, byte[] Password)
-        {
-            throw new NotImplementedException();
-        }
-
-        void Update(User user, string password = null)
-        {
-            var User = _onlineTimeTrackContext.Users.Find(user.UserID);
-
-            if (user == null)
-                throw new AppException("User not found");
-
-            if (user.Username != user.Username)
-            {
-                // username has changed so check if the new username is already taken
-                if (_onlineTimeTrackContext.Users.Any(x => x.Username == user.Username))
-                    throw new AppException("Username " + user.Username + " is already taken");
-            }
-
-
-
-            // update user properties
-            user.FullName = user.FullName;
-            user.Username = user.Username;
-
-            // update password if it was entered
-            if (!string.IsNullOrWhiteSpace(password))
-            {
-                CreatePasswordHash(user.PasswordKey);
-
-                string passwordKey = null;
-                user.PasswordKey = passwordKey;
-                user.Password = password;
-            }
-
-            _onlineTimeTrackContext.Users.Update(user);
-            _onlineTimeTrackContext.SaveChanges();
-        }
-
-
-
-        private void CreatePasswordHash(string passwordKey)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        private void CreatePasswordHash(string password, string password1)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        private void CreatePasswordHash(byte[] passwordHash, string password)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                byte[] passwordSalt = hmac.Key;
-                NewMethod(password, hmac);
-            }
-        }
-
-
-        private static void NewMethod(string password, HMACSHA512 hmac)
-        {
-            byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        }
-
-        void Delete(int id)
-        {
-            if (_onlineTimeTrackContext.Users.Find(id) != null)
-            {
-                _onlineTimeTrackContext.Users.Remove(_onlineTimeTrackContext.Users.Find(id));
-                _onlineTimeTrackContext.SaveChanges();
-            }
-        }
 
         public async Task<User> RegisterUser(User user)
         {
@@ -218,62 +168,31 @@ namespace OnlineTimeTrack.Services
                     throw new Exception("A user with the same email already exists.");
                 }
             }
-
-            // password hash generation
+            // generate password key
             user.PasswordKey = GeneratePasswordKey();
 
-            // password  hash
-            user.Password = HashPassword(user.Password, user.PasswordKey);
+            // generate password hash
+            user.PasswordHash = GenerateHash(user.PasswordHash, user.PasswordKey);
+
+            
+
+            // token generation
+            GenerateUserToken(user);
+
+            // otherwise, save the user to db
+            //var addedUser = await _onlineTimeTrackContext.Users.AddAsync(user);
 
 
-            // save the user
-            var addedUser = await _onlineTimeTrackContext.Users.AddAsync(user);
-            await _onlineTimeTrackContext.SaveChangesAsync();
-            addedUser.Entity.Password = null;
-            addedUser.Entity.PasswordKey = null;
-
-            // return the user
-            return addedUser.Entity;
-        }
-
-        private string GeneratePasswordKey()
-        {
-            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-            {
-                byte[] tokenData = new byte[32];
-                rng.GetBytes(tokenData);
-
-                string token = Convert.ToBase64String(tokenData);
-
-                return token;
-            }
-        }
-
-
-        private string HashPassword(string password, string key)
-        {
-            string HashVal = password + key;
-            using (SHA512 shaM = new SHA512Managed())
-            {
-                string Hash = Convert.ToBase64String(shaM.ComputeHash(Encoding.UTF8.GetBytes(HashVal)));
-                return Hash;
-            }
-        }
-
-
-
-        void Add(User entity)
-        {
-            _onlineTimeTrackContext.Users.Add(entity);
+            _onlineTimeTrackContext.Users.Add(user);
             _onlineTimeTrackContext.SaveChanges();
+
+
+            return user;
+            
+
+            
         }
-
-        void IUserService.Update(User user, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-
+        
 
         public int? GetUserIDFromContext(HttpContext context)
         {
@@ -362,33 +281,17 @@ namespace OnlineTimeTrack.Services
 
 
 
+/*private string GeneratePasswordKey()
+{
+    using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+    {
+        byte[] tokenData = new byte[32];
+        rng.GetBytes(tokenData);
 
+        string Token = Convert.ToBase64String(tokenData);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return Token;
+    }
+}*/
 
 
