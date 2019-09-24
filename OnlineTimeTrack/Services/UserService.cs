@@ -35,8 +35,6 @@ namespace OnlineTimeTrack.Services
         }
 
 
-          
-
         private void GenerateUserToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -50,23 +48,7 @@ namespace OnlineTimeTrack.Services
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            /*  var claims = new List<Claim>();
-             // user Id
-              claims.Add(new Claim(nameof(OnlineTimeTrackClaims.UserID), user.UserID.ToString()));
-
-             new Claim(ClaimTypes.Name, user.UserID.ToString());
-
-
-             var tokenDescriptor = new SecurityTokenDescriptor
-             {
-                 Subject = new ClaimsIdentity(claims),
- #if DEBUG
-                 Expires = DateTime.UtcNow.AddDays(1000),
- #else
-                 Expires = DateTime.UtcNow.AddDays(7),
- #endif
-                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-             };*/
+     
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
@@ -277,21 +259,5 @@ namespace OnlineTimeTrack.Services
 
 
 
-
-
-
-
-/*private string GeneratePasswordKey()
-{
-    using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
-    {
-        byte[] tokenData = new byte[32];
-        rng.GetBytes(tokenData);
-
-        string Token = Convert.ToBase64String(tokenData);
-
-        return Token;
-    }
-}*/
 
 

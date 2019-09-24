@@ -22,60 +22,18 @@ namespace OnlineTimeTrack.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-      /*private readonly AppSettings _appSettings;*/
+      
 
         public UserController(IUserService userService)
-            /*(IUserService userService, IOptions<AppSettings> appSettings)*/
+           
         {
             _userService = userService;
-           /* _appSettings = appSettings.Value;*/
+           
         }
 
 
 
-        //User Login
-        /* [AllowAnonymous]
-         [HttpPost("authenticate")]
-         public IActionResult Authenticate([FromBody]User loginDetails)
-         {
-             var user = _userService.Authenticate(loginDetails.Username, loginDetails.Password);
-             if (user == null)
-                 return BadRequest(new { message = "Username or password is incorrect" });
-
-             var tokenHandler = new JwtSecurityTokenHandler();
-             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-             {
-                 Subject = new ClaimsIdentity(new Claim[]
-                 {
-                      new Claim(ClaimTypes.Name, user.UserID.ToString())
-                 }),
-                 Expires = DateTime.UtcNow.AddDays(7),
-                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-             };
-             var Token = tokenHandler.CreateToken(tokenDescriptor);
-             var tokenString = tokenHandler.WriteToken(Token);
-
-             // return basic user info (without password) and token to store client side
-             user.Token = tokenString;
-             return Ok(new
-             {
-                 UserID = user.UserID,
-                 FullName = user.FullName,
-                 Address = user.Address,
-                 Gender = user.Gender,
-                 Dob = user.Dob,
-                 Age = user.Age,
-                 ContactNumber = user.ContactNumber,
-                 Email = user.Email,
-                 Username = user.Username,
-                 Password = user.Password,
-                 PasswordKey = user.PasswordKey,
-                 PasswordHash =user.PasswordHash,
-                 Token = tokenString
-             });
-         }*/
-
+    
         //User login
         [AllowAnonymous]
         [HttpPost("login")]
