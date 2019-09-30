@@ -66,12 +66,14 @@ namespace OnlineTimeTrack.Services
         {
             // Add ProjectTitle
             if (string.IsNullOrEmpty(ProjectTitle))
-                throw new AppException("ProjectTitle is required");
+                throw new Exception("ProjectTitle is required");
 
             if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
-                throw new AppException("ProjectTitle \"" + project.ProjectTitle + "\" is already taken");
+                throw new Exception("ProjectTitle \"" + project.ProjectTitle + "\" is already taken");
 
             project.ProjectTitle = ProjectTitle;
+            project.DateAdded = DateTime.UtcNow;
+            project.DateModified = DateTime.UtcNow;
             _onlineTimeTrackContext.Projects.Add(project);
             _onlineTimeTrackContext.SaveChanges();
             return project;
@@ -84,13 +86,13 @@ namespace OnlineTimeTrack.Services
             var Project = _onlineTimeTrackContext.Projects.Find(project.ProjectID);
 
             if (project == null)
-                throw new AppException("ProjectTitle not found");
+                throw new Exception("ProjectTitle not found");
 
             if (project.ProjectTitle != project.ProjectTitle)
             {
                 // ProjectTitle has changed so check if the new Project is already taken
                 if (_onlineTimeTrackContext.Projects.Any(x => x.ProjectTitle == project.ProjectTitle))
-                    throw new AppException("ProjectTitle " + project.ProjectTitle + " is already taken");
+                    throw new Exception("ProjectTitle " + project.ProjectTitle + " is already taken");
             }
 
         }

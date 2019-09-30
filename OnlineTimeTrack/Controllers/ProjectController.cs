@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Newtonsoft.Json.Linq;
 
 namespace OnlineTimeTrack.Controllers
 {
-    [Authorize]
+    
     [Route("api/Project")]
     public class ProjectController : ControllerBase
     {

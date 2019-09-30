@@ -27,7 +27,7 @@
             background-size: 100% 100%;
         }
         
-          </style>
+</style>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,47 +37,49 @@
     <body>
 
             <a href="menu.html">Home</a>
-            <a href="logout.html">Logout</a>
+            <a href="logout.html">Logout</a> 
             
         <center>
         <form  name="Worklogform" >
             <br><br><br>
             <h1><i>Worklog</i></h1>
             <div>
-                 <label for="Token">Token </label>
-                   
-                 <input type="string" id="Token" name="Token" required/> 
+             
                  
+                 <tr>
+                 <td><label for="Date">Date</label></td>
+                 <td><input type="datetime" id="Date" name="Date" value="yyyy-mm-dd" /></td>
+                </tr>
                  <br>
-
-                 <label for="Date">Date</label>
-                 <input type="datetime" id="Date" name="Date"/>  
-                 
                  <br>
                 
-
-                <label for="ProjectID">ProjectID</label>
-                <input type="int" id="ProjectID" name="ProjectID"/>  
-                
+                <tr>
+                <td><label for="ProjectID">ProjectID</label></td>
+                <td><input type="int" id="ProjectID" name="ProjectID"/> </td> 
+                </tr>
                 <br>
-
-                <label for="UserID">UserID</label>
-                <input type="int" id="UserID" name="UserID"/>  
-                
                 <br>
-                     
-                <label for="Feature">Feature</label>
-                <input type="text" id="Feature" name="Feature"/>  
-                
+                 
+                <tr>
+                <td><label for="UserID">UserID</label></td>
+                <td><input type="int  " id="UserID" name="UserID"/> </td> 
+                </tr>
                 <br>
-                     
-                 <label for="EstimateWorkTime">EstimateWorkTime</label>
-                <input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/>  
-                
                 <br>
-
-                    
-                </div>
+                  
+                <tr>
+                <td><label for="Feature">Feature</label></td>
+                <td><input type="text" id="Feature" name="Feature"/></td>  
+                </tr>
+                <br>
+                <br>
+                  
+                <tr>
+                <td><label for="EstimateWorkTime">EstimateWorkTime</label></td>
+                <td><input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/></td>  
+                </tr>
+                
+            </div>
          </form>
 
        <div>
@@ -89,6 +91,7 @@
         {
             function reqListener () {
             console.log(this.responseText);
+            alert("Successfully loaded");
         }
 
             var Date=document.forms["Worklogform"]["Date"].value;
@@ -111,8 +114,7 @@
              console.log(body);
             xhr.setRequestHeader("Content-Type","application/json");
             
-            var Token = document.forms["Worklogform"]["Token"].value
-            xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
+          
             xhr.send(JSON.stringify(body));
 
 };
@@ -123,13 +125,14 @@
 
 <form name="GetWorklogform" id="forms">
     <div>
-        <label for="Token">Token </label>
+      
 
-        <input type="string" id="Token" name="Token" required />
-
-        <label for="WorklogID">WorklogID </label>
-
-        <input type="long" id="WorklogID" name="WorklogID" /> <br />
+    <tr>
+        <td><label for="WorklogID">WorklogID </label></td>
+         <td><input type="WorklogID" id="WorklogID" name="WorklogID"/></td>
+        </tr>
+        
+        
     </div>
 </form>
 
@@ -139,41 +142,57 @@
     <thead>
         <tr>
             <th>WorklogID</th>
+            <th>Date</th>
             <th>ProjectID</th>
-            <th>userID</th>
-            <th>feature</th>
-            <th>estimateWorkTime</th>
-           
-            
-        </tr>
+            <th>UserID</th>
+            <th>Feature</th>
+            <th>ProjectTitle</th>
+            <th>FullName</th>
+            <th>Address</th>
+            <th>EstimateWorkTime</th>
+            <th>ActualWorkTimeStart</th>
+            <th>ActualWorkTimeEnd</th>
+            <th>TotalWorkTime</th>
+            <th>Date Added</th>
+            <th>Date Modified</th>
+         </tr>
     </thead>
 
     <tbody id="tablePlace"></tbody>
 </table>
-<p id="Getproject"></p>
+<p id="Getworklog"></p>
 
 <script>
-    function createUserColumn(data) {
+    function createWorklogColumn(data) {
         return '<td>' + data + '</td>';
     }
 
-    function generateUserRow(user) {
+    function generateWorklogRow(worklog) {
         var row = '<tr>';
-        row += createUserColumn(user.worklogID);
-        row += createUserColumn(user.projectID);
-        row += createUserColumn(user.userID);
-        row += createUserColumn(user.feature);
-        row += createUserColumn(user.estimateWorkTime);
-       
+        row += createWorklogColumn(worklog.worklogID);
+        row += createWorklogColumn(worklog.date);
+        row += createWorklogColumn(worklog.projectID);
+        row += createWorklogColumn(worklog.userID);
+        row += createWorklogColumn(worklog.feature);
+        row += createWorklogColumn(worklog.projectTitle);
+        row += createWorklogColumn(worklog.fullName);
+        row += createWorklogColumn(worklog.address);
+        row += createWorklogColumn(worklog.estimateWorkTime);
+        row += createWorklogColumn(worklog.actualWorkTimeStart);
+        row += createWorklogColumn(worklog.actualWorkTimeEnd);
+        row += createWorklogColumn(worklog.totalWorkTime);
+        row += createWorklogColumn(worklog.dateAdded);
+        row += createWorklogColumn(worklog.dateModified);
+
         row += '</td>';
 
         return row;
     }
 
-    function showUserDetails(res) {
-        var userTableBody = document.getElementById('tablePlace');
-        if (userTableBody) {
-            userTableBody.innerHTML =generateUserRow(res.data);
+    function showWorklogDetails(res) {
+        var worklogTableBody = document.getElementById('tablePlace');
+        if (worklogTableBody) {
+            worklogTableBody.innerHTML =generateWorklogRow(res.data);
         } else {
             alert('Cannot retrieve the element for showing worklog.');
         }
@@ -181,18 +200,23 @@
 
     function getWorklog() {
         function reqListener() {
-            showUserDetails(JSON.parse(this.responseText));
+            showWorklogDetails(JSON.parse(this.responseText));
+          //  window.location.href = "GetAllWorklogs.html";
         }
 
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', reqListener);
         xhr.open('GET', 'https://localhost:44392/api/worklog/getbyid?id='+ WorklogID.value, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        var Token = document.forms['GetWorklogform']['Token'].value;
-        xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
         xhr.send(WorklogID);
     }
 </script>
 </center>
 </body>
 </html>
+
+     
+      
+        
+        
+    

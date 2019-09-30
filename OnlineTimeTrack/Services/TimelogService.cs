@@ -29,6 +29,8 @@ namespace OnlineTimeTrack.Services
             addedTimelog.Entity.ActualWorkTimeStart = timelog.ActualWorkTimeStart;
 
             addedTimelog.Entity.ActualWorkTimeEnd = timelog.ActualWorkTimeEnd;
+            timelog.DateAdded = DateTime.UtcNow;
+            timelog.DateModified = DateTime.UtcNow;
 
             await _onlineTimeTrackContext.SaveChangesAsync();
 
@@ -38,7 +40,7 @@ namespace OnlineTimeTrack.Services
 
 
         //Get particular timelog
-       public async Task<Timelog> GetById(long? id)
+        public async Task<Timelog> GetById(long? id)
         {
             var result = await _onlineTimeTrackContext.Timelogs.Where(t => t.TimelogID == id).ToListAsync();
 
@@ -73,11 +75,3 @@ namespace OnlineTimeTrack.Services
         }
     }
 }
-
-
-
-
-
-
-
-

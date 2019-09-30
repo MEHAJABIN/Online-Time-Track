@@ -7,7 +7,7 @@ namespace OnlineTimeTrack.Models
 {
     public class Response<T>
     {
-            public bool Status { get; set; }
+           public bool Status { get; set; }
 
             public string Message { get; set; }
 
@@ -22,7 +22,5 @@ namespace OnlineTimeTrack.Models
                     Message = message
                 };
             }
-
-       
     }
 }

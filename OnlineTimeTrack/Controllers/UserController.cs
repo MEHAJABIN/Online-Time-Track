@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,28 +16,28 @@ using OnlineTimeTrack.Services;
 
 namespace OnlineTimeTrack.Controllers
 {
-    [Authorize]
     [Route("api/User")]
     public class UserController : ControllerBase
     {
         private IUserService _userService;
       
+        private readonly AppSettings _appSettings;
 
-        public UserController(IUserService userService)
-           
+        public UserController(IUserService userService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
-           
+            _appSettings = appSettings.Value;
         }
 
 
 
     
         //User login
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<Response<User>> Login([FromBody]User loginData)
         {
+
+          
             try
             {
                 var loggedInUser = await _userService.Login(loginData.Username, loginData.Password);
@@ -53,7 +52,6 @@ namespace OnlineTimeTrack.Controllers
 
 
         //User Registration
-        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
         {

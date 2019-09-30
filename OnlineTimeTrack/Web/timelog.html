@@ -36,6 +36,7 @@
     <body>
 
             <a href="menu.html">Home</a>
+            
             <a href="logout.html">Logout</a>
 
         <center>
@@ -43,37 +44,30 @@
             <br><br><br>
             <h1><i>Timelog</i></h1>
        <div>
-           
-                    <label for="Token">Token </label>
-                   
-                    <input type="string" id="Token" name="Token" required/><br>
+                    
+                   <tr>
+                    <td><label for="Worklog ID">  Worklog ID</label></td>
+                     <td><input type="WorklogID" name="WorklogID"/></td>
+                    </tr>         
+                    <br>
+                    <br>
 
-                   
-                    <label for="Worklog ID">  Worklog ID</label>
+                   <tr>
+                   <td><label for="ActualWorkTimeStart"> Actual Work Time Start</label></td>
+                   <td><input type="datetime" name="ActualWorkTimeStart"/></td>  
+                   </tr> 
+                   <br>
+                   <br>    
 
-                    <input type="int" name="WorklogID"/>          <br>
-
-
-                   <label for="ActualWorkTimeStart"> Actual Work Time Start</label>
-
-                    <input type="datetime" name="ActualWorkTimeStart"/>  <br>
-                            
-                    <label for="ActualWorkTimeEnd"> Actual Work Time End</label>
-
-                    <input type="datetime" name="ActualWorkTimeEnd"/> <br>
-                
-           
-                 
-             
-
-            
-                <br><br>
-             
-        </div>
+                   <tr>
+                    <td><label for="ActualWorkTimeEnd"> Actual Work Time End</label></td>
+                    <td><input type="datetime" name="ActualWorkTimeEnd"/></td> 
+                </tr>
+              </div>
         </form>
 
         <div>
-                <button onclick="POST();"  >SUBMIT</button>
+                <button onclick="POST();">SUBMIT</button>
             </div>
     
             <script>
@@ -82,10 +76,12 @@
                 function reqListener () {
                 console.log(this.responseText);
                }
+               var TimelogID=document.forms["Timelogform"]["TimelogID"].value;
                var WorklogID=document.forms["Timelogform"]["WorklogID"].value;
                var ActualWorkTimeStart=document.forms["Timelogform"]["ActualWorkTimeStart"].value;
                 var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value
                 const body = {
+                        TimelogID : TimelogID,
                         WorklogID : WorklogID,
                         ActualWorkTimeStart : ActualWorkTimeStart,
                         ActualWorkTimeEnd :ActualWorkTimeEnd
@@ -97,9 +93,6 @@
                
                  console.log(body);
                  xhr.setRequestHeader("Content-Type","application/json");
-
-                 var Token = document.forms["Timelogform"]["Token"].value
-                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(JSON.stringify(body));
             };
         
@@ -110,13 +103,12 @@
 
 <form name="GetTimelogform" id="forms">
     <div>
-        <label for="Token">Token </label>
-
-        <input type="string" id="Token" name="Token" required />
-
-        <label for="TimelogID">TimelogID </label>
-
-        <input type="long" id="TimelogID" name="TimelogID" /> <br />
+        
+        <tr>
+        <td><label for="TimelogID">TimelogID </label></td>
+        <td><input type="long" id="TimelogID" name="TimelogID" /></td>
+       </tr> 
+       
     </div>
 </form>
 
@@ -136,48 +128,48 @@
 
     <tbody id="tablePlace"></tbody>
 </table>
-<p id="GetTimelog"></p>
+<p id="Gettimelog"></p>
 
 <script>
-    function createUserColumn(data) {
+    function createTimelogColumn(data) {
         return '<td>' + data + '</td>';
     }
 
-    function generateUserRow(user) {
+    function generateTimelogRow(timelog) {
         var row = '<tr>';
-        row += createUserColumn(user.timelogID);
-        row += createUserColumn(user.worklogID);
-        row += createUserColumn(user.actualWorkTimeStart);
-        row += createUserColumn(user.actualWorkTimeEnd);
-        row += createUserColumn(user.totalWorkTime);
-        
+        row += createTimelogColumn(timelog.timelogID);
+        row += createTimelogColumn(timelog.worklogID);
+        row += createTimelogColumn(timelog.actualWorkTimeStart);
+         row += createTimelogColumn(timelog.actualWorkTimeEnd);
+        row += createTimelogColumn(timelog.totalWorkTime);
+       
         row += '</td>';
 
         return row;
     }
 
-    function showUserDetails(res) {
-        var userTableBody = document.getElementById('tablePlace');
-        if (userTableBody) {
-            userTableBody.innerHTML =generateUserRow(res.data);
+    function showTimelogDetails(res) {
+        var timelogTableBody = document.getElementById('tablePlace');
+        if (timelogTableBody) {
+            timelogTableBody.innerHTML =generateTimelogRow(res.data);
         } else {
-            alert('Cannot retrieve the element for showing Timelog.');
+            alert('Cannot retrieve the element for showing timelog.');
         }
     }
 
     function getTimelog() {
         function reqListener() {
-            showUserDetails(JSON.parse(this.responseText));
+            showTimelogDetails(JSON.parse(this.responseText));
+          //  window.location.href = "GetAllWorklogs.html";
         }
 
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', reqListener);
-        xhr.open('GET', 'https://localhost:44392/api/timelog/getbyid?id='+TimelogID.value, true);
+        xhr.open('GET', 'https://localhost:44392/api/timelog/getbyid?id='+ TimelogID.value, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        var Token = document.forms['GetTimelogform']['Token'].value;
-        xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
         xhr.send(TimelogID);
     }
 </script>
+</center>
 </body>
 </html>

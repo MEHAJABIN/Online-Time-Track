@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 using OnlineTimeTrack.Contexts;
-
+using Newtonsoft.Json.Linq;
 
 namespace OnlineTimeTrack.Controllers
 {
@@ -26,15 +26,17 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
+
+
         [HttpPost]
         public async Task<Response<Worklog>> Worklog([FromBody]Worklog worklog)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
+           /* var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }
+            }*/
 
             if (worklog == null)
             {
@@ -42,7 +44,7 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-            worklog.UserID = userID.GetValueOrDefault();
+           /* worklog.UserID = userID.GetValueOrDefault();*/
 
 
             try
@@ -55,7 +57,23 @@ namespace OnlineTimeTrack.Controllers
             {
                 return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
+
         }
+
+           /* if (worklog == null)
+            {
+                return Response<Worklog>.CreateResponse(false, "Please provide valid Wprklog Id.", null);
+            }
+            try
+            {
+                var newWorklog = await _worklogService.Worklog(worklog);
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.",newWorklog);
+            }
+            catch (Exception e)
+            {
+                return Response<Worklog>.CreateResponse(false, e.Message, null);
+            }
+        }*/
 
 
         [HttpGet("GetById")]
@@ -91,12 +109,12 @@ namespace OnlineTimeTrack.Controllers
         [HttpPut("UpdateWorklog")]
         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
+           /* var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }
+            }*/
 
             if (WorklogID == null)
             {
@@ -104,7 +122,7 @@ namespace OnlineTimeTrack.Controllers
             }
 
 
-            WorklogID.UserID = userID.GetValueOrDefault();
+           // WorklogID.UserID = userID.GetValueOrDefault();
 
 
             try

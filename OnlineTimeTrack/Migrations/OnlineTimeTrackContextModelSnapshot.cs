@@ -25,6 +25,10 @@ namespace OnlineTimeTrack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
                     b.Property<string>("ProjectTitle");
 
                     b.HasKey("ProjectID");
@@ -41,6 +45,10 @@ namespace OnlineTimeTrack.Migrations
                     b.Property<DateTime>("ActualWorkTimeEnd");
 
                     b.Property<DateTime>("ActualWorkTimeStart");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
 
                     b.Property<long>("WorklogID");
 
@@ -71,7 +79,11 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<string>("PasswordHash");
+
                     b.Property<string>("PasswordKey");
+
+                    b.Property<string>("Token");
 
                     b.Property<string>("Username");
 

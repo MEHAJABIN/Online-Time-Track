@@ -47,10 +47,7 @@
         
             <div>
 
-                    <label for="Token">Token </label>
                    
-                    <input type="string" id="Token" name="Token" required/>
-
 
 
                     <label for="ProjectTitle">ProjectTitle </label>
@@ -74,6 +71,9 @@
         { 
             function reqListener () {
            console.log(this.responseText);
+           alert("Successfully loaded");
+          // window.location.href="getProject";
+
         }
 
         
@@ -88,19 +88,9 @@
         var xhr = new XMLHttpRequest();
         xhr.addEventListener("load", reqListener);
         xhr.open("POST", "https://localhost:44392/api/project",true);
-         
-           
-           
-          
-               
-            
-              
-            console.log(body);
-            xhr.setRequestHeader("Content-Type","application/json");
-
-            var Token = document.forms["Projectform"]["Token"].value
-            xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
-            xhr.send(JSON.stringify(body));
+        console.log(body);
+        xhr.setRequestHeader("Content-Type","application/json");
+        xhr.send(JSON.stringify(body));
           
 };
  </script>
@@ -109,9 +99,7 @@
 
 <form name="Getprojectform" id="forms">
             <div>
-                <label for="Token">Token </label>
-
-                <input type="string" id="Token" name="Token" required />
+                
 
                 <label for="ProjectID">ProjectID </label>
 
@@ -135,23 +123,23 @@
         <p id="Getproject"></p>
 
         <script>
-            function createUserColumn(data) {
+            function createProjectColumn(data) {
                 return '<td>' + data + '</td>';
             }
 
-            function generateUserRow(user) {
+            function generateProjectRow(project) {
                 var row = '<tr>';
-                row += createUserColumn(user.projectID);
-                row += createUserColumn(user.projectTitle);
+                row += createProjectColumn(project.projectID);
+                row += createProjectColumn(project.projectTitle);
                 row += '</td>';
 
                 return row;
             }
 
             function showUserDetails(res) {
-                var userTableBody = document.getElementById('tablePlace');
-                if (userTableBody) {
-                    userTableBody.innerHTML =generateUserRow(res.data);
+                var projectTableBody = document.getElementById('tablePlace');
+                if (projectTableBody) {
+                    projectTableBody.innerHTML =generateProjectRow(res.data);
                 } else {
                     alert('Cannot retrieve the element for showing project.');
                 }
@@ -160,17 +148,16 @@
             function getProject() {
                 function reqListener() {
                     showUserDetails(JSON.parse(this.responseText));
+                   // window.location.href = "worklog.html";
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
                 xhr.open('GET', 'https://localhost:44392/api/project/getbyid?id='+ ProjectID.value, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                var Token = document.forms['Getprojectform']['Token'].value;
-                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(ProjectID);
             }
         </script>
-        </center>>
+        </center>
     </body>
 </html>

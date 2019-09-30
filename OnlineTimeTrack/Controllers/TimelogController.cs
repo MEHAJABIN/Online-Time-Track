@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
+using Newtonsoft.Json.Linq;
 
 namespace OnlineTimeTrack.Controllers
 {
@@ -32,12 +33,12 @@ namespace OnlineTimeTrack.Controllers
         [HttpPost]
         public async Task<Response<Timelog>> Timelog([FromBody]Timelog timelog)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
+           /* var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
-            }
+            }*/
 
             if (timelog == null)
             {
@@ -45,7 +46,7 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-            timelog.UserID = userID.GetValueOrDefault();
+          //  timelog.UserID = userID.GetValueOrDefault();
 
             try
             {
