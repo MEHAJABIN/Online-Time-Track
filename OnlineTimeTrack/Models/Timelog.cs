@@ -40,8 +40,8 @@ namespace OnlineTimeTrack.Models
 
 
 
+
         [ForeignKey("WorklogID")]
-        [NotMapped]
         public Worklog Worklog { get; set; }       
        
 

@@ -14,6 +14,9 @@ namespace OnlineTimeTrack.Contexts
         public DbSet<Worklog> Worklogs { get; set; }
         public DbSet<Timelog> Timelogs { get; set; }
 
+        public string ConnectionString { get; set; }
+        public string JwtSecret { get; set; }
+
         public OnlineTimeTrackContext(DbContextOptions<OnlineTimeTrackContext> options) : base(options)
         {
         }

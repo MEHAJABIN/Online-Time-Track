@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,48 +17,49 @@ using OnlineTimeTrack.Services;
 
 namespace OnlineTimeTrack.Controllers
 {
+ 
     [Route("api/User")]
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-      
-        private readonly AppSettings _appSettings;
+       
 
-        public UserController(IUserService userService, IOptions<AppSettings> appSettings)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _appSettings = appSettings.Value;
+            
         }
 
 
+        
+        [HttpPost("authenticate")]
+     //   public IActionResult Authenticate([FromBody]User loginDetails)
+     public async Task<Response<User>>Authenticate([FromBody]User loginDetails)
+     {
 
-    
-        //User login
-        [HttpPost("login")]
-        public async Task<Response<User>> Login([FromBody]User loginData)
-        {
-
-          
             try
             {
-                var loggedInUser = await _userService.Login(loginData.Username, loginData.Password);
-                //return Response<User>.SuccessResponse(loggedInUser);
-                return  Response<User>.CreateResponse(true, "Successfully registered.",loggedInUser);
+                var user = await _userService.Authenticate(loginDetails.Username, loginDetails.Password);
+
+                return Response<User>.CreateResponse(true, "Successfully login.", user);
             }
             catch (Exception e)
             {
                 return Response<User>.CreateResponse(false, e.Message, null);
+
             }
-        }
+
+     }
 
 
-        //User Registration
+
+    
         [HttpPost("Register")]
         public async Task<Response<User>> Register([FromBody] User user)
         {
             if (user == null)
             {
-                return Response<User>.CreateResponse(false, "Please provide valid user details.", null);
+                return Response<User>.CreateResponse(false, "Please provide valid user data.", null);
             }
 
             try
@@ -91,7 +93,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<User>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<User>.CreateResponse(true, "Successfully loaded.", ExistingUser);
+                return Response<User>.CreateResponse(true, "Successfully uploaded.", ExistingUser);
             }
             catch (Exception e)
             {
@@ -157,7 +159,7 @@ namespace OnlineTimeTrack.Controllers
 
 
 
-        //For Get AllUsers
+
         [HttpGet("GetAllUsers")]
         public async Task<Response<IEnumerable<User>>> GetAllUsers([FromQuery] int start, int limit)
         {
@@ -171,7 +173,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<User>>.CreateResponse(false, "Not  valid ", null);
                 }
 
-                return Response<IEnumerable<User>>.CreateResponse(true, "Successfully loaded.", users);
+                return Response<IEnumerable<User>>.CreateResponse(true, "Successfully uploaded.", users);
             }
             catch (Exception e)
             {
@@ -181,26 +183,6 @@ namespace OnlineTimeTrack.Controllers
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

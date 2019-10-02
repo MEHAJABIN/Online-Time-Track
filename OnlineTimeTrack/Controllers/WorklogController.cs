@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 using OnlineTimeTrack.Contexts;
-using Newtonsoft.Json.Linq;
+
 
 namespace OnlineTimeTrack.Controllers
 {
@@ -26,17 +26,15 @@ namespace OnlineTimeTrack.Controllers
         }
 
 
-
-
         [HttpPost]
         public async Task<Response<Worklog>> Worklog([FromBody]Worklog worklog)
         {
-           /* var userID = _userService.GetUserIDFromContext(HttpContext);
+            var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }*/
+            }
 
             if (worklog == null)
             {
@@ -44,36 +42,20 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-           /* worklog.UserID = userID.GetValueOrDefault();*/
+            worklog.UserID = userID.GetValueOrDefault();
 
 
             try
             {
                 var newWorklog = await _worklogService.Worklog(worklog);
 
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", newWorklog);
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", null);
             }
             catch (Exception e)
             {
                 return Response<Worklog>.CreateResponse(false, e.Message, null);
             }
-
         }
-
-           /* if (worklog == null)
-            {
-                return Response<Worklog>.CreateResponse(false, "Please provide valid Wprklog Id.", null);
-            }
-            try
-            {
-                var newWorklog = await _worklogService.Worklog(worklog);
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.",newWorklog);
-            }
-            catch (Exception e)
-            {
-                return Response<Worklog>.CreateResponse(false, e.Message, null);
-            }
-        }*/
 
 
         [HttpGet("GetById")]
@@ -94,7 +76,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<Worklog>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Worklog>.CreateResponse(true, "Successfully loaded.", ExistingId);
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", ExistingId);
             }
             catch (Exception e)
             {
@@ -109,12 +91,12 @@ namespace OnlineTimeTrack.Controllers
         [HttpPut("UpdateWorklog")]
         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
-           /* var userID = _userService.GetUserIDFromContext(HttpContext);
+            var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }*/
+            }
 
             if (WorklogID == null)
             {
@@ -122,7 +104,7 @@ namespace OnlineTimeTrack.Controllers
             }
 
 
-           // WorklogID.UserID = userID.GetValueOrDefault();
+            WorklogID.UserID = userID.GetValueOrDefault();
 
 
             try
@@ -200,7 +182,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -225,7 +207,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -252,7 +234,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -263,21 +245,21 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("GetAllWorklogs")]
-        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Feature, int EstimateWorkTime,
+        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int EstimateWorkTime,
         DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
 
         {
            
             try
             {
-                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Feature, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
+                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Features, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
 
                 if (worklogs == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not  valid ", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully loaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
             }
             catch (Exception e)
             {
@@ -285,8 +267,6 @@ namespace OnlineTimeTrack.Controllers
             }
           
         }
-
-
     }
 }
 

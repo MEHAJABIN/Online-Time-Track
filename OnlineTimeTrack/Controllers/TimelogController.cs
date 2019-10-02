@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
-using Newtonsoft.Json.Linq;
 
 namespace OnlineTimeTrack.Controllers
 {
@@ -33,12 +32,12 @@ namespace OnlineTimeTrack.Controllers
         [HttpPost]
         public async Task<Response<Timelog>> Timelog([FromBody]Timelog timelog)
         {
-           /* var userID = _userService.GetUserIDFromContext(HttpContext);
+            var userID = _userService.GetUserIDFromContext(HttpContext);
 
             if (userID == null)
             {
                 return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
-            }*/
+            }
 
             if (timelog == null)
             {
@@ -46,7 +45,7 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-          //  timelog.UserID = userID.GetValueOrDefault();
+            timelog.UserID = userID.GetValueOrDefault();
 
             try
             {
@@ -80,7 +79,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<Timelog>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Timelog>.CreateResponse(true, "Successfully loaded.", ExistingId);
+                return Response<Timelog>.CreateResponse(true, "Successfully uploaded.", ExistingId);
             }
             catch (Exception e)
             {
@@ -127,55 +126,8 @@ namespace OnlineTimeTrack.Controllers
             }
         }
 
-
-
-
-        [HttpDelete("DeleteTimelog")]
-        public async Task<Response<Timelog>> DeleteTimelog([FromBody] Timelog TimelogID)
-
-        {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
-            }
-
-            if (TimelogID == null)
-            {
-                return Response<Timelog>.CreateResponse(false, "Please provide valid Timelog Id.", null);
-
-            }
-
-            TimelogID.UserID = userID.GetValueOrDefault();
-
-            try
-            {
-                var ExistingTimelog = await _timelogService.DeleteTimelog(TimelogID);
-
-
-                if (ExistingTimelog == null)
-                {
-                    return Response<Timelog>.CreateResponse(false, "Not a valid Timelog Id", null);
-                }
-
-                return Response<Timelog>.CreateResponse(true, "Successfully deleted.", ExistingTimelog);
-            }
-            catch (Exception e)
-            {
-                return Response<Timelog>.CreateResponse(false, e.Message, null);
-            }
-        }
-
-
     }
 }
-
-
-
-
-
-
 
 
 

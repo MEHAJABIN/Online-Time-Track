@@ -64,15 +64,15 @@ namespace OnlineTimeTrack.Services
             public async Task<Worklog> Worklog(Worklog worklog)
             {
                 // save the worklog
-                var addedWorklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
+                var Worklog = await _onlineTimeTrackContext.Worklogs.AddAsync(worklog);
 
-                addedWorklog.Entity.Feature = worklog.Feature;
+                worklog.Feature = worklog.Feature;
                 worklog.DateAdded = DateTime.UtcNow;
                 worklog.DateModified = DateTime.UtcNow;
                 await _onlineTimeTrackContext.SaveChangesAsync();
 
                 // return the worklog
-                return addedWorklog.Entity;
+                return worklog;
             }
 
 

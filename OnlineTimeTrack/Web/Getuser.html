@@ -41,7 +41,11 @@
 
         <form name="Getuserform" id="forms">
             <div>
-             
+             <!--<label for="Token">Token </label>
+
+                <input type="string" id="Token" name="Token" required />
+
+                <br>--> 
 
                 <label for="UserID">UserID </label>
 
@@ -107,18 +111,21 @@
             function getUser() {
                 function reqListener() {
                     showUserDetails(JSON.parse(this.responseText));
-                    alert("Successfully loaded");
                 }
      
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
                 xhr.open('GET', 'https://localhost:44392/api/user/getbyid?='+ UserID.value, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-              
+               // var Token = document.forms['Getuserform']['Token'].value;
+              //  xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(UserID);
-               
-   
-
+                /*var xhttp = new XMLHttpRequest();
+                 xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+          // Your code here
+   }
+};*/
             }
         </script>
         </center>

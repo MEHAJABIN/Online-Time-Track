@@ -1,5 +1,9 @@
 # Online-Time-Track
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9eb532e1bcdb4d1a0633d1ec5c74d42705978819
 ## About the project
 
 The OnlineTimeTrack is a web project created in Asp.net core Web-Api framework  as Back End, C# code is using in Web Api. 
@@ -55,6 +59,7 @@ https://github.com/MEHAJABIN/Online-Time-Track/wiki
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -62,3 +67,5 @@ https://github.com/MEHAJABIN/Online-Time-Track/wiki
 
 
 
+=======
+>>>>>>> 9eb532e1bcdb4d1a0633d1ec5c74d42705978819

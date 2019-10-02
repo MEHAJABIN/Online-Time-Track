@@ -41,7 +41,11 @@
 
         <form name="Getworklogform" id="forms">
             <div>
+                <label for="Token">Token </label>
 
+                <input type="string" id="Token" name="Token" required />
+
+                <br>
 
                 <label for="start">start</label>
 
@@ -73,21 +77,21 @@
  
             <tbody id="tablePlace"></tbody>
         </table>
-        <p id="GetWorklog"></p>
+        <p id="Getuser"></p>
 
         <script>
             
-            function createWorklogColumn(data) {
+            function createUserColumn(data) {
                 return '<td>' + data + '</td>';
             }
 
-            function generateWorklogRow(user) {
+            function generateUserRow(user) {
                 var row = '<tr>';
-               row += createWorklogColumn(user.worklogID);
-               row += createWorklogColumn(user.projectID);
-               row += createWorklogColumn(user.userID);
-               row += createWorklogColumn(user.feature);
-               row += createWorklogColumn(user.estimateWorkTime);
+               row += createUserColumn(user.worklogID);
+               row += createUserColumn(user.projectID);
+               row += createUserColumn(user.userID);
+               row += createUserColumn(user.feature);
+               row += createUserColumn(user.estimateWorkTime);
        
                 row += '</td>';
 
@@ -95,14 +99,14 @@
             }
             
            
-            function showWorklogDetails(res) {
+            function showUserDetails(res) {
                 
-                var worklogTableBody = document.getElementById('tablePlace');
-                if (worklogTableBody) {
+                var userTableBody = document.getElementById('tablePlace');
+                if (userTableBody) {
                     var rowStrings="";
                     for(var i=0; i<res.data.length;i++)
-                    rowStrings += generateWorklogRow(res.data[i]);
-                    worklogTableBody.innerHTML =rowStrings;
+                    rowStrings += generateUserRow(res.data[i]);
+                    userTableBody.innerHTML =rowStrings;
                 }
 
                 else {
@@ -118,8 +122,10 @@
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?=' +start & +limit, true);
+                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?start=0&limit=6', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
+                var Token = document.forms['Getworklogform']['Token'].value;
+                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(start,limit);
                 
             }

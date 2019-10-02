@@ -22,13 +22,13 @@ namespace OnlineTimeTrack.Services
         public async Task<Timelog> Timelog(Timelog timelog)
         {
             // save the Timelog
-            var addedTimelog = await _onlineTimeTrackContext.Timelogs.AddAsync(timelog);
+            var Timelog = await _onlineTimeTrackContext.Timelogs.AddAsync(timelog);
 
-            addedTimelog.Entity.WorklogID = timelog.WorklogID;
+            timelog.WorklogID = timelog.WorklogID;
 
-            addedTimelog.Entity.ActualWorkTimeStart = timelog.ActualWorkTimeStart;
+            timelog.ActualWorkTimeStart = timelog.ActualWorkTimeStart;
 
-            addedTimelog.Entity.ActualWorkTimeEnd = timelog.ActualWorkTimeEnd;
+            timelog.ActualWorkTimeEnd = timelog.ActualWorkTimeEnd;
             timelog.DateAdded = DateTime.UtcNow;
             timelog.DateModified = DateTime.UtcNow;
 

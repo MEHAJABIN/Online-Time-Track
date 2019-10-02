@@ -101,12 +101,15 @@ namespace OnlineTimeTrack.Services
         public async Task<Project> Project(Project project)
         {
             // save the project
-            var addedProject = await _onlineTimeTrackContext.Projects.AddAsync(project);
+            var Project = await _onlineTimeTrackContext.Projects.AddAsync(project);
+            project.DateAdded = DateTime.UtcNow;
+            project.DateModified = DateTime.UtcNow;
+            project.ProjectTitle = project.ProjectTitle;
             await _onlineTimeTrackContext.SaveChangesAsync();
-            addedProject.Entity.ProjectTitle = project.ProjectTitle;
+           
 
             // return the project
-            return addedProject.Entity;
+            return project;
         }
 
 

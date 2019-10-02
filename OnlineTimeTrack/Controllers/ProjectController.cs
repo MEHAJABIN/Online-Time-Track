@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using OnlineTimeTrack.Models;
 using OnlineTimeTrack.Services;
 using System.Security.Claims;
-using Newtonsoft.Json.Linq;
 
 namespace OnlineTimeTrack.Controllers
 {
@@ -35,7 +34,7 @@ namespace OnlineTimeTrack.Controllers
             try
             {
                 var newProject= await _projectService.Project(project);
-                return Response<Project>.CreateResponse(true, "Successfully uploaded.", newProject);
+                return Response<Project>.CreateResponse(true, "Successfully uploaded.", null);
             }
             catch (Exception e)
             {
@@ -64,7 +63,7 @@ namespace OnlineTimeTrack.Controllers
                     return Response<Project>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<Project>.CreateResponse(true, "Successfully loaded.", ExistingId);
+                return Response<Project>.CreateResponse(true, "Successfully uploaded.", ExistingId);
             }
             catch (Exception e)
             {
@@ -144,7 +143,7 @@ namespace OnlineTimeTrack.Controllers
                 {
                     return Response<IEnumerable<Project>>.CreateResponse(false, "Not  valid ", null);
                 }
-                return Response<IEnumerable<Project>>.CreateResponse(true, "Successfully loaded", projects);
+                return Response<IEnumerable<Project>>.CreateResponse(true, "Successfully Uploaded", projects);
 
                 
             }

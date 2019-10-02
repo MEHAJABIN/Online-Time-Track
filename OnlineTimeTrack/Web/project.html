@@ -46,18 +46,13 @@
             <h1><i>Project</i></h1>
         
             <div>
-
-                   
-
-
                     <label for="ProjectTitle">ProjectTitle </label>
 
                     <input type="text" id="projectitle" name="ProjectTitle">  <br>
 
                    
                          
-                  
-            </div>
+           </div>
         
            
         </form>
@@ -71,9 +66,7 @@
         { 
             function reqListener () {
            console.log(this.responseText);
-           alert("Successfully loaded");
-          // window.location.href="getProject";
-
+           alert("loaded Successfully");
         }
 
         
@@ -90,6 +83,7 @@
         xhr.open("POST", "https://localhost:44392/api/project",true);
         console.log(body);
         xhr.setRequestHeader("Content-Type","application/json");
+
         xhr.send(JSON.stringify(body));
           
 };
@@ -100,7 +94,6 @@
 <form name="Getprojectform" id="forms">
             <div>
                 
-
                 <label for="ProjectID">ProjectID </label>
 
                 <input type="long" id="ProjectID" name="ProjectID" /> <br />
@@ -136,10 +129,10 @@
                 return row;
             }
 
-            function showUserDetails(res) {
+            function showProjectDetails(res) {
                 var projectTableBody = document.getElementById('tablePlace');
                 if (projectTableBody) {
-                    projectTableBody.innerHTML =generateProjectRow(res.data);
+                    projectTableBody.innerHTML =generateUserRow(res.data);
                 } else {
                     alert('Cannot retrieve the element for showing project.');
                 }
@@ -148,7 +141,6 @@
             function getProject() {
                 function reqListener() {
                     showUserDetails(JSON.parse(this.responseText));
-                   // window.location.href = "worklog.html";
                 }
 
                 var xhr = new XMLHttpRequest();
@@ -158,6 +150,6 @@
                 xhr.send(ProjectID);
             }
         </script>
-        </center>
+        </center>>
     </body>
 </html>

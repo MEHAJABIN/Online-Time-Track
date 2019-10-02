@@ -13,13 +13,13 @@ namespace OnlineTimeTrack.Models
 
         public string ProjectTitle { get; set; }
 
-
         [DefaultValue("getutcdate()")]
         public DateTime DateAdded { get; set; }
 
 
         [DefaultValue("getutcdate()")]
         public DateTime DateModified { get; set; }
+
 
     }
 }
