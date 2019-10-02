@@ -57,13 +57,3 @@ https://github.com/MEHAJABIN/Online-Time-Track/wiki
 
 
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-=======
->>>>>>> 9eb532e1bcdb4d1a0633d1ec5c74d42705978819
