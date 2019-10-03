@@ -32,12 +32,8 @@ namespace OnlineTimeTrack.Controllers
         [HttpPost]
         public async Task<Response<Timelog>> Timelog([FromBody]Timelog timelog)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
-            }
+          
+           
 
             if (timelog == null)
             {
@@ -45,8 +41,7 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-            timelog.UserID = userID.GetValueOrDefault();
-
+         
             try
             {
                 var newTimelog = await _timelogService.Timelog(timelog);
@@ -93,22 +88,11 @@ namespace OnlineTimeTrack.Controllers
        [HttpPut("UpdateTimelog")]
         public async Task<Response<Timelog>> UpdateTimelog([FromBody] Timelog TimelogID)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Timelog>.CreateResponse(false, "Not a valid user", null);
-            }
-
+           
             if (TimelogID == null)
             {
                 return Response<Timelog>.CreateResponse(false, "Please provide valid Timelog Id.", null);
             }
-
-
-           TimelogID.UserID = userID.GetValueOrDefault();
-
-
             try
             {
                 var ExistingTimelog = await _timelogService.UpdateTimelog(TimelogID);

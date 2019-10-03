@@ -21,7 +21,7 @@ namespace OnlineTimeTrack.Services
         Task<IEnumerable<User>>GetAllUsers(int start, int limit);
         User Create(User user, string password);
         void Update(User user, string password = null);
-        int? GetUserIDFromContext(HttpContext context);
+      
        
     }
 

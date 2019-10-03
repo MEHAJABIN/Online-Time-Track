@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using System.Linq.Expressions;
+using System.Linq.Expressions;C:\Users\MEHJABIN\source\repos\OnlineTimeTrack\OnlineTimeTrack\Services\WorklogService.cs
 using System.Data.SqlClient;
 
-
+ 
 namespace OnlineTimeTrack.Services
 {
     public class WorklogService : IWorklogService
@@ -264,10 +264,7 @@ namespace OnlineTimeTrack.Services
                 return ExistingWorklog;
             }
 
-            public int? GetprojectIDFromContext(HttpContext context)
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
 

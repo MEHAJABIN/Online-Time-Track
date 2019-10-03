@@ -29,12 +29,7 @@ namespace OnlineTimeTrack.Controllers
         [HttpPost]
         public async Task<Response<Worklog>> Worklog([FromBody]Worklog worklog)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }
+            
 
             if (worklog == null)
             {
@@ -42,14 +37,11 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-            worklog.UserID = userID.GetValueOrDefault();
-
-
             try
             {
                 var newWorklog = await _worklogService.Worklog(worklog);
 
-                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", null);
+                return Response<Worklog>.CreateResponse(true, "Successfully uploaded.", newWorklog);
             }
             catch (Exception e)
             {
@@ -91,21 +83,11 @@ namespace OnlineTimeTrack.Controllers
         [HttpPut("UpdateWorklog")]
         public async Task<Response<Worklog>> UpdateWorklog([FromBody] Worklog WorklogID)
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }
 
             if (WorklogID == null)
             {
                 return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
             }
-
-
-            WorklogID.UserID = userID.GetValueOrDefault();
-
 
             try
             {
@@ -130,12 +112,6 @@ namespace OnlineTimeTrack.Controllers
         public async Task<Response<Worklog>> DeleteWorklog([FromBody] Worklog WorklogID)
 
         {
-            var userID = _userService.GetUserIDFromContext(HttpContext);
-
-            if (userID == null)
-            {
-                return Response<Worklog>.CreateResponse(false, "Not a valid user", null);
-            }
 
             if (WorklogID == null)
             {
@@ -143,8 +119,7 @@ namespace OnlineTimeTrack.Controllers
 
             }
 
-            WorklogID.UserID = userID.GetValueOrDefault();
-
+           
             try
             {
                 var ExistingWorklog = await _worklogService.DeleteWorklog(WorklogID);

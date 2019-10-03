@@ -34,7 +34,7 @@ namespace OnlineTimeTrack.Controllers
             try
             {
                 var newProject= await _projectService.Project(project);
-                return Response<Project>.CreateResponse(true, "Successfully uploaded.", null);
+                return Response<Project>.CreateResponse(true, "Successfully uploaded.", newProject);
             }
             catch (Exception e)
             {

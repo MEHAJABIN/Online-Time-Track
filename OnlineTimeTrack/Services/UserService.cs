@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 
+
 namespace OnlineTimeTrack.Services
 {
 
@@ -285,13 +286,6 @@ namespace OnlineTimeTrack.Services
 
 
 
-        public int? GetUserIDFromContext(HttpContext context)
-        {
-            var userIDClaim = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
-            if (userIDClaim != null) return Int32.Parse(userIDClaim.Value);
-
-            return null;
-        }
 
 
         public async Task<User> GetById(long? id)

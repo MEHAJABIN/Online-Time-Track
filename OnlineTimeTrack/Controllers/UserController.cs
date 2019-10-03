@@ -33,9 +33,8 @@ namespace OnlineTimeTrack.Controllers
 
         
         [HttpPost("authenticate")]
-     //   public IActionResult Authenticate([FromBody]User loginDetails)
-     public async Task<Response<User>>Authenticate([FromBody]User loginDetails)
-     {
+        public async Task<Response<User>>Authenticate([FromBody]User loginDetails)
+        {
 
             try
             {
@@ -181,6 +180,8 @@ namespace OnlineTimeTrack.Controllers
             }
 
         }
+
+      
     }
 }
 

@@ -22,7 +22,6 @@ namespace OnlineTimeTrack.Models
                     Message = message
                 };
             }
-
        
     }
 }
