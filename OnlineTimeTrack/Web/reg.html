@@ -1,4 +1,4 @@
- <style id="style">
+<!--<style id="style">
     
         ul#menu{
             padding: 10
@@ -10,10 +10,16 @@
         ul#menu li a{
             background-color:darksalmon;
             color:#366092;
-            padding: 5px 10px;
+            padding-bottom: 20px 20px;
             text-decoration: none;
-            font:800 15px cursive ;
-                border-radius: 4px 4px 0 0;
+            text-align: center;
+            font:800 15px cursive;
+            border-radius: 4px 4px 0 0;
+
+
+            
+          
+                 
         }
         ul#menu li a:hover{
             background-color: #366092;
@@ -27,228 +33,302 @@
             background-size: 100% 100%;
         }
         
-          </style>
+          </style>-->
+<style>
+  /*.formfield label {
+           padding-right:10px;
+           width: 15%;
+       }*/
+  body {
+    background-image: url("Background 3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+  }
+
+  .formdiv{
+       padding: 30px 20px;
+       width: 300px ;
+      /*padding: 50px 50px 75px 100px;*/
+      text-align:left;
+    }
+    .input{
+      padding:30px 20px;
+      widows: 300px;
+    }
+</style>
 
 <!DOCTYPE html>
 <html>
-    <head>
-   
-    <meta charset="utf-8"/>
-    
-        <title>HTML Page</title>
 
-    </head>
-  <body>  
-      <a href="menu.html">Home</a>
+<head>
 
-      <a href="logout.html">Logout</a> 
-      
-    <center>
-     
-      <form name="Registerform"  id="forms">  
+  <meta charset="utf-8" />
+
+  <title>HTML Page</title>
+
+</head>
+
+<body>
+  <a href="menu.html">Home</a>
+
+  <a href="logout.html">Logout</a>
+
+
+
+
+   <form name="Registerform"  id="forms" class="formdiv">
       <br><br><br>
       <h1><i>Registration</i></h1>
+
       <div>
-         
-          <tr>
-         <td>
-            FullName
-          </td>
-           <td> <input type="text" id="FullName" name="FullName"> </td>
-         </tr>
+        
+          <label for="FullName">FullName
+            <input type="text" id="FullName"/>
+          </label>
           <br>
           <br>
 
-          <tr>
-         <td>
-            Address
-          </td>
-            <td><input type= "textarea" name="Address"> </textarea></td>
-          </tr>
+          <label for="Address">Address
+            <input type="textarea" id="Address" rows="3" ></textarea>
+          </label>
           <br>
           <br>
 
-        <tr>
+          <label for="Gender">Gender
+            <td>Male<input type="radio" name="Gender" value="Male"/> </td>
+            <td>Female<input type="radio" name="Gender" value="Female"/> </td>
+         </label>
+          <br>
+          <br>
+
+          <label for="Dob">Date of birth
+            <input type="datetime" id="Dob"  value="yyyy-mm-dd" />
+          </label>
+          <br>
+          <br>
+
+          <label for="Age">Age
+            <input type="Age" id="Age"/>
+          </label>
+          <br>
+          <br>
+
+          <label for="ContactNumber">ContactNumber
+            <input type="text" id="ContactNumber"/>
+          </label>
+          <br>
+          <br>
+
+          <label for="Email">Email
+            <input type="email" id="Email"  value="@gmail.com"/>
+          </label>
+          <br>
+          <br>
+
+            
+          <label for="Username">Username
+            <input type="text" id="Username"/>
+          </label>
+          <br>
+          <br>
+
+          <label for="Password">Password
+          <input type="Password" id="Password"/>
+        </label>
+
+
+       <!--<label for="WorklogID">WorklogID
+          <input type="int" id="WorklogID"/>
+        </label>-->
+
+      
+
+      </div>
+    </form>
+      <div>
+           
+          <input type="button"  value="SUBMIT" onClick="POST();"> </button>
+          
+        
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- <form name="Registerform" id="forms">
+
+    <div>
+
+      <tr>
+        <td>
+          FullName
+        </td>
+        <td> <input type="text" id="FullName" name="FullName"> </td>
+      </tr>
+
+      <br>
+      <br>
+
+      <tr>
+        <td>
+          Address
+        </td>
+        <td><input type=" textarea" name="Address"> </textarea></td>
+      </tr>
+
+      <br>
+      <br>
+
+      <tr>
         <td>
           Gender
         </td>
-          <td>Male<input type="radio" name="Gender" value="Male"/> </td>
+        <td>Male<input type="radio" name="Gender" value="Male" /> </td>
 
-          <td>Female<input type="radio" name="Gender" value="Female"/> </td>
-         </tr>
-         <br> 
-         <br>
+        <td>Female<input type="radio" name="Gender" value="Female" /> </td>
+      </tr>
+      <br>
+      <br>
 
-         
-         <tr>
-         <td><label for="Dob"> Date of birth </label></td>
-           <td><input type="datetime" id="Dob" name="Dob" value="yyyy-mm-dd"> </td>
-        </tr>
-        <br>
-        <br>
-         
-        <tr>
-          <td><label for="Age"> Age </label></td>
-            <td><input type="Age" id="Age" name="Age"></td> 
-        </tr>
-            <br>
-            <br>
 
-         <tr>
-          <td><label for="ContactNumber"> Contact Number </label></td>
-            <td><input type= "text" id="ContactNumber" name="ContactNumber"></td>    
-          </tr>
-          <br>
-          <br>
+      <tr>
+        <td><label for="Dob"> Date of birth </label></td>
+        <td><input type="datetime" id="Dob" name="Dob" value="yyyy-mm-dd"> </td>
+      </tr>
+      <br>
+      <br>
 
-          <tr>
-          <td><label for="Email">Email</label></td>
-          <td><input type= "email" name="Email" value="@gmail.com" required/></td>
-          </tr>   
-          <br>
-          <br>
-         
-          <tr>
-          <td><label for="username"> Username </label></td>
-            <td><input type="text" id="username" name="Username"></td>
-          </tr>
-           <br>
-           <br>
-     
-        
-           <tr>
-          <td><label for="password"> Password </label></td>
-            <td><input type="password" name="Password" required/></td> 
-        </tr>
-        
-         </div> 
-         
+      <tr>
+        <td><label for="Age"> Age </label></td>
+        <td><input type="Age" id="Age" name="Age"></td>
+      </tr>
+      <br>
+      <br>
 
-      </form>
+      <tr>
+        <td><label for="ContactNumber"> Contact Number </label></td>
+        <td><input type="text" id="ContactNumber" name="ContactNumber"></td>
+      </tr>
+      <br>
+      <br>
 
-      <div>
-             
-      <input type="button"  value="SUBMIT" onClick="POST();"> </button>
-      
-      </div>
-    
+      <tr>
+        <td><label for="Email">Email</label></td>
+        <td><input type="email" name="Email" value="@gmail.com" required /></td>
+      </tr>
+      <br>
+      <br>
 
-      <script >
-          function POST()
-          {
-          function reqListener () {
+      <tr>
+        <td><label for="username"> Username </label></td>
+        <td><input type="text" id="username" name="Username"></td>
+      </tr>
+      <br>
+      <br>
+
+
+      <tr>
+        <td><label for="password"> Password </label></td>
+        <td><input type="password" name="Password" required /></td>
+      </tr>
+
+    </div>
+</form>
+<div>
+    <tr>
+    <td colspan="2" align="center">
+   <input type="button"  value="SUBMIT" onClick="POST();"> </button>
+    </td>
+   </tr>
+ 
+</div>-->
+
+
+
+
+    <script>
+      function POST() {
+        function reqListener() {
           console.log(this.responseText);
           alert("Registered Successfully");
           window.location.href = "login.html";
-                      
-                
-          }
-                      
-          var FullName =document.forms["Registerform"]["FullName"].value;
-                          var Address = document.forms["Registerform"]["Address"].value;
-                          var Dob= document.forms["Registerform"]["Dob"].value;
-                          var Gender =document.forms["Registerform"]["Gender"].value;
-                          var Age =document.forms["Registerform"]["Age"].value;
-                          var ContactNumber =document.forms["Registerform"]["ContactNumber"].value;
-                          var Email = document.forms["Registerform"]["Email"].value;
-                          var Username =document.forms["Registerform"]["Username"].value;
-                          var Password =document.forms["Registerform"]["Password"].value;
-                          const body = {
-                              FullName: FullName,
-                              Address:Address,
-                              Dob:Dob,
-                              Gender:Gender,
-                              Age:Age,
-                              ContactNumber:ContactNumber,
-                              Email:Email,
-                              Username:Username,
-                              Password:Password
-                              };
-                              var xhr = new XMLHttpRequest();
-                               xhr.addEventListener("load", reqListener);
-                              xhr.open("POST", "https://localhost:44392/api/user/register ")
-                            
-                              console.log(body);
-                              xhr.setRequestHeader("Content-Type","application/JSON");
-                              xhr.send(JSON.stringify(body));
-                         
-                           };
-                        </script> 
-          </center>
-        </body>
-</html> 
-
-  
-
- 
 
 
+        }
+     //   var WorklogID= document.forms["Registerform"]["WorklogID"].value;
+        var FullName = document.forms["Registerform"]["FullName"].value;
+        var Address = document.forms["Registerform"]["Address"].value;
+        var Dob = document.forms["Registerform"]["Dob"].value;
+        var Gender = document.forms["Registerform"]["Gender"].value;
+        var Age = document.forms["Registerform"]["Age"].value;
+        var ContactNumber = document.forms["Registerform"]["ContactNumber"].value;
+        var Email = document.forms["Registerform"]["Email"].value;
+        var Username = document.forms["Registerform"]["Username"].value;
+        var Password = document.forms["Registerform"]["Password"].value;
+        const body = {
+        //  WorklogID : WorklogID,
+          FullName: FullName,
+          Address: Address,
+          Dob: Dob,
+          Gender: Gender,
+          Age: Age,
+          ContactNumber: ContactNumber,
+          Email: Email,
+          Username: Username,
+          Password: Password
+        };
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", reqListener);
+        xhr.open("POST", "https://localhost:44392/api/user/register",true)
 
+        console.log(body);
+        xhr.setRequestHeader("Content-Type", "application/JSON");
+        xhr.send(JSON.stringify(body));
 
+      };
+    </script>
 
+</body>
 
-
-   
-
-
-
-
-    
-               
-              
-                         
-                           
-              
-          
-        
-                    
-                
-                   
-                    
-                     
-                     
-                
-               
-               
-                   
-                  
-            
-              
-              
-            
-
-          
-    
-
-       
-
- <!--<script>
-    // Store XMLHttpRequest and the JSON file location in variables
-    var xhr = new XMLHttpRequest();
-    var url = "https://localhost:44392/api/user/getbyid?id=28";
-    
-    // Called whenever the readyState attribute changes 
-    xhr.onreadystatechange = function loadGET() {
-    
-      // Check if fetch request is done
-      if (xhr.readyState == 4 && xhr.status == 200) { 
-      
-        // Parse the JSON string
-        var jsonData = JSON.parse(xhr.responseText);
-        
-        // Call the showArtists(), passing in the parsed JSON string
-        showloadGET(jsonData);
-      }
-    };
-    
-    // Do the HTTP call using the url variable we specified above
-    xhr.open("GET","https://localhost:44392/api/user/getbyid?id=28", true);
-    xhr.send();
-    </script>-->
-        
-    
-
-        
-            
-         
-           
+</html>

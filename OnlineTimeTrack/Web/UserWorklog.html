@@ -1,135 +1,44 @@
-
-<style>
-    
-        ul#menu{
-            padding: 10
+<style id="style">
+        ul#menu {
+            padding: 10;
         }
-        ul#menu li{
+        ul#menu li {
             display: inline-block;
         }
-        ul#menu li a{
-            background-color:darksalmon;
-            color:#366092;
+        ul#menu li a {
+            background-color: darksalmon;
+            color: #366092;
             padding: 5px 10px;
             text-decoration: none;
-            font:800 15px cursive ;
-                border-radius: 4px 4px 0 0;
+            font: 800 15px cursive;
+            border-radius: 4px 4px 0 0;
         }
-        ul#menu li a:hover{
+        ul#menu li a:hover {
             background-color: #366092;
-            color:aqua;
+            color: aqua;
             font: 700 18px fantasy;
             border-radius: 20px 20px 0 0;
         }
-        body{
-            background-image: url("Background 3.jpg");
+        body {
+            background-image: url('Background 3.jpg');
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
-        
-          </style>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>HTML Page</title>
-        <meta charset="utf-8"/>
-    </head>
-    <body>
-
-            <a href="menu.html">Home</a>
-            <a href="logout.html">Logout</a>
-            
-        <center>
-        <form  name="Worklogform" >
-            <br><br><br>
-            <h1><i>Worklog</i></h1>
-            <div>
-               
-
-                 <label for="Date">Date</label>
-                 <input type="datetime" id="Date" name="Date"  value="yyyy-mm-dd"/>  
-                 
-                 <br>
-                
-
-                <label for="ProjectID">ProjectID</label>
-                <input type="int" id="ProjectID" name="ProjectID"/>  
-                
-                <br>
-
-                <label for="UserID">UserID</label>
-                <input type="int" id="UserID" name="UserID"/>  
-                
-                <br>
-
-               
-                     
-                <label for="Feature">Feature</label>
-                <input type="text" id="Feature" name="Feature"/>  
-                
-                <br>
-                     
-                 <label for="EstimateWorkTime">EstimateWorkTime</label>
-                <input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/>  
-                
-                <br>
-
-                    
-                </div>
-         </form>
-
-       <div>
-            <input type=button  value="ADD" onClick="POST();"> </button> <br>
-        </div>
-
-        <script>
-        function POST()
-        {
-            function reqListener () {
-            console.log(this.responseText);
-            alert("loaded Successfully");
-        }
-
-            var Date=document.forms["Worklogform"]["Date"].value;
-            var ProjectID=document.forms["Worklogform"]["ProjectID"].value;
-            var UserID=document.forms["Worklogform"]["UserID"].value;
-            //var ProjectID=document.forms["Worklogform"]["WorklogID"].value;
-            var Feature=document.forms["Worklogform"]["Feature"].value;
-            var EstimateWorkTime=document.forms["Worklogform"]["EstimateWorkTime"].value;
-          //  var FullName = document.forms["Worklogform"]["FullName"].value;
-          //  var Address = document.forms["Worklogform"]["Address"].value;
-          //  var ProjectTitle = document.forms["Worklogform"]["ProjectTitle"].value;
-          //  var DateAdded = document.forms["Worklogform"]["DateAdded"].value;
-           // var DateModified = document.forms["Worklogform"]["DateModified"].value;
-            const body = { 
-                    Date : Date,
-                    ProjectID : ProjectID,
-                    UserID : UserID,
-                  //  WorklogID : WorklogID,
-                    Feature : Feature,
-                    EstimateWorkTime : EstimateWorkTime,
-                  //  FullName : FullName,
-                   // Address : Address,
-                   // ProjectTitle : ProjectTitle,
-                   // DateAdded : DateAdded,
-                  //  DateModified : DateModified
-
-                };
-                var xhr = new XMLHttpRequest();
-             xhr.addEventListener("load", reqListener);
-             xhr.open("POST", "https://localhost:44392/api/worklog ");
-          
-             console.log(body);
-            xhr.setRequestHeader("Content-Type","application/json");
-            xhr.send(JSON.stringify(body));
-
-};
+    </style>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8" />
     
-</script>
+            <title>HTML Page</title>
+        </head>
 
+    <body>
+        <a href="menu.html">Home</a>
+        <a href="logout.html">Logout</a>
 
-
-<form name="GetWorklogform" id="forms">
+    <center>
+        <!--<form name="GetWorklogform" id="forms">
     <div>
 
         <label for="WorklogID">WorklogID </label>
@@ -198,9 +107,9 @@
 </script>
 </center>
 </body>
-</html>
+</html>-->
 
-<!--<form name="GetUserWorklogform" id="forms">
+<form name="GetUserWorklogform" id="forms">
     <div>
         <label for="UserID">UserID </label>
 
@@ -210,7 +119,7 @@
     </div>
 </form>
 
-<input type="button" value="GetUserWorklog" onclick="getUserWorklog();" />
+<input type="button" value="GetUserWorklog" onclick="getuserWorklog();" />
 
 <table name="Table" id="table_id" class="display" border="1">
     <thead>
@@ -268,10 +177,11 @@ if (worklogTableBody) {
 }
 }
 
-function getUserWorklog() {
+function getuserWorklog() {
 function reqListener() {
-   showWorklogDetails(JSON.parse(this.responseText));
- //console.log(this.responseText);
+  // showWorklogDetails(JSON.parse(this.responseText));
+ 
+ console.log(this.responseText);
 
 }
 
@@ -281,11 +191,28 @@ xhr.open('GET', 'https://localhost:44392/api/worklog/userid?id='+UserID.value,  
 
 xhr.setRequestHeader("Content-Type", "application/JSON");
 xhr.send(UserID);
-
-/* xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(UserID);*/
 }
 </script>
 </center>
 </body>
-</html>-->
+</html>
+
+      
+
+<!--"worklogID": 1,
+            "projectID": 1,
+            "userID": 1,
+            "date": "0001-01-01T00:00:00",
+            "estimateWorkTime": 0,
+            "feature": "Android",
+            "projectTitle": "Zappy",
+            "fullName": "Aparna",
+            "address": "Aparna villa",
+            "actualWorkTimeStart": "0001-01-01T00:00:00",
+            "actualWorkTimeEnd": "0001-01-01T00:00:00",
+            "totalWorkTime": 0.0,
+            "dateAdded": "0001-01-01T00:00:00",
+            "dateModified": "0001-01-01T00:00:00",
+            "timeLog": null,
+            "timelogs": null,
+            "user": null,-->

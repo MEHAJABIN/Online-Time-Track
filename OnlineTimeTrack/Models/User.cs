@@ -10,7 +10,7 @@ namespace OnlineTimeTrack.Models
     public class User
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+       [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long UserID { get; set; }
 
         public string FullName { get; set; }
@@ -37,8 +37,8 @@ namespace OnlineTimeTrack.Models
 
         public string Token { get; set; }
 
-
-        
+        [ForeignKey("WorklogID")]
+        public Worklog Worklog { get; set; }
 
     }
 }

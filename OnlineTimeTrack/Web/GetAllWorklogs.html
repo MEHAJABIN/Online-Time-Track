@@ -39,14 +39,9 @@
 
         <center>
 
-        <form name="Getworklogform" id="forms">
+        <form name="GetAllworklogsform" id="forms">
             <div>
-                <label for="Token">Token </label>
-
-                <input type="string" id="Token" name="Token" required />
-
-                <br>
-
+               
                 <label for="start">start</label>
 
                 <input type="int" id="start" name="start" /> 
@@ -61,37 +56,63 @@
             </div>
         </form>
 
-        <input type="button" value="GETALLWORKLOG" onclick="getAllWorklogs();" />
+        <input type="button" value="GETALLWORKLOG" onclick="getallWorklogs();" />
 
         <table name="Table" id="table_id" class="display" border="1">
             <thead>
                 <tr>
-                        <th>WorklogID</th>
-                        <th>ProjectID</th>
-                        <th>userID</th>
-                        <th>feature</th>
-                        <th>estimateWorkTime</th>
+                    <th>UserID</th>
+                    <th>WorklogID</th>
+                    <th>TimelogID</th>
+                    <th>ProjectID</th>
+                    <th>FullName</th>
+                    <th>Address</th>
+                    <th>ProjectTitle</th>
+                    <th>Feature</th>
+                    <th>EstimateWorkTime</th>
+                    <th>ActualWorkTimeStart</th>
+                    <th>ActualWorkTimeEnd</th>
+                    <th>TotalWorkTime</th>
+                    <th>DateAdded</th>
+                    <th>DateModified</th>
+                    
+                    
                     
                 </tr>
             </thead>
  
             <tbody id="tablePlace"></tbody>
         </table>
-        <p id="Getuser"></p>
+        <p id="GetAllWorklogs"></p>
 
         <script>
             
-            function createUserColumn(data) {
+            function createWorklogColumn(data) {
                 return '<td>' + data + '</td>';
             }
 
-            function generateUserRow(user) {
+           // function generateWorklogRow(worklog) {
+             function generateWorklogRow(worklog) {
                 var row = '<tr>';
-               row += createUserColumn(user.worklogID);
-               row += createUserColumn(user.projectID);
-               row += createUserColumn(user.userID);
-               row += createUserColumn(user.feature);
-               row += createUserColumn(user.estimateWorkTime);
+       
+      //  row += createWorklogColumn(timelog.worklogID);
+       
+        row += createWorklogColumn(worklog.userID);
+        row += createWorklogColumn(worklog.worklogID);
+        row += createWorklogColumn(worklog.projectID);
+        row += createWorklogColumn(worklog.timelogID);
+        row += createWorklogColumn(worklog.fullName);
+        row += createWorklogColumn(worklog.address);
+        row += createWorklogColumn(worklog.projectTitle);
+        row += createWorklogColumn(worklog.feature);
+        row += createWorklogColumn(worklog.estimateWorkTime);
+        row += createWorklogColumn(worklog.actualWorkTimeStart);
+        row += createWorklogColumn(worklog.actualWorkTimeEnd);
+        row += createWorklogColumn(worklog.totalWorkTime);
+        row += createWorklogColumn(worklog.dateAdded);
+        row += createWorklogColumn(worklog.dateModified);
+
+       
        
                 row += '</td>';
 
@@ -99,33 +120,26 @@
             }
             
            
-            function showUserDetails(res) {
-                
-                var userTableBody = document.getElementById('tablePlace');
-                if (userTableBody) {
-                    var rowStrings="";
-                    for(var i=0; i<res.data.length;i++)
-                    rowStrings += generateUserRow(res.data[i]);
-                    userTableBody.innerHTML =rowStrings;
-                }
+          
+            function showWorklogDetails(res) {
+           var worklogTableBody = document.getElementById('tablePlace');
+            if (worklogTableBody) {
+            worklogTableBody.innerHTML =generateWorklogRow(res.data);
+           } else {
+          alert('Cannot retrieve the element for showing worklog.');
+          }
+        }
 
-                else {
-                    alert('Cannot retrieve the element for showing worklogs.');
-                }
-                
-            }
-
-            function getAllWorklogs() {
+            function getallWorklogs() {
                 function reqListener() {
-                    showUserDetails(JSON.parse(this.responseText));
+                  showWorklogDetails(JSON.parse(this.responseText));
+                 // console.log(this.responseText);
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?start=0&limit=6', true);
+                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?='+start.value +limit.value, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                var Token = document.forms['Getworklogform']['Token'].value;
-                xhr.setRequestHeader('Authorization', 'Bearer ' + Token);
                 xhr.send(start,limit);
                 
             }

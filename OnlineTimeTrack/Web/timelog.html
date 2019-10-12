@@ -150,7 +150,7 @@
     function showTimelogDetails(res) {
         var timelogTableBody = document.getElementById('tablePlace');
         if (timelogTableBody) {
-            timelogTableBody.innerHTML =generateUserRow(res.data);
+            timelogTableBody.innerHTML =generateTimelogRow(res.data);
         } else {
             alert('Cannot retrieve the element for showing Timelog.');
         }

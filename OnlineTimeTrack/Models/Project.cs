@@ -21,6 +21,9 @@ namespace OnlineTimeTrack.Models
         public DateTime DateModified { get; set; }
 
 
+        [ForeignKey("WorklogID")]
+        public Worklog Worklog { get; set; }
+
     }
 }
 

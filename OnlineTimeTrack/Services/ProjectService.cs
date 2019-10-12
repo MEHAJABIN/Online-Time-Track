@@ -19,9 +19,10 @@ namespace OnlineTimeTrack.Services
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
        
 
-        public ProjectService(OnlineTimeTrackContext onlineTimeTrackContext)
+        public ProjectService(OnlineTimeTrackContext onlineTimeTrackContext,IUserService userService,ITimelogService timelogService)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
+            
         }
 
 

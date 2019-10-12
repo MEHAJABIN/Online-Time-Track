@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlineTimeTrack.Models
 {
-    public class Worklog 
+    public class Worklog
 
     {
         [Key]
@@ -41,17 +41,17 @@ namespace OnlineTimeTrack.Models
         [NotMapped]
         public DateTime ActualWorkTimeEnd { get; set; }
 
-        
+
         public double TotalWorkTime
         {
             get
-            {                
+            {
                 return (ActualWorkTimeEnd - ActualWorkTimeStart).TotalHours;
             }
         }
 
 
-        
+
 
         [DefaultValue("getutcdate()")]
         public DateTime DateAdded { get; set; }
@@ -62,10 +62,23 @@ namespace OnlineTimeTrack.Models
 
         [NotMapped]
         public Timelog TimeLog { get; set; }
-      
+
         public List<Timelog> Timelogs { get; set; }
+
+
+        [NotMapped]
+        public User User { get; set; }
+
+        public List<User> Users { get; set; }
     }
 }
+
+       
+
+
+
+
+
 
 
 

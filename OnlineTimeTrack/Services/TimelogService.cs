@@ -11,11 +11,14 @@ namespace OnlineTimeTrack.Services
     public class TimelogService : ITimelogService
     {
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
-
+       
 
         public TimelogService(OnlineTimeTrackContext onlineTimeTrackContext)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
+          
+
+
         }
 
 

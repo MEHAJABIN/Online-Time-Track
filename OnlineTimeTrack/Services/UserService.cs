@@ -26,11 +26,14 @@ namespace OnlineTimeTrack.Services
 
         private readonly OnlineTimeTrackContext _onlineTimeTrackContext;
         private readonly AppSettings _appSettings;
+       
+
 
         public UserService(OnlineTimeTrackContext onlineTimeTrackContext, IOptions<AppSettings> appSettings)
         {
             _onlineTimeTrackContext = onlineTimeTrackContext;
              _appSettings = appSettings.Value;
+            
 
         }
 
@@ -84,8 +87,7 @@ namespace OnlineTimeTrack.Services
                 return null;
             }
 
-            // var user = _onlineTimeTrackContext.Users.SingleOrDefault(x => x.Username == Username);
-         
+          
              
             // find the user from db with the same username
 

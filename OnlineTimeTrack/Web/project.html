@@ -132,7 +132,7 @@
             function showProjectDetails(res) {
                 var projectTableBody = document.getElementById('tablePlace');
                 if (projectTableBody) {
-                    projectTableBody.innerHTML =generateUserRow(res.data);
+                    projectTableBody.innerHTML =generateProjectRow(res.data);
                 } else {
                     alert('Cannot retrieve the element for showing project.');
                 }
@@ -140,7 +140,7 @@
 
             function getProject() {
                 function reqListener() {
-                    showUserDetails(JSON.parse(this.responseText));
+                    showProjectDetails(JSON.parse(this.responseText));
                 }
 
                 var xhr = new XMLHttpRequest();
@@ -150,6 +150,6 @@
                 xhr.send(ProjectID);
             }
         </script>
-        </center>>
+        </center>
     </body>
 </html>

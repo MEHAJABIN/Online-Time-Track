@@ -16,7 +16,7 @@ namespace OnlineTimeTrack.Models
         public long WorklogID { get; set; }
 
         [NotMapped]
-        public long UserID { get; set; }
+        public long UserID { get; set; } 
 
         public DateTime ActualWorkTimeStart { get; set; }
 

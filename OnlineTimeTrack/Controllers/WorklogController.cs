@@ -17,12 +17,14 @@ namespace OnlineTimeTrack.Controllers
         private readonly IUserService _userService;
         private readonly IWorklogService _worklogService;
         private readonly IProjectService _projectService;
+        private readonly ITimelogService _timelogService;
 
-        public WorklogController(IWorklogService worklogService, IUserService userService, IProjectService projectService)
+        public WorklogController(IWorklogService worklogService, IUserService userService, IProjectService projectService,ITimelogService timelogService)
         {
             _worklogService = worklogService;
             _userService = userService;
             _projectService = projectService;
+            _timelogService = timelogService;
         }
 
 
@@ -51,17 +53,13 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("GetById")]
-        public async Task<Response<Worklog>> GetById([FromQuery]long? id)
+        public async Task<Response<Worklog>> GetById([FromQuery] int id)
 
         {
-            if (id == null)
-            {
-                return Response<Worklog>.CreateResponse(false, "Please provide valid Worklog Id.", null);
-            }
 
             try
             {
-                var ExistingId = await _worklogService.GetById(id.GetValueOrDefault());
+                var ExistingId = await _worklogService.GetById(id);
 
                 if (ExistingId == null)
                 {
@@ -141,23 +139,20 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("ProjectID")]
-        public async Task<Response<IEnumerable<Worklog>>> GetWorklog([FromQuery] long? ProjectID)
+        public async Task<Response<IEnumerable<Worklog>>> GetProjectWorklog([FromQuery] int projectId, long? WorklogID, long? UserID, long? ProjectID,
+           string ProjectTitle, string Feature, string FullName, string Address)
 
         {
-            if (ProjectID == null)
-            {
-                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid Project Id.", null);
-
-            }
+            
             try
             {
-                var worklogs = await _worklogService.GetAll(ProjectID.GetValueOrDefault());
-                if (worklogs == null)
+                var worklog = await _worklogService.GetProjectWorklog(projectId,WorklogID,UserID,ProjectID,ProjectTitle,Feature,FullName,Address);
+                if (worklog == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklog);
             }
             catch (Exception e)
             {
@@ -176,13 +171,13 @@ namespace OnlineTimeTrack.Controllers
             }
             try
             {
-                var worklogs = await _worklogService.GetAll(Features.ToString());
-                if (worklogs == null)
+                var worklog = await _worklogService.GetAll(Features.ToString());
+                if (worklog == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklog);
             }
             catch (Exception e)
             {
@@ -193,23 +188,22 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("UserID")]
-        public async Task<Response<IEnumerable<Worklog>>> GetUSerWorklog([FromQuery] long? UserID)
-
+        public async Task<Response<IEnumerable<Worklog>>> GetUSerWorklog([FromQuery] int userId, long? WorklogID, long? UserID, long? ProjectID,
+           string ProjectTitle, string Feature, string FullName, string Address)
+       
         {
-            if (UserID == null)
-            {
-                return Response<IEnumerable<Worklog>>.CreateResponse(false, "Please provide valid User Id.", null);
-
-            }
+           
             try
             {
-                var worklogs = await _worklogService.Get(UserID.GetValueOrDefault());
-                if (worklogs == null)
+              
+                var worklog = await _worklogService.GetUserWorklog(userId,UserID, WorklogID,ProjectID,
+            ProjectTitle,Feature,FullName, Address);
+                if (worklog == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklog);
             }
             catch (Exception e)
             {
@@ -227,14 +221,14 @@ namespace OnlineTimeTrack.Controllers
            
             try
             {
-                var worklogs = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Features, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
+                var worklog = await _worklogService.GetAllWorklogs(start, limit, WorklogID, UserID, ProjectID, Features, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd, ProjectTitle, FullName, Address);
 
-                if (worklogs == null)
+                if (worklog == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not  valid ", null);
                 }
 
-                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklogs);
+                return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklog);
             }
             catch (Exception e)
             {
