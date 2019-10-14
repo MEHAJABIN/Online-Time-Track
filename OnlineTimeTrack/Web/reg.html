@@ -1,289 +1,156 @@
-<!--<style id="style">
-    
-        ul#menu{
-            padding: 10
-        }
-        ul#menu li{
-            display: inline-block;
-       
-        }
-        ul#menu li a{
-            background-color:darksalmon;
-            color:#366092;
-            padding-bottom: 20px 20px;
-            text-decoration: none;
-            text-align: center;
-            font:800 15px cursive;
-            border-radius: 4px 4px 0 0;
-
-
-            
-          
-                 
-        }
-        ul#menu li a:hover{
-            background-color: #366092;
-            color:aqua;
-            font: 700 18px fantasy;
-            border-radius: 20px 20px 0 0;
-        }
-        body{
-            background-image: url("Background 3.jpg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-        }
-        
-          </style>-->
 <style>
-  /*.formfield label {
-           padding-right:10px;
-           width: 15%;
-       }*/
   body {
+    margin: 0;
+    font-family: "Roboto Condensed", sans-serif;
     background-image: url("Background 3.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-
-  }
-
-  .formdiv{
-       padding: 30px 20px;
-       width: 300px ;
-      /*padding: 50px 50px 75px 100px;*/
-      text-align:left;
-    }
-    .input{
-      padding:30px 20px;
-      widows: 300px;
-    }
-</style>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-
-  <meta charset="utf-8" />
-
-  <title>HTML Page</title>
-
-</head>
-
-<body>
-  <a href="menu.html">Home</a>
-
-  <a href="logout.html">Logout</a>
-
-
-
-
-   <form name="Registerform"  id="forms" class="formdiv">
-      <br><br><br>
-      <h1><i>Registration</i></h1>
-
-      <div>
-        
-          <label for="FullName">FullName
-            <input type="text" id="FullName"/>
-          </label>
-          <br>
-          <br>
-
-          <label for="Address">Address
-            <input type="textarea" id="Address" rows="3" ></textarea>
-          </label>
-          <br>
-          <br>
-
-          <label for="Gender">Gender
-            <td>Male<input type="radio" name="Gender" value="Male"/> </td>
-            <td>Female<input type="radio" name="Gender" value="Female"/> </td>
-         </label>
-          <br>
-          <br>
-
-          <label for="Dob">Date of birth
-            <input type="datetime" id="Dob"  value="yyyy-mm-dd" />
-          </label>
-          <br>
-          <br>
-
-          <label for="Age">Age
-            <input type="Age" id="Age"/>
-          </label>
-          <br>
-          <br>
-
-          <label for="ContactNumber">ContactNumber
-            <input type="text" id="ContactNumber"/>
-          </label>
-          <br>
-          <br>
-
-          <label for="Email">Email
-            <input type="email" id="Email"  value="@gmail.com"/>
-          </label>
-          <br>
-          <br>
-
-            
-          <label for="Username">Username
-            <input type="text" id="Username"/>
-          </label>
-          <br>
-          <br>
-
-          <label for="Password">Password
-          <input type="Password" id="Password"/>
-        </label>
-
-
-       <!--<label for="WorklogID">WorklogID
-          <input type="int" id="WorklogID"/>
-        </label>-->
-
+    background-size: 100% 100%; }
+     .frm-ctrl {
+      margin-bottom: 0.5em; 
+      font-family: "Roboto Condensed", sans-serif;
+      display: flex;
+      }
+      .login-screen {
+      height: 100vh;
+      width: 100vw;
+      display: block;
+      align-items: center;
+      justify-content: center; }
+      table, th, td  {
+      letter-spacing: 1px;
+      font-family: sans-serif;
+      font-size: 1em;
+      padding: 5px;
+      text-align: left;
+      }
+      button.primary{
+        width: 60%;
+      padding: 0.5em;
+      border: none;
+      font-size: 1.2em;
+      border-radius: 3px;
+      margin-top: 0.4em; 
+      }
       
-
-      </div>
-    </form>
-      <div>
-           
-          <input type="button"  value="SUBMIT" onClick="POST();"> </button>
-          
+     
+  
+    
+  </style>
+  
+  
+  <!DOCTYPE html>
+  <html>
+  
+  <head>
+  
+    <meta charset="utf-8" />
+  
+    <title>HTML Page</title>
+  
+  </head>
+  
+      <body>
+          <a href="menu.html">Home</a>
+  
+          <a href="logout.html">Logout</a>
         
+        
+        <center>
+          <form name ="Registerform" >
+            <br><br><br>
+              <h1>Register</h1>
+              <div  class="login-screen">
+              <table>
+  
+                  
+                  <tr>
+                      <div class="frm-ctrl"></div>
+                      <th>FullName</th>
+                      
+                      <td><input type="text" name="FullName"  id="FullName"></td>
+                    </div>
+                  </tr>
+                  
+                  
+                  
+                  <tr>  
+                        <div class="frm-ctrl">
+                        <th>Address</th>
+                      
+                          <td><input type="text" name="Address" id="Address"></td>
+                        </div>
+                  </tr>
+  
+                  <tr>
+                       <div class="frm-ctrl">
+                          <th>Gender</th>
+                         
+                          <td>Male<input type="radio" name="Gender" value="Male"/> 
+                          Female<input type="radio" name="Gender" value="Female"/> </td>
+                        </div>
+                  </tr>
+  
+                  <tr>
+                      <div class="frm-ctrl">
+                      <th>Date of birth</th>
+                      </div>
+                      <td>  <input type="datetime" id="Dob"  value="yyyy-mm-dd"></td>
+                 </tr>
+  
+                 <tr>
+                    <div class="frm-ctrl">
+                    <th>Age</th>
+                    </div>
+                    <td><input type="Age" name="Age" id="Age"></td>
+               </tr>
+  
+  
+               <tr>
+                  <div class="frm-ctrl">
+                  <th>ContactNumber</th>
+                  </div>
+                  <td><input type="text" name="ContactNumber" id="ContactNumber"></td>
+             </tr>
+  
+             <tr>
+                <div class="frm-ctrl">
+                <th>Email</th>
+                </div>
+                <td> <input type="email" id="Email"  value="abc123@gmail.com"></td>
+           </tr>
+  
+  
+           <tr>
+              <div class="frm-ctrl">
+              <th>Username</th>
+              </div>
+              <td><input type="text" id="Username" name="Username" required/></td>
+         </tr>
+  
+  
+         <tr>
+            <div class="frm-ctrl">
+            <th>Password</th>
+            </div>
+            <td><input type="password" name="Password" required /></td>
+       </tr>
+        </table>
+        <div>
+          <tr>
+          
+         <input type="button"  value="SUBMIT" onClick="POST();" class="primary"> </button>
+          </td>
+         </tr>
+       
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <!-- <form name="Registerform" id="forms">
-
-    <div>
-
-      <tr>
-        <td>
-          FullName
-        </td>
-        <td> <input type="text" id="FullName" name="FullName"> </td>
-      </tr>
-
-      <br>
-      <br>
-
-      <tr>
-        <td>
-          Address
-        </td>
-        <td><input type=" textarea" name="Address"> </textarea></td>
-      </tr>
-
-      <br>
-      <br>
-
-      <tr>
-        <td>
-          Gender
-        </td>
-        <td>Male<input type="radio" name="Gender" value="Male" /> </td>
-
-        <td>Female<input type="radio" name="Gender" value="Female" /> </td>
-      </tr>
-      <br>
-      <br>
-
-
-      <tr>
-        <td><label for="Dob"> Date of birth </label></td>
-        <td><input type="datetime" id="Dob" name="Dob" value="yyyy-mm-dd"> </td>
-      </tr>
-      <br>
-      <br>
-
-      <tr>
-        <td><label for="Age"> Age </label></td>
-        <td><input type="Age" id="Age" name="Age"></td>
-      </tr>
-      <br>
-      <br>
-
-      <tr>
-        <td><label for="ContactNumber"> Contact Number </label></td>
-        <td><input type="text" id="ContactNumber" name="ContactNumber"></td>
-      </tr>
-      <br>
-      <br>
-
-      <tr>
-        <td><label for="Email">Email</label></td>
-        <td><input type="email" name="Email" value="@gmail.com" required /></td>
-      </tr>
-      <br>
-      <br>
-
-      <tr>
-        <td><label for="username"> Username </label></td>
-        <td><input type="text" id="username" name="Username"></td>
-      </tr>
-      <br>
-      <br>
-
-
-      <tr>
-        <td><label for="password"> Password </label></td>
-        <td><input type="password" name="Password" required /></td>
-      </tr>
-
-    </div>
-</form>
-<div>
-    <tr>
-    <td colspan="2" align="center">
-   <input type="button"  value="SUBMIT" onClick="POST();"> </button>
-    </td>
-   </tr>
- 
-</div>-->
-
+            </div>
+      </form>
+    
+    </center>
+      </body>
+  </html>
+  
+  
 
 
 
