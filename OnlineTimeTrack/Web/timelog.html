@@ -1,32 +1,41 @@
 <style>
-    
-        ul#menu{
-            padding: 10
-        }
-        ul#menu li{
-            display: inline-block;
-        }
-        ul#menu li a{
-            background-color:darksalmon;
-            color:#366092;
-            padding: 5px 10px;
-            text-decoration: none;
-            font:800 15px cursive ;
-                border-radius: 4px 4px 0 0;
-        }
-        ul#menu li a:hover{
-            background-color: #366092;
-            color:aqua;
-            font: 700 18px fantasy;
-            border-radius: 20px 20px 0 0;
-        }
-        body{
-            background-image: url("Background 3.jpg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
+        body {
+          margin: 0;
+          font-family: "Roboto Condensed", sans-serif;
+          background-image: url("Background 3.jpg");
+          background-repeat: no-repeat;
+          background-size: 100% 100%; }
+           .frm-ctrl {
+            margin-bottom: 0.5em; 
+            font-family: "Roboto Condensed", sans-serif;
+            display: flex;
+            }
+            .timelog {
+            height: 100vh;
+            width: 100vw;
+            display: block;
+            align-items: center;
+            justify-content: center; }
+            table, th, td  {
+            letter-spacing: 1px;
+            font-family: sans-serif;
+            font-size: 1em;
+            padding: 5px;
+            text-align: left;
+            }
+            button.primary{
+          width: 60%;
+        padding: 0.5em;
+        border: none;
+        font-size: 1.2em;
+        border-radius: 3px;
+        margin-top: 0.4em; 
         }
         
-          </style>
+            
+</style>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,38 +50,49 @@
         <center>
         <form name ="Timelogform"  id="forms">
             <br><br><br>
-            <h1><i>Timelog</i></h1>
-       <div>
+            <h1>Timelog</h1>
+            <div  class="timelog">
+           <table>
+           
+                           <tr>
+                               <div class="frm-ctrl"></div>
+                                   <th>Worklog ID</th>
+                                   <td><input type="int" name="WorklogID"  id="Worklog ID"/></td>
+                               </div>
+                               </tr>
+
            
 
-                   
-                    <label for="Worklog ID">  Worklog ID</label>
+                               <tr>
+                                    <div class="frm-ctrl"></div>
+                                        <th>ActualWorkTimeStart</th>
+                                        <td><input type="datetime" name="ActualWorkTimeStart"  id="ActualWorkTimeStart"/></td>
+                                    </div>
+                                    </tr>
 
-                    <input type="int" name="WorklogID"/>          <br>
 
-
-                   <label for="ActualWorkTimeStart"> Actual Work Time Start</label>
-
-                    <input type="datetime" name="ActualWorkTimeStart"/>  <br>
-                            
-                    <label for="ActualWorkTimeEnd"> Actual Work Time End</label>
-
-                    <input type="datetime" name="ActualWorkTimeEnd"/> <br>
                 
-           
-                 
+                    <tr>
+                            <div class="frm-ctrl"></div>
+                                <th>ActualWorkTimeEnd</th>
+                                <td><input type="datetime" name="ActualWorkTimeEnd"  id="ActualWorkTimeEnd"/></td>
+                            </div>
+                            </tr>
+                            
+                  
              
 
-            
-                <br><br>
-             
+      </table>
+
+      <div>
+           
+           <input type="button"  value="ADD" onClick="POST();" class="primary"> </button>
+          
+         
+        </div>
         </div>
         </form>
 
-        <div>
-                <button onclick="POST();"  >SUBMIT</button>
-            </div>
-    
             <script>
             function POST()
             {
@@ -82,7 +102,7 @@
                }
                var WorklogID=document.forms["Timelogform"]["WorklogID"].value;
                var ActualWorkTimeStart=document.forms["Timelogform"]["ActualWorkTimeStart"].value;
-                var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value
+               var ActualWorkTimeEnd=document.forms["Timelogform"]["ActualWorkTimeEnd"].value;
                 const body = {
                         WorklogID : WorklogID,
                         ActualWorkTimeStart : ActualWorkTimeStart,
@@ -111,7 +131,7 @@
     </div>
 </form>
 
-<input type="button" value="GET TIMELOG" onclick="getTimelog();" />
+<input type="button" value="GETTIMELOG" onclick="getTimelog();" />
 
 <table name="Table" id="table_id" class="display" border="1">
     <thead>

@@ -1,33 +1,42 @@
 
 <style>
-    
-        ul#menu{
-            padding: 10
+    body {
+      margin: 0;
+      font-family: "Roboto Condensed", sans-serif;
+      background-image: url("Background 3.jpg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%; }
+       .frm-ctrl {
+        margin-bottom: 0.5em; 
+        font-family: "Roboto Condensed", sans-serif;
+        display: flex;
         }
-        ul#menu li{
-            display: inline-block;
+        .worklog {
+        height: 100vh;
+        width: 100vw;
+        display: block;
+        align-items: center;
+        justify-content: center; }
+        table, th, td  {
+        letter-spacing: 1px;
+        font-family: sans-serif;
+        font-size: 1em;
+        padding: 5px;
+        text-align: left;
         }
-        ul#menu li a{
-            background-color:darksalmon;
-            color:#366092;
-            padding: 5px 10px;
-            text-decoration: none;
-            font:800 15px cursive ;
-                border-radius: 4px 4px 0 0;
-        }
-        ul#menu li a:hover{
-            background-color: #366092;
-            color:aqua;
-            font: 700 18px fantasy;
-            border-radius: 20px 20px 0 0;
-        }
-        body{
-            background-image: url("Background 3.jpg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
+        button.primary{
+          width: 60%;
+        padding: 0.5em;
+        border: none;
+        font-size: 1.2em;
+        border-radius: 3px;
+        margin-top: 0.4em; 
         }
         
-          </style>
+       
+    
+      
+    </style>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,45 +51,56 @@
         <center>
         <form  name="Worklogform" >
             <br><br><br>
-            <h1><i>Worklog</i></h1>
-            <div>
-               
+            <h1>Worklog</h1>
+            
+          <div  class="worklog">
+         <table>
 
-                 <label for="Date">Date</label>
-                 <input type="datetime" id="Date" name="Date"  value="yyyy-mm-dd"/>  
-                 
-                 <br>
+                <tr>
+                    <div class="frm-ctrl"></div>
+                        <th>Date</th>
+                        <td><input type="datetime" name="Date"  id="Date" value="yyyy-mm-dd"/></td>
+                    </div>
+                    </tr>
                 
-
-                <label for="ProjectID">ProjectID</label>
-                <input type="int" id="ProjectID" name="ProjectID"/>  
-                
-                <br>
-
-                <label for="UserID">UserID</label>
-                <input type="int" id="UserID" name="UserID"/>  
-                
-                <br>
-
-               
-                     
-                <label for="Feature">Feature</label>
-                <input type="text" id="Feature" name="Feature"/>  
-                
-                <br>
-                     
-                 <label for="EstimateWorkTime">EstimateWorkTime</label>
-                <input type="int" id="EstimateWorkTime" name="EstimateWorkTime"/>  
-                
-                <br>
-
-                    
+            
+                    <div class="frm-ctrl"></div>
+                    <th>ProjectID</th>
+                    <td><input type="int" name="ProjectID"  id="ProjectID" ></td>
                 </div>
+                </tr>
+            
+                <div class="frm-ctrl"></div>
+                <th>UserID</th>
+                <td><input type="int" name="UserID"  id="UserID" ></td>
+            </div>
+            </tr>
+           
+
+                <div class="frm-ctrl"></div>
+                <th>Feature</th>
+                <td><input type="text" name="Feature"  id="Feature" ></td>
+            </div>
+            </tr>
+                     
+               
+                     
+                <div class="frm-ctrl"></div>
+                    <th>EstimateWorkTime</th>
+                    <td><input type="int" name="EstimateWorkTime"  id="EstimateWorkTime" ></td>
+                </div>
+                </tr>
+
+                
+</table>
+<div>
+        <input type=button  value="ADD" onClick="POST();"  class="primary"> </button> 
+    </div> 
+                    
+             </div>
          </form>
 
-       <div>
-            <input type=button  value="ADD" onClick="POST();"> </button> <br>
-        </div>
+      
 
         <script>
         function POST()
@@ -93,26 +113,14 @@
             var Date=document.forms["Worklogform"]["Date"].value;
             var ProjectID=document.forms["Worklogform"]["ProjectID"].value;
             var UserID=document.forms["Worklogform"]["UserID"].value;
-            //var ProjectID=document.forms["Worklogform"]["WorklogID"].value;
             var Feature=document.forms["Worklogform"]["Feature"].value;
             var EstimateWorkTime=document.forms["Worklogform"]["EstimateWorkTime"].value;
-          //  var FullName = document.forms["Worklogform"]["FullName"].value;
-          //  var Address = document.forms["Worklogform"]["Address"].value;
-          //  var ProjectTitle = document.forms["Worklogform"]["ProjectTitle"].value;
-          //  var DateAdded = document.forms["Worklogform"]["DateAdded"].value;
-           // var DateModified = document.forms["Worklogform"]["DateModified"].value;
             const body = { 
                     Date : Date,
                     ProjectID : ProjectID,
                     UserID : UserID,
-                  //  WorklogID : WorklogID,
                     Feature : Feature,
                     EstimateWorkTime : EstimateWorkTime,
-                  //  FullName : FullName,
-                   // Address : Address,
-                   // ProjectTitle : ProjectTitle,
-                   // DateAdded : DateAdded,
-                  //  DateModified : DateModified
 
                 };
                 var xhr = new XMLHttpRequest();
@@ -145,9 +153,9 @@
         <tr>
             <th>WorklogID</th>
             <th>ProjectID</th>
-            <th>userID</th>
-            <th>feature</th>
-            <th>estimateWorkTime</th>
+            <th>UserID</th>
+            <th>Feature</th>
+            <th>EstimateWorkTime</th>
            
             
         </tr>
@@ -167,6 +175,7 @@
         row += createWorklogColumn(worklog.worklogID);
         row += createWorklogColumn(worklog.projectID);
         row += createWorklogColumn(worklog.userID);
+        row += createWorklogColumn(worklog.timelogID);
         row += createWorklogColumn(worklog.feature);
         row += createWorklogColumn(worklog.estimateWorkTime);
         
@@ -200,92 +209,3 @@
 </body>
 </html>
 
-<!--<form name="GetUserWorklogform" id="forms">
-    <div>
-        <label for="UserID">UserID </label>
-
-        <input type="long" id="UserID" name="UserID" /> 
-        
-        <br>
-    </div>
-</form>
-
-<input type="button" value="GetUserWorklog" onclick="getUserWorklog();" />
-
-<table name="Table" id="table_id" class="display" border="1">
-    <thead>
-        <tr>
-            <th>UserID</th>
-            <th>WorklogID</th>
-            <th>ProjectID</th>
-            <th>FullName</th>
-            <th>Address</th>
-            <th>ProjectTitle</th>
-            <th>Feature</th>
-            <th>EstimateWorkTime</th>
-            <th>DateAdded</th>
-            <th>DateModified</th>
-            
-            
-        </tr>
-    </thead>
-
-    <tbody id="tablePlace"></tbody>
-</table>
-<p id="GetUserWorklog"></p>
-
-<script>
-    
-    function createWorklogColumn(data) {
-        return '<td>' + data + '</td>';
-    }
-
-    function generateWorklogRow(worklog) {
-        var row = '<tr>';
-        
-        row += createWorklogColumn(worklog.userID);
-        row += createWorklogColumn(worklog.worklogID);
-        row += createWorklogColumn(worklog.projectID);
-        row += createWorklogColumn(worklog.fullName);
-        row += createWorklogColumn(worklog.address);
-        row += createWorklogColumn(worklog.projectTitle);
-        row += createWorklogColumn(worklog.feature);
-        row += createWorklogColumn(worklog.estimateWorkTime);
-        row += createWorklogColumn(worklog.dateAdded);
-        row += createWorklogColumn(worklog.dateModified);
-       
-        row += '</td>';
-
-        return row;
-    }      
-
-    function showWorklogDetails(res) {
-var worklogTableBody = document.getElementById('tablePlace');
-if (worklogTableBody) {
-    worklogTableBody.innerHTML =generateWorklogRow(res.data);
-} else {
-    alert('Cannot retrieve the element for showing worklog.');
-}
-}
-
-function getUserWorklog() {
-function reqListener() {
-   showWorklogDetails(JSON.parse(this.responseText));
- //console.log(this.responseText);
-
-}
-
-var xhr = new XMLHttpRequest();
-xhr.addEventListener('load', reqListener);
-xhr.open('GET', 'https://localhost:44392/api/worklog/userid?id='+UserID.value,  true);
-
-xhr.setRequestHeader("Content-Type", "application/JSON");
-xhr.send(UserID);
-
-/* xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(UserID);*/
-}
-</script>
-</center>
-</body>
-</html>-->

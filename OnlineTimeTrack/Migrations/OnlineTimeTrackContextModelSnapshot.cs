@@ -31,7 +31,11 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<string>("ProjectTitle");
 
+                    b.Property<long?>("WorklogID");
+
                     b.HasKey("ProjectID");
+
+                    b.HasIndex("WorklogID");
 
                     b.ToTable("Projects");
                 });
@@ -79,17 +83,23 @@ namespace OnlineTimeTrack.Migrations
 
                     b.Property<string>("Gender");
 
-                    b.Property<string>("Password");
-
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PasswordKey");
+
+                    b.Property<long?>("TimelogID1");
 
                     b.Property<string>("Token");
 
                     b.Property<string>("Username");
 
+                    b.Property<long?>("WorklogID");
+
                     b.HasKey("UserID");
+
+                    b.HasIndex("TimelogID1");
+
+                    b.HasIndex("WorklogID");
 
                     b.ToTable("Users");
                 });
@@ -119,12 +129,30 @@ namespace OnlineTimeTrack.Migrations
                     b.ToTable("Worklogs");
                 });
 
+            modelBuilder.Entity("OnlineTimeTrack.Models.Project", b =>
+                {
+                    b.HasOne("OnlineTimeTrack.Models.Worklog", "Worklog")
+                        .WithMany()
+                        .HasForeignKey("WorklogID");
+                });
+
             modelBuilder.Entity("OnlineTimeTrack.Models.Timelog", b =>
                 {
                     b.HasOne("OnlineTimeTrack.Models.Worklog", "Worklog")
                         .WithMany("Timelogs")
                         .HasForeignKey("WorklogID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OnlineTimeTrack.Models.User", b =>
+                {
+                    b.HasOne("OnlineTimeTrack.Models.Timelog")
+                        .WithMany("Users")
+                        .HasForeignKey("TimelogID1");
+
+                    b.HasOne("OnlineTimeTrack.Models.Worklog", "Worklog")
+                        .WithMany("Users")
+                        .HasForeignKey("WorklogID");
                 });
 #pragma warning restore 612, 618
         }

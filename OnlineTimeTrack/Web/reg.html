@@ -10,7 +10,7 @@
       font-family: "Roboto Condensed", sans-serif;
       display: flex;
       }
-      .login-screen {
+      .reg {
       height: 100vh;
       width: 100vw;
       display: block;
@@ -59,7 +59,7 @@
           <form name ="Registerform" >
             <br><br><br>
               <h1>Register</h1>
-              <div  class="login-screen">
+              <div  class="reg">
               <table>
   
                   
@@ -116,7 +116,7 @@
                 <div class="frm-ctrl">
                 <th>Email</th>
                 </div>
-                <td> <input type="email" id="Email"  value="abc123@gmail.com"></td>
+                <td> <input type="email" id="Email"  value="abc@gmail.com"></td>
            </tr>
   
   
@@ -163,7 +163,7 @@
 
 
         }
-     //   var WorklogID= document.forms["Registerform"]["WorklogID"].value;
+    
         var FullName = document.forms["Registerform"]["FullName"].value;
         var Address = document.forms["Registerform"]["Address"].value;
         var Dob = document.forms["Registerform"]["Dob"].value;
@@ -174,7 +174,7 @@
         var Username = document.forms["Registerform"]["Username"].value;
         var Password = document.forms["Registerform"]["Password"].value;
         const body = {
-        //  WorklogID : WorklogID,
+       
           FullName: FullName,
           Address: Address,
           Dob: Dob,

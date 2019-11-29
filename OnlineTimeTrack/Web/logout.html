@@ -9,17 +9,20 @@
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>
     <body>
+    <center>
+         <input type=button  value="LOGOUT" onClick="LOGOUT();"> </button>
+                
 
-<center>
 
-<input id="btnLogoff" class="btn btn-success pull-right" type="button" value="Log off">
-
-<script type="text/javascript">
-   $('#btnLogoff').click(function(){
-     sessionStorage.removeItem('accessToken');
-     window.location.href= "login.html";
-   });
-  </script>
+    <script type="text/javascript">
+  
+   function LOGOUT()
+                { 
+              
+                   window.location.href = "menu.html";
+                }
+  
+   </script>
   </center>
 </body>
 </html>

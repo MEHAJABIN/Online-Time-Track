@@ -13,15 +13,19 @@ namespace OnlineTimeTrack.Models
         [Key]
         public long TimelogID { get; set; }
 
-        public long WorklogID { get; set; }
+
+        public long WorklogID { get; set; } 
 
         [NotMapped]
-        public long UserID { get; set; } 
-
+        public long UserID { get; set; }
+ 
+        
         public DateTime ActualWorkTimeStart { get; set; }
 
+        
         public DateTime ActualWorkTimeEnd { get; set; }
 
+        [NotMapped]
         public double TotalWorkTime
         {
             get
@@ -42,8 +46,15 @@ namespace OnlineTimeTrack.Models
 
 
         [ForeignKey("WorklogID")]
-        public Worklog Worklog { get; set; }       
-       
+        public Worklog Worklog { get; set; }
+
+
+
+        [NotMapped]
+        public User User { get; set; }
+
+        public List<User> Users { get; set; }
+
 
     }
 }

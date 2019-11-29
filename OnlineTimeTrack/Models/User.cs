@@ -31,6 +31,7 @@ namespace OnlineTimeTrack.Models
         
         public string PasswordKey { get; set; }
 
+        [NotMapped]
         public string Password { get; set; }
 
         public string PasswordHash { get; set; }
@@ -39,6 +40,9 @@ namespace OnlineTimeTrack.Models
 
         [ForeignKey("WorklogID")]
         public Worklog Worklog { get; set; }
+
+        [NotMapped]
+        public long TimelogID { get; set; }
 
     }
 }

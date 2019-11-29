@@ -38,77 +38,7 @@
         <a href="logout.html">Logout</a>
 
     <center>
-        <!--<form name="GetWorklogform" id="forms">
-    <div>
-
-        <label for="WorklogID">WorklogID </label>
-
-        <input type="long" id="WorklogID" name="WorklogID" /> <br />
-    </div>
-</form>
-
-<input type="button" value="GETWORKLOG" onclick="getWorklog();" />
-
-<table name="Table" id="table_id" class="display" border="1">
-    <thead>
-        <tr>
-            <th>WorklogID</th>
-            <th>ProjectID</th>
-            <th>userID</th>
-            <th>feature</th>
-            <th>estimateWorkTime</th>
-           
-            
-        </tr>
-    </thead>
-
-    <tbody id="tablePlace"></tbody>
-</table>
-<p id="Getproject"></p>
-
-<script>
-    function createWorklogColumn(data) {
-        return '<td>' + data + '</td>';
-    }
-
-    function generateWorklogRow(worklog) {
-        var row = '<tr>';
-        row += createWorklogColumn(worklog.worklogID);
-        row += createWorklogColumn(worklog.projectID);
-        row += createWorklogColumn(worklog.userID);
-        row += createWorklogColumn(worklog.feature);
-        row += createWorklogColumn(worklog.estimateWorkTime);
-        
-        row += '</td>';
-
-        return row;
-    }
-
-    function showWorklogDetails(res) {
-        var worklogTableBody = document.getElementById('tablePlace');
-        if (worklogTableBody) {
-            worklogTableBody.innerHTML =generateWorklogRow(res.data);
-        } else {
-            alert('Cannot retrieve the element for showing worklog.');
-        }
-    }
-
-    function getWorklog() {
-        function reqListener() {
-            showWorklogDetails(JSON.parse(this.responseText));
-        }
-
-        var xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', reqListener);
-        xhr.open('GET', 'https://localhost:44392/api/worklog/getbyid?id='+ WorklogID.value, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(WorklogID);
-    }
-</script>
-</center>
-</body>
-</html>-->
-
+      
 <form name="GetUserWorklogform" id="forms">
     <div>
         <label for="UserID">UserID </label>
@@ -126,14 +56,18 @@
         <tr>
             <th>UserID</th>
             <th>WorklogID</th>
+           <!-- <th>TimelogID</th>-->
             <th>ProjectID</th>
             <th>FullName</th>
             <th>Address</th>
             <th>ProjectTitle</th>
             <th>Feature</th>
             <th>EstimateWorkTime</th>
+           <!-- <th>ActualWorkTimeStart</th>
+            <th>ActualWorkTimeEnd</th>
+            <th>TotalWorkTime</th>
             <th>DateAdded</th>
-            <th>DateModified</th>
+            <th>DateModified</th>-->
             
             
         </tr>
@@ -145,7 +79,7 @@
 
 <script>
     
-    function createWorklogColumn(data) {
+    function createWorklogColumn(data ) {
         return '<td>' + data + '</td>';
     }
 
@@ -154,14 +88,18 @@
         
         row += createWorklogColumn(worklog.userID);
         row += createWorklogColumn(worklog.worklogID);
+       /* row += createWorklogColumn(worklog.timelogs[0].timelogID);*/
         row += createWorklogColumn(worklog.projectID);
         row += createWorklogColumn(worklog.fullName);
         row += createWorklogColumn(worklog.address);
         row += createWorklogColumn(worklog.projectTitle);
         row += createWorklogColumn(worklog.feature);
         row += createWorklogColumn(worklog.estimateWorkTime);
-        row += createWorklogColumn(worklog.dateAdded);
-        row += createWorklogColumn(worklog.dateModified);
+      /*  row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeStart);
+        row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeEnd);
+        row += createWorklogColumn(worklog.timelogs[0].totalWorkTime);
+        row += createWorklogColumn(worklog.timelogs[0].dateAdded);
+        row += createWorklogColumn(worklog.timelogs[0].dateModified);*/
        
         row += '</td>';
 
@@ -171,7 +109,8 @@
     function showWorklogDetails(res) {
 var worklogTableBody = document.getElementById('tablePlace');
 if (worklogTableBody) {
-    worklogTableBody.innerHTML =generateWorklogRow(res.data);
+  
+   worklogTableBody.innerHTML =generateWorklogRow(res.data[UserID.value]);
 } else {
     alert('Cannot retrieve the element for showing worklog.');
 }
@@ -179,9 +118,9 @@ if (worklogTableBody) {
 
 function getuserWorklog() {
 function reqListener() {
-  // showWorklogDetails(JSON.parse(this.responseText));
+ showWorklogDetails(JSON.parse(this.responseText));
  
- console.log(this.responseText);
+ //console.log(this.responseText);
 
 }
 
@@ -199,20 +138,3 @@ xhr.send(UserID);
 
       
 
-<!--"worklogID": 1,
-            "projectID": 1,
-            "userID": 1,
-            "date": "0001-01-01T00:00:00",
-            "estimateWorkTime": 0,
-            "feature": "Android",
-            "projectTitle": "Zappy",
-            "fullName": "Aparna",
-            "address": "Aparna villa",
-            "actualWorkTimeStart": "0001-01-01T00:00:00",
-            "actualWorkTimeEnd": "0001-01-01T00:00:00",
-            "totalWorkTime": 0.0,
-            "dateAdded": "0001-01-01T00:00:00",
-            "dateModified": "0001-01-01T00:00:00",
-            "timeLog": null,
-            "timelogs": null,
-            "user": null,-->

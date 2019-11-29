@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -36,10 +36,11 @@
     <body>
         <a href="menu.html">Home</a>
         <a href="logout.html">Logout</a>
+        <a href="front.html">Pages</a>
 
         <center>
 
-        <form name="GetAllworklogsform" id="forms">
+        <form name="GetAllworklogform" id="forms">
             <div>
                
                 <label for="start">start</label>
@@ -56,14 +57,15 @@
             </div>
         </form>
 
-        <input type="button" value="GETALLWORKLOG" onclick="getallWorklogs();" />
+        <input type="button" value="GETALLWORKLOG" onclick="getallWorklog();" />
 
         <table name="Table" id="table_id" class="display" border="1">
             <thead>
                 <tr>
-                    <th>UserID</th>
+                    
                     <th>WorklogID</th>
-                    <th>TimelogID</th>
+                    <th>UserID</th>
+                   <th>TimelogID</th> 
                     <th>ProjectID</th>
                     <th>FullName</th>
                     <th>Address</th>
@@ -78,12 +80,13 @@
                     
                     
                     
+                    
                 </tr>
             </thead>
  
             <tbody id="tablePlace"></tbody>
         </table>
-        <p id="GetAllWorklogs"></p>
+        <p id="GetAllWorklog"></p>
 
         <script>
             
@@ -91,26 +94,23 @@
                 return '<td>' + data + '</td>';
             }
 
-           // function generateWorklogRow(worklog) {
              function generateWorklogRow(worklog) {
                 var row = '<tr>';
-       
-      //  row += createWorklogColumn(timelog.worklogID);
-       
-        row += createWorklogColumn(worklog.userID);
         row += createWorklogColumn(worklog.worklogID);
+        row += createWorklogColumn(worklog.userID);
+        row += createWorklogColumn(worklog.timelogs[0].timelogID);
         row += createWorklogColumn(worklog.projectID);
-        row += createWorklogColumn(worklog.timelogID);
         row += createWorklogColumn(worklog.fullName);
         row += createWorklogColumn(worklog.address);
         row += createWorklogColumn(worklog.projectTitle);
         row += createWorklogColumn(worklog.feature);
         row += createWorklogColumn(worklog.estimateWorkTime);
-        row += createWorklogColumn(worklog.actualWorkTimeStart);
-        row += createWorklogColumn(worklog.actualWorkTimeEnd);
-        row += createWorklogColumn(worklog.totalWorkTime);
-        row += createWorklogColumn(worklog.dateAdded);
-        row += createWorklogColumn(worklog.dateModified);
+        row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeStart);
+        row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeEnd);
+        row += createWorklogColumn(worklog.timelogs[0].totalWorkTime);
+        row += createWorklogColumn(worklog.timelogs[0].dateAdded);
+        row += createWorklogColumn(worklog.timelogs[0].dateModified);
+       
 
        
        
@@ -119,26 +119,31 @@
                 return row;
             }
             
+           function showWorklogDetails(res) {
+           var worklogTableBody = document.getElementById('tablePlace');
+           if(worklogTableBody){
+               var rowStrings="";
+               for(var i=0;i<res.data.length;i++) 
+               rowStrings += generateWorklogRow(res.data[i]);
+             worklogTableBody.innerHTML = rowStrings;
+           } 
+
            
           
-            function showWorklogDetails(res) {
-           var worklogTableBody = document.getElementById('tablePlace');
-            if (worklogTableBody) {
-            worklogTableBody.innerHTML =generateWorklogRow(res.data);
-           } else {
-          alert('Cannot retrieve the element for showing worklog.');
-          }
         }
+           
+   
+        
 
-            function getallWorklogs() {
+            function getallWorklog() {
                 function reqListener() {
-                  showWorklogDetails(JSON.parse(this.responseText));
-                 // console.log(this.responseText);
+                showWorklogDetails(JSON.parse(this.responseText));
+              //console.log(this.responseText);
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?='+start.value +limit.value, true);
+                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?'+(start.value&limit.value), true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(start,limit);
                 

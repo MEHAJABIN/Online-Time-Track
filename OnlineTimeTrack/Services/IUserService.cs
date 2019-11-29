@@ -20,7 +20,7 @@ namespace OnlineTimeTrack.Services
         Task<User> Authenticate(string Username, string Password);
         Task<IEnumerable<User>>GetAllUsers(int start, int limit);
         User Create(User user, string password);
-        void Update(User user, string password = null);
+        
       
        
     }

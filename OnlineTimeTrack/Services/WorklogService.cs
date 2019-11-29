@@ -1,5 +1,5 @@
-﻿using OnlineTimeTrack.Contexts;
-using System;
+﻿using System;
+using OnlineTimeTrack.Contexts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -159,7 +159,7 @@ namespace OnlineTimeTrack.Services
             var result = await worklog
                   .GroupBy(x => x.WorklogID)
                   .Select(g =>
-                  new Worklog
+                  new Worklog 
                   {
                       WorklogID = g.FirstOrDefault().WorklogID,
                       ProjectID = g.FirstOrDefault().ProjectID,
@@ -183,28 +183,47 @@ namespace OnlineTimeTrack.Services
         }
 
 
-    
 
 
 
 
-    public async Task<IEnumerable<Worklog>> GetUserWorklog(int userId, long? WorklogID, long? UserID, long? ProjectID,
-           string ProjectTitle,string Feature, string FullName, string Address)
+
+        public async Task<IEnumerable<Worklog>> GetUserWorklog(int userId, long? WorklogID, long? UserID, long? ProjectID,long? TimelogID,
+                string ProjectTitle,string Feature, string FullName, string Address,int? EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd)
         {
             var worklog = _onlineTimeTrackContext.Worklogs
 
-                   .Join(_onlineTimeTrackContext.Projects, w => w.ProjectID, p => p.ProjectID,
-                   (w, p) =>
-                   new Worklog
-                   {
-                       WorklogID = w.WorklogID,
-                       UserID = w.UserID,
-                       Feature = w.Feature,
-                       ProjectID = p.ProjectID,
-                       ProjectTitle = p.ProjectTitle
+                    .Join(_onlineTimeTrackContext.Projects, w => w.ProjectID, p => p.ProjectID,
+                    (w, p) =>
+                    new Worklog
+                    {
+                        WorklogID = w.WorklogID,
+                        UserID = w.UserID,
+                        Feature = w.Feature,
+                        EstimateWorkTime = w.EstimateWorkTime,
+                        ProjectID = p.ProjectID,
+                        ProjectTitle = p.ProjectTitle
 
 
-                   });
+                    });
+            worklog = worklog
+               .Join(_onlineTimeTrackContext.Timelogs, w => w.TimelogID, t => t.TimelogID,
+                    (comb, t) =>
+                    new Worklog
+                    {
+                        WorklogID = comb.WorklogID,
+                        UserID = comb.UserID,
+                        Feature = comb.Feature,
+                        EstimateWorkTime = comb.EstimateWorkTime,
+                        ProjectID =comb.ProjectID,
+                        ProjectTitle =comb.ProjectTitle,
+                        TimelogID =t.TimelogID,
+                        ActualWorkTimeStart = t.ActualWorkTimeStart,
+                        ActualWorkTimeEnd = t.ActualWorkTimeEnd
+                    });
+
+
+
             worklog = worklog
                  .Join(_onlineTimeTrackContext.Users, comb => comb.UserID, u => u.UserID,
                 (comb, u) =>
@@ -212,11 +231,15 @@ namespace OnlineTimeTrack.Services
                 {
                     WorklogID = comb.WorklogID,
                     Feature = comb.Feature,
+                    EstimateWorkTime = comb.EstimateWorkTime,
                     UserID = u.UserID,
                     FullName = u.FullName,
                     Address = u.Address,
                     ProjectID = comb.ProjectID,
-                    ProjectTitle = comb.ProjectTitle
+                    ProjectTitle = comb.ProjectTitle,
+                    TimelogID = comb.TimelogID,
+                    ActualWorkTimeStart = comb.ActualWorkTimeStart,
+                    ActualWorkTimeEnd = comb.ActualWorkTimeEnd
                 });
 
             if (ProjectID != null)
@@ -234,50 +257,209 @@ namespace OnlineTimeTrack.Services
                 worklog = worklog.Where(w => w.Feature == Feature);
             }
 
-
-            if (UserID != null)
+            if (EstimateWorkTime != null)
             {
-                worklog = worklog.Where(u => u.UserID == UserID);
+                worklog = worklog.Where(w => w.EstimateWorkTime == EstimateWorkTime);
             }
 
-            if (FullName != null)
+            if (TimelogID != null)
             {
-                worklog = worklog.Where(u => u.FullName == FullName);
+                worklog = worklog.Where(t => t.TimelogID == TimelogID);
+
+
+                if (ActualWorkTimeStart != null)
+                {
+                    worklog = worklog.Where(t => t.ActualWorkTimeStart == ActualWorkTimeStart);
+                }
+
+
+                if (ActualWorkTimeEnd != null)
+                {
+                    worklog = worklog.Where(t => t.ActualWorkTimeEnd == ActualWorkTimeEnd);
+                }
+
+
+                if (UserID != null)
+                {
+                    worklog = worklog.Where(u => u.UserID == UserID);
+                }
+
+                if (FullName != null)
+                {
+                    worklog = worklog.Where(u => u.FullName == FullName);
+                }
+
+                if (Address != null)
+                {
+                    worklog = worklog.Where(u => u.Address == Address);
+
+                }
+                var result = await worklog
+                      .GroupBy(x => x.WorklogID)
+                      .Select(g =>
+                      new Worklog
+                      {
+                          WorklogID = g.FirstOrDefault().WorklogID,
+                          ProjectID = g.FirstOrDefault().ProjectID,
+                          UserID = g.FirstOrDefault().UserID,
+                          ProjectTitle = g.FirstOrDefault().ProjectTitle,
+                          Feature = g.FirstOrDefault().Feature,
+                          EstimateWorkTime = g.FirstOrDefault().EstimateWorkTime,
+                          TimelogID = g.FirstOrDefault().TimelogID,
+                          ActualWorkTimeStart = g.FirstOrDefault().ActualWorkTimeStart,
+                          ActualWorkTimeEnd = g.FirstOrDefault().ActualWorkTimeEnd,
+                          FullName = g.FirstOrDefault().FullName,
+                          Address = g.FirstOrDefault().Address,
+
+                          Users = g.Select(u => u.User).ToList()
+                      }).ToListAsync();
+
+                if (userId != 0)
+                {
+                    result = result.Take(userId).ToList();
+                }
+
+                return result;
             }
-
-            if (Address != null)
-            {
-                worklog = worklog.Where(u => u.Address == Address);
-
-            }
-            var result = await worklog
-                  .GroupBy(x => x.WorklogID)
-                  .Select(g =>
-                  new Worklog
-                  {
-                      WorklogID = g.FirstOrDefault().WorklogID,
-                      ProjectID = g.FirstOrDefault().ProjectID,
-                      UserID = g.FirstOrDefault().UserID,
-                      ProjectTitle = g.FirstOrDefault().ProjectTitle,
-                      Feature = g.FirstOrDefault().Feature,
-                      FullName = g.FirstOrDefault().FullName,
-                      Address = g.FirstOrDefault().Address,
-
-                    
-
-                      Users = g.Select(u => u.User).ToList()
-                  }).ToListAsync();
-
-            if (userId != 0)
-            {
-                result = result.Take(userId).ToList();
-            }
-
-            return result;
         }
 
-        
 
+
+
+
+
+
+
+        /*{
+          var worklog = _onlineTimeTrackContext.Worklogs
+
+                 .Join(_onlineTimeTrackContext.Projects, w => w.ProjectID, p => p.ProjectID,
+                 (w, p) =>
+                 new Worklog
+                 {
+                     WorklogID = w.WorklogID,
+                     UserID = w.UserID,
+                     Feature = w.Feature,
+                     EstimateWorkTime = w.EstimateWorkTime,
+                     ProjectID = p.ProjectID,
+                     ProjectTitle = p.ProjectTitle
+
+
+                 });
+          worklog = worklog
+          .Join(_onlineTimeTrackContext.Timelogs, comb => comb.TimelogID, t => t.TimelogID,
+           (comb, t) =>
+           new Worklog
+           {
+               WorklogID = comb.WorklogID,
+               Feature = comb.Feature,
+               EstimateWorkTime = comb.EstimateWorkTime,
+               ProjectID = comb.ProjectID,
+               ProjectTitle = comb.ProjectTitle,
+               TimelogID = t.TimelogID,
+               ActualWorkTimeStart = t.ActualWorkTimeStart,
+               ActualWorkTimeEnd = t.ActualWorkTimeEnd,
+
+           });
+          worklog = worklog
+               .Join(_onlineTimeTrackContext.Users, comb => comb.UserID, u => u.UserID,
+              (comb, u) =>
+              new Worklog
+              {
+                  WorklogID = comb.WorklogID,
+                  Feature = comb.Feature,
+                  EstimateWorkTime = comb.EstimateWorkTime,
+                  ProjectID = comb.ProjectID,
+                  ProjectTitle = comb.ProjectTitle,
+                 TimelogID = comb.TimelogID,
+                  ActualWorkTimeStart = comb.ActualWorkTimeStart,
+                  ActualWorkTimeEnd = comb.ActualWorkTimeEnd,
+                  UserID = u.UserID,
+                  FullName = u.FullName,
+                  Address = u.Address,
+                  User = u
+              });
+
+
+          if (ProjectID != null)
+          {
+              worklog = worklog.Where(p => p.ProjectID == ProjectID);
+          }
+
+          if (ProjectTitle != null)
+          {
+              worklog = worklog.Where(p => p.ProjectTitle == ProjectTitle);
+          }
+
+          if (Feature != null)
+          {
+              worklog = worklog.Where(w => w.Feature == Feature);
+          }
+
+          if (EstimateWorkTime != null)
+          {
+              worklog = worklog.Where(w => w.EstimateWorkTime ==EstimateWorkTime);
+          }
+
+         if (TimelogID != null)
+          {
+              worklog = worklog.Where(t => t.TimelogID == TimelogID);
+          }
+
+          if (ActualWorkTimeStart != null)
+          {
+              worklog = worklog.Where(t => t.ActualWorkTimeStart == ActualWorkTimeStart);
+          }
+
+          if (ActualWorkTimeEnd != null)
+          {
+              worklog = worklog.Where(t => t.ActualWorkTimeEnd == ActualWorkTimeEnd);
+          }
+
+
+
+          if (UserID != null)
+          {
+              worklog = worklog.Where(u => u.UserID == UserID);
+          }
+
+          if (FullName != null)
+          {
+              worklog = worklog.Where(u => u.FullName == FullName);
+          }
+
+          if (Address != null)
+          {
+              worklog = worklog.Where(u => u.Address == Address);
+
+          }
+          var result = await worklog
+                .GroupBy(x => x.WorklogID)
+                .Select(g =>
+                new Worklog
+                {
+                    WorklogID = g.FirstOrDefault().WorklogID,
+                    ProjectID = g.FirstOrDefault().ProjectID,
+                    UserID = g.FirstOrDefault().UserID,
+                    TimelogID = g.FirstOrDefault().TimelogID,
+                    ActualWorkTimeStart = g.FirstOrDefault().ActualWorkTimeStart,
+                    ActualWorkTimeEnd = g.FirstOrDefault().ActualWorkTimeEnd,
+                    ProjectTitle = g.FirstOrDefault().ProjectTitle,
+                    Feature = g.FirstOrDefault().Feature,
+                    EstimateWorkTime = g.FirstOrDefault().EstimateWorkTime,
+                    FullName = g.FirstOrDefault().FullName,
+                    Address = g.FirstOrDefault().Address,
+
+                    Users = g.Select(u => u.User).ToList()
+                }).ToListAsync();
+
+           if (UserId != 0)
+           {
+               result = result.Take(UserId).ToList();
+           }
+
+           return result;
+       }*/
 
 
 
@@ -333,7 +515,7 @@ namespace OnlineTimeTrack.Services
 
 
             public async Task<IEnumerable<Worklog>> GetAllWorklogs(int start, int limit, long? WorklogID, long? UserID, long? ProjectID,
-            string Feature, int EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
+            string Feature, int? EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
             {
 
 
@@ -347,6 +529,7 @@ namespace OnlineTimeTrack.Services
                         WorklogID = w.WorklogID,
                         UserID = w.UserID,
                         Feature = w.Feature,
+                        EstimateWorkTime =w.EstimateWorkTime,
                         ProjectID = p.ProjectID,
                         ProjectTitle = p.ProjectTitle
 
@@ -359,6 +542,7 @@ namespace OnlineTimeTrack.Services
                     {
                         WorklogID = comb.WorklogID,
                         Feature = comb.Feature,
+                        EstimateWorkTime = comb.EstimateWorkTime,
                         UserID = u.UserID,
                         FullName = u.FullName,
                         Address = u.Address,
@@ -373,6 +557,7 @@ namespace OnlineTimeTrack.Services
                     {
                         WorklogID = comb.WorklogID,
                         Feature = comb.Feature,
+                        EstimateWorkTime = comb.EstimateWorkTime,
                         UserID = comb.UserID,
                         FullName = comb.FullName,
                         Address = comb.Address,
@@ -398,8 +583,13 @@ namespace OnlineTimeTrack.Services
                     worklog = worklog.Where(w => w.Feature == Feature);
                 }
 
+            if (EstimateWorkTime!= null)
+            {
+                worklog = worklog.Where(w => w.EstimateWorkTime == EstimateWorkTime);
+            }
 
-                if (UserID != null)
+
+            if (UserID != null)
                 {
                     worklog = worklog.Where(u => u.UserID == UserID);
                 }
@@ -424,6 +614,7 @@ namespace OnlineTimeTrack.Services
                           UserID = g.FirstOrDefault().UserID,
                           ProjectTitle = g.FirstOrDefault().ProjectTitle,
                           Feature = g.FirstOrDefault().Feature,
+                          EstimateWorkTime = g.FirstOrDefault().EstimateWorkTime,
                           FullName = g.FirstOrDefault().FullName,
                           Address = g.FirstOrDefault().Address,
 
@@ -453,11 +644,6 @@ namespace OnlineTimeTrack.Services
 
 
 
-        public Worklog Create(Worklog worklog, int EstimateWorkTime, string Feature, DateTime ActualTimeStart, DateTime ActualTimeEnd)
-        {
-            throw new NotImplementedException();
-        }
-         
     }
 }
 

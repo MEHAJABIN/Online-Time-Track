@@ -139,14 +139,14 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("ProjectID")]
-        public async Task<Response<IEnumerable<Worklog>>> GetProjectWorklog([FromQuery] int projectId, long? WorklogID, long? UserID, long? ProjectID,
+        public async Task<Response<IEnumerable<Worklog>>> GetProjectWorklog([FromQuery] int ProjectId, long? WorklogID, long? UserID, long? ProjectID,
            string ProjectTitle, string Feature, string FullName, string Address)
 
         {
             
             try
             {
-                var worklog = await _worklogService.GetProjectWorklog(projectId,WorklogID,UserID,ProjectID,ProjectTitle,Feature,FullName,Address);
+                var worklog = await _worklogService.GetProjectWorklog(ProjectId,WorklogID,UserID,ProjectID,ProjectTitle,Feature,FullName,Address);
                 if (worklog == null)
                 {
                     return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
@@ -188,19 +188,19 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("UserID")]
-        public async Task<Response<IEnumerable<Worklog>>> GetUSerWorklog([FromQuery] int userId, long? WorklogID, long? UserID, long? ProjectID,
-           string ProjectTitle, string Feature, string FullName, string Address)
+        public async Task<Response<IEnumerable<Worklog>>>GetUserWorklog([FromQuery] int userId, long? WorklogID, long? UserID, long? ProjectID,long? TimelogID,
+        int? EstimateWorkTime, string ProjectTitle, string Feature, string FullName, string Address, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd)
        
         {
            
             try
             {
-              
-                var worklog = await _worklogService.GetUserWorklog(userId,UserID, WorklogID,ProjectID,
-            ProjectTitle,Feature,FullName, Address);
+                var worklog = await _worklogService.GetUserWorklog(userId, UserID, WorklogID, ProjectID, TimelogID,
+            ProjectTitle, Feature, FullName, Address, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd);
+
                 if (worklog == null)
                 {
-                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not a valid Id", null);
+                    return Response<IEnumerable<Worklog>>.CreateResponse(false, "Not  valid ", null);
                 }
 
                 return Response<IEnumerable<Worklog>>.CreateResponse(true, "Successfully uploaded.", worklog);
@@ -209,12 +209,14 @@ namespace OnlineTimeTrack.Controllers
             {
                 return Response<IEnumerable<Worklog>>.CreateResponse(false, e.Message, null);
             }
+          
         }
+    
 
 
 
         [HttpGet("GetAllWorklogs")]
-        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int EstimateWorkTime,
+        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int? EstimateWorkTime,
         DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
 
         {

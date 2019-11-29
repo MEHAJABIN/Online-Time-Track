@@ -176,15 +176,15 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
         }
 
-        private void CreatePasswordHash(string passwordKey)
-        {
-            throw new NotImplementedException();
-        }
+            private void CreatePasswordHash(string passwordKey)
+             {
+                   
+             }
 
-        private void CreatePasswordHash(string passwordKey, string password)
-        {
-            throw new NotImplementedException();
-        }
+             private void CreatePasswordHash(string passwordKey, string password)
+             {
+                
+             }
 
         private static void NewMethod(string password, HMACSHA512 hmac)
         {
@@ -281,10 +281,6 @@ namespace OnlineTimeTrack.Services
             _onlineTimeTrackContext.SaveChanges();
         }
 
-        void IUserService.Update(User user, string password)
-        {
-            throw new NotImplementedException();
-        }
 
 
 

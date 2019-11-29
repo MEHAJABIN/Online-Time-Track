@@ -24,6 +24,10 @@ namespace OnlineTimeTrack.Models
 
         public string Feature { get; set; }
 
+
+        [NotMapped]
+        public long TimelogID { get; set; }
+
         [NotMapped]
         public string ProjectTitle { get; set; }
 
@@ -70,6 +74,11 @@ namespace OnlineTimeTrack.Models
         public User User { get; set; }
 
         public List<User> Users { get; set; }
+
+
+
+
+       
     }
 }
 
