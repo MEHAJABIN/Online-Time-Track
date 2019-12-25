@@ -1,33 +1,40 @@
 
-<style>
-    
-        ul#menu{
-            padding: 10
-        }
-        ul#menu li{
-            display: inline-block;
-        }
-        ul#menu li a{
-            background-color:darksalmon;
-            color:#366092;
-            padding: 5px 10px;
-            text-decoration: none;
-            font:800 15px cursive ;
-                border-radius: 4px 4px 0 0;
-        }
-        ul#menu li a:hover{
-            background-color: #366092;
-            color:aqua;
-            font: 700 18px fantasy;
-            border-radius: 20px 20px 0 0;
-        }
+ <style>
         body{
-            background-image: url("Background 3.jpg");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-        }
-        
-          </style>
+         margin: 0;
+        font-family: "Roboto Condensed", sans-serif;
+        background-image: url("Background 3.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%; }
+         .frm-ctrl {
+          margin-bottom: 0.5em; 
+          font-family: "Roboto Condensed", sans-serif;
+          display: flex;
+          }
+          .project{
+          height: 100vh;
+          width: 100vw;
+          display: block;
+          align-items: center;
+          justify-content: center; }
+          table, th, td  {
+          letter-spacing: 1px;
+          font-family: sans-serif;
+          font-size: 1em;
+          padding: 5px;
+          text-align: left;
+          }
+          button.primary{
+            width: 60%;
+          padding: 0.5em;
+          border: none;
+          font-size: 1.2em;
+          border-radius: 3px;
+          margin-top: 0.4em; 
+          }
+          
+            
+        </style>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,20 +53,25 @@
             <br><br><br>
             <h1>Project</h1>
         
-            <div>
-                    <label for="ProjectTitle">ProjectTitle </label>
-
-                    <input type="text" id="projectitle" name="ProjectTitle">  <br>
-
-                   
-                         
-           </div>
+            <div class="project">
+                    <table>
+                            <tr>
+                                    <div class="frm-ctrl"></div>
+                                    <th>ProjectTitle</th>
+                                    
+                                    <td><input type="text" name="ProjectTitle"  id="ProjectTitle"></td>
+                                  </div>
+                                </tr>
+                            </table>
+                            <div>
+                                    <input type=button  value="ADD" onClick="POST();" class="primary"></button>
+                        
+                                       
+                                    </div>
         
-           
+                            </div>
         </form>
-        <div>
-                <input type=button  value="ADD" onClick="POST();"> </button>
-        </div>
+        
 
         <script>
            

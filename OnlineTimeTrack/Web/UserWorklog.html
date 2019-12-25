@@ -35,6 +35,7 @@
 
     <body>
         <a href="menu.html">Home</a>
+        <a href="front.html">Pages</a>
         <a href="logout.html">Logout</a>
 
     <center>
@@ -56,18 +57,18 @@
         <tr>
             <th>UserID</th>
             <th>WorklogID</th>
-           <!-- <th>TimelogID</th>-->
+            <th>TimelogID</th>
             <th>ProjectID</th>
             <th>FullName</th>
             <th>Address</th>
             <th>ProjectTitle</th>
             <th>Feature</th>
             <th>EstimateWorkTime</th>
-           <!-- <th>ActualWorkTimeStart</th>
+           <th>ActualWorkTimeStart</th>
             <th>ActualWorkTimeEnd</th>
             <th>TotalWorkTime</th>
             <th>DateAdded</th>
-            <th>DateModified</th>-->
+            <th>DateModified</th>
             
             
         </tr>
@@ -88,18 +89,18 @@
         
         row += createWorklogColumn(worklog.userID);
         row += createWorklogColumn(worklog.worklogID);
-       /* row += createWorklogColumn(worklog.timelogs[0].timelogID);*/
+        row += createWorklogColumn(worklog.timelogs[0].timelogID);
         row += createWorklogColumn(worklog.projectID);
         row += createWorklogColumn(worklog.fullName);
         row += createWorklogColumn(worklog.address);
         row += createWorklogColumn(worklog.projectTitle);
         row += createWorklogColumn(worklog.feature);
         row += createWorklogColumn(worklog.estimateWorkTime);
-      /*  row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeStart);
+        row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeStart);
         row += createWorklogColumn(worklog.timelogs[0].actualWorkTimeEnd);
         row += createWorklogColumn(worklog.timelogs[0].totalWorkTime);
         row += createWorklogColumn(worklog.timelogs[0].dateAdded);
-        row += createWorklogColumn(worklog.timelogs[0].dateModified);*/
+        row += createWorklogColumn(worklog.timelogs[0].dateModified);
        
         row += '</td>';
 
@@ -109,7 +110,7 @@
     function showWorklogDetails(res) {
 var worklogTableBody = document.getElementById('tablePlace');
 if (worklogTableBody) {
-  
+    
    worklogTableBody.innerHTML =generateWorklogRow(res.data[UserID.value]);
 } else {
     alert('Cannot retrieve the element for showing worklog.');
@@ -118,7 +119,7 @@ if (worklogTableBody) {
 
 function getuserWorklog() {
 function reqListener() {
- showWorklogDetails(JSON.parse(this.responseText));
+showWorklogDetails(JSON.parse(this.responseText));
  
  //console.log(this.responseText);
 
