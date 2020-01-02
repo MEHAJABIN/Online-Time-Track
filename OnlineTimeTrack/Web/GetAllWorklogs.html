@@ -54,9 +54,9 @@
             <table>
                     <tr>
                             <div class="frm-ctrl"></div>
-                            <th>Start</th>
+                            <th>start</th>
                             
-                            <td><input type="int" name="Start"  id="Start"></td>
+                            <td><input type="int" name="start"  id="start"></td>
                           </div>
                         </tr>
                         
@@ -64,9 +64,9 @@
                         
                         <tr>  
                               <div class="frm-ctrl">
-                              <th>Limit</th>
+                              <th>limit</th>
                             
-                                <td><input type="int" name="Limit" id="Limit"></td>
+                                <td><input type="int" name="limit" id="limit"></td>
                               </div>
                         </tr>
                     </table>
@@ -85,7 +85,7 @@
                     
                     <th>WorklogID</th>
                     <th>UserID</th>
-                   <th>TimelogID</th> 
+                    <th>TimelogID</th>                   
                     <th>ProjectID</th>
                     <th>FullName</th>
                     <th>Address</th>
@@ -148,23 +148,18 @@
         } 
         }
           
-
-           
-          
-        
-           
-   
-        
-
-            function getallWorklog() {
+               function getallWorklog() {
                 function reqListener() {
-              showWorklogDetails(JSON.parse(this.responseText));
-             // console.log(this.responseText);
+             showWorklogDetails(JSON.parse(this.responseText));
+              
+             
+                  
+            //  console.log(this.responseText);
                 }
 
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener('load', reqListener);
-                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?'+(start.value&limit.value), true);
+                xhr.open('GET', 'https://localhost:44392/api/worklog/getallworklogs?getallworklogs='+(start.value&limit.value), true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(start,limit);
                 

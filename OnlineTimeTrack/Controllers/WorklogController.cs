@@ -188,14 +188,14 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("UserID")]
-        public async Task<Response<IEnumerable<Worklog>>>GetUserWorklog([FromQuery] int userId, long? WorklogID, long? UserID, long? ProjectID,long? TimelogID,
+        public async Task<Response<IEnumerable<Worklog>>>GetUserWorklog([FromQuery] long? WorklogID, int UserID,long? ProjectID,long? TimelogID,
         int? EstimateWorkTime, string ProjectTitle, string Feature, string FullName, string Address, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd)
        
         {
            
             try
             {
-                var worklog = await _worklogService.GetUserWorklog(userId, UserID, WorklogID, ProjectID, TimelogID,
+                 var worklog = await _worklogService.GetUserWorklog(  WorklogID, UserID, ProjectID, TimelogID,
                ProjectTitle, Feature, FullName, Address, EstimateWorkTime, ActualWorkTimeStart, ActualWorkTimeEnd);
 
                 if (worklog == null)
@@ -216,7 +216,7 @@ namespace OnlineTimeTrack.Controllers
 
 
         [HttpGet("GetAllWorklogs")]
-        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, long? UserID, long? ProjectID, string Features, int? EstimateWorkTime,
+        public async Task<Response<IEnumerable<Worklog>>>GetAllWorklogs([FromQuery] int start,int limit, long? WorklogID, int UserID, long? ProjectID, string Features, int? EstimateWorkTime,
         DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd, string ProjectTitle, string FullName, string Address)
 
         {

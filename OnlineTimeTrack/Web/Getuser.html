@@ -105,7 +105,9 @@
 
             function getUser() {
                 function reqListener() {
-                    showUserDetails(JSON.parse(this.responseText));
+                showUserDetails(JSON.parse(this.responseText));
+                // console.log(this.responseText);
+                   
                 }
      
                 var xhr = new XMLHttpRequest();

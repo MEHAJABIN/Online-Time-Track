@@ -154,6 +154,8 @@
             function getProject() {
                 function reqListener() {
                     showProjectDetails(JSON.parse(this.responseText));
+                    alert("loaded Successfully");
+                   window.location.href="worklog.html";
                 }
 
                 var xhr = new XMLHttpRequest();

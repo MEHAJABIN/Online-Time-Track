@@ -1,4 +1,3 @@
-
 <style>
     body {
       margin: 0;
@@ -64,13 +63,15 @@
                     </div>
                     </tr>
                 
-            
+                <tr>          
                     <div class="frm-ctrl"></div>
                     <th>ProjectID</th>
                     <td><input type="int" name="ProjectID"  id="ProjectID" ></td>
                 </div>
                 </tr>
-            
+
+
+            <tr>
                 <div class="frm-ctrl"></div>
                 <th>UserID</th>
                 <td><input type="int" name="UserID"  id="UserID" ></td>
@@ -78,20 +79,25 @@
             </tr>
            
 
-                <div class="frm-ctrl"></div>
+            <tr>  
+            <div class="frm-ctrl"></div>
                 <th>Feature</th>
                 <td><input type="text" name="Feature"  id="Feature" ></td>
             </div>
             </tr>
                      
                
-                     
+            <tr>                    
                 <div class="frm-ctrl"></div>
                     <th>EstimateWorkTime</th>
                     <td><input type="int" name="EstimateWorkTime"  id="EstimateWorkTime" ></td>
                 </div>
                 </tr>
 
+              
+              
+
+                
                 
 </table>
 <div>
@@ -109,6 +115,7 @@
             function reqListener () {
             console.log(this.responseText);
             alert("loaded Successfully");
+            //window.location.href = "timelog.html";
         }
 
             var Date=document.forms["Worklogform"]["Date"].value;
@@ -116,12 +123,14 @@
             var UserID=document.forms["Worklogform"]["UserID"].value;
             var Feature=document.forms["Worklogform"]["Feature"].value;
             var EstimateWorkTime=document.forms["Worklogform"]["EstimateWorkTime"].value;
+         
             const body = { 
                     Date : Date,
                     ProjectID : ProjectID,
                     UserID : UserID,
                     Feature : Feature,
                     EstimateWorkTime : EstimateWorkTime,
+                
 
                 };
                 var xhr = new XMLHttpRequest();
@@ -157,7 +166,11 @@
             <th>UserID</th>
             <th>Feature</th>
             <th>EstimateWorkTime</th>
-           
+            <th>ActualWorkTimeStart</th>
+            <th>ActualWorkTimeEnd</th>
+            <th>TotalWorkTime</th>
+            <th>DateAdded</th>
+            <th>DateModified</th>
             
         </tr>
     </thead>
@@ -179,6 +192,7 @@
         row += createWorklogColumn(worklog.timelogID);
         row += createWorklogColumn(worklog.feature);
         row += createWorklogColumn(worklog.estimateWorkTime);
+        
         
         row += '</td>';
 

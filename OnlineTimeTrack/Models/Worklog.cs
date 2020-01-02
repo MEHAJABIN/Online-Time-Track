@@ -45,7 +45,7 @@ namespace OnlineTimeTrack.Models
         [NotMapped]
         public DateTime ActualWorkTimeEnd { get; set; }
 
-
+        [NotMapped]
         public double TotalWorkTime
         {
             get

@@ -23,7 +23,7 @@ namespace OnlineTimeTrack.Services
         Task<IEnumerable<Worklog>> GetProjectWorklog(int ProjectId,long? WorklogID, long? UserID, long? ProjectID,
            string ProjectTitle, string Feature, string FullName, string Address);
 
-        Task<IEnumerable<Worklog>> GetUserWorklog(int userId, long? WorklogID, long? UserID, long? ProjectID,long? TimelogID, 
+        Task<IEnumerable<Worklog>> GetUserWorklog( long? WorklogID,int UserID, long? ProjectID,long? TimelogID, 
            string ProjectTitle, string Feature, string FullName, string Address, int? EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd);
 
        

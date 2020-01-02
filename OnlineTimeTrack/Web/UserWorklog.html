@@ -44,9 +44,11 @@
     <div>
         <label for="UserID">UserID </label>
 
-        <input type="long" id="UserID" name="UserID" /> 
+        <input type="long" id="UserID" name="UserID"  /> 
         
         <br>
+   
+
     </div>
 </form>
 
@@ -79,13 +81,12 @@
 <p id="GetUserWorklog"></p>
 
 <script>
-    
-    function createWorklogColumn(data ) {
-        return '<td>' + data + '</td>';
-    }
+         function createWorklogColumn(data) {
+                return '<td>' + data + '</td>';
+            }
 
-    function generateWorklogRow(worklog) {
-        var row = '<tr>';
+             function generateWorklogRow(worklog) {
+                var row = '<tr>';
         
         row += createWorklogColumn(worklog.userID);
         row += createWorklogColumn(worklog.worklogID);
@@ -101,36 +102,42 @@
         row += createWorklogColumn(worklog.timelogs[0].totalWorkTime);
         row += createWorklogColumn(worklog.timelogs[0].dateAdded);
         row += createWorklogColumn(worklog.timelogs[0].dateModified);
-       
+        
         row += '</td>';
 
         return row;
-    }      
+    }
 
-    function showWorklogDetails(res) {
-var worklogTableBody = document.getElementById('tablePlace');
-if (worklogTableBody) {
     
-   worklogTableBody.innerHTML =generateWorklogRow(res.data[UserID.value]);
-} else {
-    alert('Cannot retrieve the element for showing worklog.');
-}
-}
+        
+        function showWorklogDetails(res) {
+           var worklogTableBody = document.getElementById('tablePlace');
+           if(worklogTableBody){
+               var rowStrings="";
+               for(var i=0;i<res.data.length;i++) 
+               rowStrings += generateWorklogRow(res.data[i]);
+             worklogTableBody.innerHTML = rowStrings;
+        } 
+        }
+          
+
+
 
 function getuserWorklog() {
 function reqListener() {
-showWorklogDetails(JSON.parse(this.responseText));
- 
- //console.log(this.responseText);
+ showWorklogDetails(JSON.parse(this.responseText));
+alert("loaded Successfully");
 
 }
 
 var xhr = new XMLHttpRequest();
 xhr.addEventListener('load', reqListener);
-xhr.open('GET', 'https://localhost:44392/api/worklog/userid?id='+UserID.value,  true);
+xhr.open('GET', 'https://localhost:44392/api/worklog/userid?userid='+UserID.value,  true);
 
 xhr.setRequestHeader("Content-Type", "application/JSON");
 xhr.send(UserID);
+
+
 }
 </script>
 </center>

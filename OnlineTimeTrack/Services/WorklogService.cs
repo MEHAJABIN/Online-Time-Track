@@ -184,14 +184,10 @@ namespace OnlineTimeTrack.Services
 
 
 
-
-
-
-
-        public async Task<IEnumerable<Worklog>> GetUserWorklog(int userId, long? WorklogID, long? UserID, long? ProjectID, long? TimelogID,
-                string ProjectTitle, string Feature, string FullName, string Address, int? EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd)
+        public async Task<IEnumerable<Worklog>> GetUserWorklog( long? WorklogID, int UserID, long? ProjectID, long? TimelogID,
+              string ProjectTitle, string Feature, string FullName, string Address, int? EstimateWorkTime, DateTime ActualWorkTimeStart, DateTime ActualWorkTimeEnd)
         {
-            
+
 
 
 
@@ -296,17 +292,11 @@ namespace OnlineTimeTrack.Services
                       Timelogs = g.Select(t => t.TimeLog).ToList()
                   }).ToListAsync();
 
-            if (userId != 0)
-            {
-                result = result.Take(userId).ToList();
-            }
+           
 
-            return result;
+            return result.ToList();
 
-
-        }
-
-
+         }
 
 
 
@@ -314,7 +304,7 @@ namespace OnlineTimeTrack.Services
         public async Task<IEnumerable<Worklog>> GetAll(string Feature)
         {
           var result = await _onlineTimeTrackContext.Worklogs.Where(f => f.Feature == Feature).ToListAsync();
-         return result;
+          return result;
         }
 
 
@@ -434,7 +424,7 @@ namespace OnlineTimeTrack.Services
                }
 
 
-                if (UserID != null)
+                if (UserID != 0)
                 {
                     worklog = worklog.Where(u => u.UserID == UserID);
                 }
